@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { icons } from '../../utils/icons';
 import MethodContext from '../../context/methodProvider';
-
+import Comment from './Comment';
+import InputImage from '../../components/fileinput/InputImage';
+import * as blogApi from '../../service/blogpost'
+import ImageBlog from './ImageBlog';
 
 const Blogpost = () => {
     const { uploadFile } = useContext(MethodContext)
-
     const [imageUploads, setImageUpload] = useState([]);
-
     const [urlImgs, setUrlImgs] = useState([])
 
     const handleChange = (e) => {
@@ -25,8 +26,17 @@ const Blogpost = () => {
     }
 
     useEffect(() => {
-        console.log(urlImgs);
-    }, [urlImgs])
+        const fetchData = async () => {
+            try {
+                const bloggData = await blogApi.getAllBlogPost()
+                console.log(bloggData.blogList);
+                //setVouchers(vouchersData.voucherList);
+            } catch (error) {
+                console.error('Error fetching blogposts:', error);
+            }
+        };
+        fetchData();
+    }, []);
 
     const [blogposts, setBlogposts] = useState([
         {
@@ -54,23 +64,25 @@ const Blogpost = () => {
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam aliquet magna sed dolor rhoncus, et dapibus neque pretium. Sed pulvinar ligula et urna aliquam, non lacinia arcu consectetur. Nunc eget risus id lorem sollicitudin pulvinar. Sed viverra sodales risus, eget condimentum nisi consectetur vel. Cras nec faucibus nulla. Nullam sed dui in neque tempus sagittis. Nulla placerat ligula ac massa feugiat, a tempor ex aliquet.'
         }
     ]);
+    const [imageList, setImageList] = useState([
+        'https://firebasestorage.googleapis.com/v0/b/beautyboutique-7ebb3.appspot.com/o/Blog-post%2F1.png?alt=media&token=6bd2273d-b34f-4df2-adfd-55d1e1506a48',
+        'https://firebasestorage.googleapis.com/v0/b/beautyboutique-7ebb3.appspot.com/o/Blog-post%2F1.png?alt=media&token=6bd2273d-b34f-4df2-adfd-55d1e1506a48',
+        'https://firebasestorage.googleapis.com/v0/b/beautyboutique-7ebb3.appspot.com/o/Blog-post%2F1.png?alt=media&token=6bd2273d-b34f-4df2-adfd-55d1e1506a48',
+        'https://firebasestorage.googleapis.com/v0/b/beautyboutique-7ebb3.appspot.com/o/Blog-post%2F1.png?alt=media&token=6bd2273d-b34f-4df2-adfd-55d1e1506a48',
+        'https://firebasestorage.googleapis.com/v0/b/beautyboutique-7ebb3.appspot.com/o/Blog-post%2F1.png?alt=media&token=6bd2273d-b34f-4df2-adfd-55d1e1506a48',
+        'https://firebasestorage.googleapis.com/v0/b/beautyboutique-7ebb3.appspot.com/o/Blog-post%2F1.png?alt=media&token=6bd2273d-b34f-4df2-adfd-55d1e1506a48',
+    ])
 
     const [likes, setLikes] = useState(0);
     const [liked, setLiked] = useState(false);
     const [expanded, setExpanded] = useState(false);
 
-
-
-
     const handleLikeClick = () => {
         if (!liked) {
-            // Tăng số lượt like khi người dùng bấm vào nút like
             setLikes(likes + 1);
         } else {
-            // Giảm số lượt like khi người dùng nhấn lần 2
             setLikes(likes - 1);
         }
-        // Đảo ngược trạng thái liked
         setLiked(!liked);
     };
 
@@ -94,23 +106,22 @@ const Blogpost = () => {
             <dialog id="my_modal_2" className="modal">
                 <div className="modal-box w-11/12 max-w-3xl">
                     <div className='w-full m-4'>
-                        <span >Title of the article</span>
+                        <span className='mr-4 text-black font-semibold text-xl' >Title of the article</span>
 
-                        <input type="text" placeholder="Type here" className="input input-bordered input-primary w-full max-w-xs" />
+                        <input type="text"
+                            placeholder="Title"
+                            className="input input-bordered input-primary w-[70%]" />
                     </div>
                     <div className='w-full m-4'>
-                        <span className='font-bold m-2'>Do you have any questions or concerns about products or beauty care?</span>
-                        <textarea placeholder="Bio" className="textarea textarea-bordered textarea-lg w-full max-w-xl" ></textarea>
+                        <span className='text-black font-semibold text-xl'>Do you have any questions or concerns about products or beauty care?</span>
+                        <textarea
+                            placeholder="Content"
+                            className="textarea textarea-primary textarea-lg w-[95%] mt-2" ></textarea>
                     </div>
-                    <div className='w-full flex items-center justify-center m-4'>
-                        <input
-                            type="file"
-                            className="file-input file-input-bordered file-input-success w-full max-w-xs"
-                            onChange={handleChange}
-                            multiple
-                        />
+                    <div className='w-[95%] flex items-center justify-center m-4'>
+                        <InputImage />
                     </div>
-                    <div>
+                    <div className='flex items-end justify-end'>
                         <button className="btn btn-outline btn-success" onClick={handlePost}>POST</button>
                     </div>
                 </div>
@@ -137,8 +148,8 @@ const Blogpost = () => {
                                                 {blogpost.title}
                                             </span>
                                         </div>
-                                        <div className='w-full h-96'>
-
+                                        <div className='w-full'>
+                                            <ImageBlog imageUrls={imageList} />
                                         </div>
                                         <div className='flex items-center justify-center'>
                                             <div className='w-[90%] bg-gray-200 border shadow-lg rounded-sm flex items-center justify-center'>
@@ -188,7 +199,7 @@ const Blogpost = () => {
                                             </div>
                                         </div>
                                         <div className='w-full'>
-                                            {/* <Comment id={blogpost.id} /> */}
+                                            <Comment id={blogpost.id} />
                                         </div>
                                     </footer>
                                 </div>

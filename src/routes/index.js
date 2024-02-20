@@ -1,6 +1,6 @@
 
 import {
-    Blog, Voucher, Home, Cart, ShipDetail,PaymentSuccess
+    Blog, ManageVoucher, Voucher, Home, Cart, ShipDetail, PaymentSuccess
 } from '../pages/index';
 
 const router = [
@@ -10,7 +10,7 @@ const router = [
     { path: '/cart', component: Cart },
     { path: '/ship-detail', component: ShipDetail },
     { path: '/payment-success', component: PaymentSuccess },
-
+    { path: '/managevoucher', component: ManageVoucher },
 ];
 
 

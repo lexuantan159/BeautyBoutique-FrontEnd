@@ -47,7 +47,7 @@ function Header() {
   };
   return (
     <div
-      className={`fixed max-w-[1200px] top-0 left-0 right-0 w-full z-50  mx-auto transition-transform transform duration-300 ${
+      className={`sticky mb-8 max-w-[1200px] top-0 left-0 right-0 w-full z-50  mx-auto transition-transform transform duration-300 ${
         isVisible ? 'translate-y-0' : '-translate-y-full'
       }`}
     >
@@ -97,9 +97,9 @@ function Header() {
         </div>
       </div>
       <div className="w-full ">
-        <div className="bg-white rounded-lg shadow-2xl flex items-center justify-center">
+        <div className="bg-white rounded-lg shadow-sm flex items-center justify-center">
           <div className="w-full border border-black rounded-lg">
-            <Navbar className="w-full z-50 shadow-lg bg-opacity-10 rounded-lg">
+            <Navbar className="w-full py-2 z-50 shadow-lg bg-opacity-10 rounded-lg">
               <Navbar.Brand>
                 <div className="avatar">
                   <div className="w-14 rounded-full">

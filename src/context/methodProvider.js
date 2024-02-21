@@ -1,11 +1,11 @@
-import { createContext } from 'react';
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { storage } from '../config/firebase.config';
-import { v4 } from "uuid";
-
+import {createContext} from 'react';
+import {ref, uploadBytes, getDownloadURL} from "firebase/storage";
+import {storage} from '../config/firebase.config';
+import {v4} from "uuid";
+import {toast} from 'react-toastify';
 const MethodContext = createContext({});
 
-export const MethodProvider = ({ children }) => {
+export const MethodProvider = ({children}) => {
 
 
     const formatDateTime = (dateTimeString) => {
@@ -40,7 +40,7 @@ export const MethodProvider = ({ children }) => {
                 const snapshot = await uploadBytes(imageRef, imageUpload)
                 const url = await getDownloadURL(snapshot.ref);
 
-                uploadedImages.push({ id: imageId, url });
+                uploadedImages.push({id: imageId, url});
             }
 
             console.log(uploadedImages);
@@ -50,8 +50,37 @@ export const MethodProvider = ({ children }) => {
             throw error;
         }
     };
+
+    const notify = (message, type) => {
+        const toastType = type === 'success' ? toast.success : toast.error;
+        return toastType(message);
+    };
+
+    const toastLoadingId = (message) => {
+        return toast.loading(message);
+    };
+
+    const toastUpdateLoadingId = (message, status, idLoading) => {
+        if (status === 'success') {
+            toast.update(idLoading, {
+                render: message,
+                type: 'success',
+                isLoading: false,
+                autoClose: true,
+                closeButton: 'close',
+            });
+        } else {
+            toast.update(idLoading, {
+                render: message,
+                type: 'error',
+                isLoading: false,
+                autoClose: true,
+                closeButton: 'close',
+            });
+        }
+    };
     return (
-        <MethodContext.Provider value={{ formatDateTime, uploadFile }}>
+        <MethodContext.Provider value={{formatDateTime, uploadFile, notify, toastLoadingId, toastUpdateLoadingId}}>
             {children}
         </MethodContext.Provider>
     );

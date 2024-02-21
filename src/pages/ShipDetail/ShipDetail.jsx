@@ -1,46 +1,16 @@
 import React, {useState} from 'react'
-import {GoChevronDown, GoChevronRight} from "react-icons/go";
 import {MdOutlineAddLocationAlt, MdOutlineLocalShipping, MdOutlinePayments} from "react-icons/md";
 import {GrAdd} from "react-icons/gr";
 import {motion} from "framer-motion"
+import DropList from "../../components/animation/DropList";
 
 const ShipDetail = () => {
 
-    const [isExpanded, setIsExpanded] = useState(false);
-
-    const handleClick = () => {
-        setIsExpanded(!isExpanded);
-    };
-
-    const container = {
-        hidden: {opacity: 0, height: "0px", backgroundColor: "white"},
-        show: {
-            opacity: 1,
-            height: "85px",
-            transition: {
-                easing: "linear",
-            }
-        }
-    }
-
-    const itemCross = {
-        hidden: {opacity: 1, rotate: 0},
-        show: {opacity: 1, rotate: 90}
-    }
-    const item = {
-        hidden: {opacity: 0},
-        show: {
-            opacity: 1,
-            transition: {
-                easing: "linear",
-            }
-        }
-    }
 
     return (<>
             <div className="max-w-[1200px] grid grid-cols-12 gap-5 mt-40 mx-auto">
                 <h1 className="col-span-12 font-bold text-xl">Ship Detail <span className="font-normal"></span></h1>
-                <div className="bg-white col-span-8 max-h-[430px] overflow-y-scroll no-scrollbar">
+                <div className="bg-white col-span-8  overflow-y-scroll no-scrollbar">
                     <div className="p-3 mb-3 rounded-lg border-[0.2px] border-gray-300 shadow-lg">
                         <p className="flex items-center text-lg font-bold"><MdOutlineAddLocationAlt
                             className="mr-2"/> Address </p>
@@ -62,50 +32,12 @@ const ShipDetail = () => {
                             </div>
                         </div>
                     </div>
-                    {/**/}
-                    {/*<div*/}
-                    {/*    className="p-3 mb-3 flex justify-between items-center rounded-lg shadow-lg border-[0.2px] border-gray-300">*/}
-                    {/*    <p className="flex items-center "><MdOutlineLocalShipping className="mr-2"/> METHOD SHIPPING</p>*/}
-                    {/*    <GoChevronRight className="text-xl"/>*/}
-                    {/*</div>*/}
+                    {/*Method*/}
+                    <DropList title={"method shipping"} listItem={["J&T"]}
+                              Icon={"MdOutlineLocalShipping"}></DropList>
+                    <DropList title={"method payment"} listItem={["Thanh Toan Khi Nhan Hang", "Zalo Pay"]}
+                              Icon={"MdOutlinePayments"}></DropList>
 
-                    <motion.div
-                        initial="show"
-                        onClick={handleClick}
-                        className="p-3 mb-3 rounded-lg shadow-lg border-[0.2px] border-gray-300">
-                        <motion.div
-                            className="flex justify-between items-center cursor-pointer"
-                        >
-                            <motion.p className="flex items-center">
-                                <MdOutlineLocalShipping className="mr-2"/> METHOD SHIPPING
-                            </motion.p>
-                            <motion.p animate={isExpanded ? itemCross.show : itemCross.hidden}
-                            >
-                                <GoChevronRight className="text-xl"/>
-                            </motion.p>
-                        </motion.div>
-                        <motion.div
-                            initial="hidden"
-                            variants={container}
-                            animate={isExpanded ? "show" : "hidden"}
-                            className={`${isExpanded ? "block mt-2" : "hidden"}`}
-                        >
-                            <motion.p variants={item}
-                                      className={isExpanded ? "block text-lg rounded hover:bg-gray-300 py-2 px-3 " : "hidden"}>Thanh
-                                Toan Khi Nhan
-                                Hang
-                            </motion.p>
-                            <motion.p variants={item}
-                                      className={isExpanded ? "block text-lg rounded hover:bg-gray-300 py-2 px-3 " : "hidden"}>Zalo
-                                Pay
-                            </motion.p>
-                        </motion.div>
-                    </motion.div>
-                    <div
-                        className="p-3 mb-3 flex justify-between items-center rounded-lg shadow-lg border-[0.2px] border-gray-300">
-                        <p className="flex items-center "><MdOutlinePayments className="mr-2"/> METHOD PAYMENT</p>
-                        <GoChevronRight className="text-xl"/>
-                    </div>
                 </div>
                 <div className="bg-white col-span-4 flex-grow">
                     <div className="w-full flex justify-between gap-2 ">
@@ -114,13 +46,13 @@ const ShipDetail = () => {
                             Add Other
                         </button>
                         <button type="button"
-                                className="w-full text-center bg-[#FF9FA0] text-white font-bold py-3 px-4 rounded hover:text-white">
+                                className="w-full text-center hover:bg-[#FF9FA0] bg-red-500 text-white font-bold py-3 px-4 rounded hover:text-white">
                             Payment
                         </button>
                     </div>
                     <div
-                        className="w-full mt-4 bg-white rounded-lg shadow-md px-3 pb-3 max-h-[260px] overflow-y-scroll no-scrollbar">
-                        <div className="flex gap-4 p-3 mb-3">
+                        className="w-full mt-4 bg-white rounded-lg shadow-md p-3 max-h-[260px] overflow-y-scroll no-scrollbar">
+                        <div className="flex gap-4 p-2 mb-2">
                             <img
                                 src="https://img.freepik.com/premium-photo/vibrant-packaging-design-skinca-stair-scene-concept-creative-design-luxury-elegant_655090-472454.jpg"
                                 alt="product" className="w-[66px] h-[66px] object-cover"/>
@@ -131,7 +63,7 @@ const ShipDetail = () => {
                                     ₫)</p>
                             </div>
                         </div>
-                        <div className="flex gap-4 p-3 mb-3">
+                        <div className="flex gap-4 p-2 mb-2">
                             <img
                                 src="https://img.freepik.com/premium-photo/vibrant-packaging-design-skinca-stair-scene-concept-creative-design-luxury-elegant_655090-472454.jpg"
                                 alt="product" className="w-[66px] h-[66px] object-cover"/>
@@ -142,7 +74,7 @@ const ShipDetail = () => {
                                     ₫)</p>
                             </div>
                         </div>
-                        <div className="flex gap-4 p-3 mb-3">
+                        <div className="flex gap-4 p-2 mb-2">
                             <img
                                 src="https://img.freepik.com/premium-photo/vibrant-packaging-design-skinca-stair-scene-concept-creative-design-luxury-elegant_655090-472454.jpg"
                                 alt="product" className="w-[66px] h-[66px] object-cover"/>

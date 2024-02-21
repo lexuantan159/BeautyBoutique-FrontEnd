@@ -11,3 +11,4 @@ export { default as Cart } from './Cart/Cart';
 export { default as ShipDetail } from './ShipDetail/ShipDetail';
 export { default as Blogpost } from './Blogpost/Blogpost';
 export { default as PaymentSuccess } from './Payment/PaymentSuccess';
+export { default as ManageVoucher } from './Dashboard/Voucher/ManageVoucher';

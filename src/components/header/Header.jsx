@@ -52,14 +52,14 @@ function Header() {
       }`}
     >
       <div className="w-full flex justify-between p-2 bg-white text-black bg-opacity-50">
-        <div className="flex justify-center items-center font-sans text-xs">
+        <div className="flex justify-center items-center font-sans text-lg">
           <ul className="flex justify-center items-center">
             <li className="flex justify-center items-center mr-4 ">
               <span className="text-orange-400 mr-2 font-bold">
                 <icons.CiLocationOn />
               </span>
               <span className="max-sm:hidden max-md:hidden">
-                FPT Complex Đà Nắng
+                FPT Complex Đà Nẵng
               </span>
             </li>
             <li className="flex justify-center items-center ">
@@ -71,8 +71,8 @@ function Header() {
           </ul>
         </div>
 
-        <div className="text-black flex justify-center items-center font-sans text-xs">
-          <ul className="flex justify-center items-center cursor-pointer">
+        <div className="text-black flex justify-center items-center font-sans text-lg">
+          <ul className="flex justify-center items-center cursor-pointer gap-2">
             <li className="flex justify-center items-center mr-1 ">
               <a href="https://www.facebook.com/studiofotofusion">
                 <icons.BsInstagram />
@@ -97,9 +97,9 @@ function Header() {
         </div>
       </div>
       <div className="w-full ">
-        <div className="bg-white rounded-lg shadow-sm flex items-center justify-center">
-          <div className="w-full border border-black rounded-lg">
-            <Navbar className="w-full py-2 z-50 shadow-lg bg-opacity-10 rounded-lg">
+        <div className="bg-white rounded-lg flex items-center justify-center">
+          <div className="w-full border-slate-300 border-2 rounded-lg">
+            <Navbar className="w-full py-2 z-50 shadow-sm bg-opacity-10 rounded-lg">
               <Navbar.Brand>
                 <div className="avatar">
                   <div className="w-14 rounded-full">

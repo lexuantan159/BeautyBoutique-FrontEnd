@@ -1,7 +1,30 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { icons } from '../../utils/icons';
+import MethodContext from '../../context/methodProvider';
 
 const Blogpost = () => {
+  const { uploadFile } = useContext(MethodContext);
+
+  const [imageUploads, setImageUpload] = useState([]);
+
+  const [urlImgs, setUrlImgs] = useState([]);
+
+  const handleChange = e => {
+    for (let i = 0; i < e.target.files.length; i++) {
+      const newImage = e.target.files[i];
+      newImage['id'] = Math.random();
+      setImageUpload(prevState => [...prevState, newImage]);
+    }
+  };
+  const handlePost = async () => {
+    const imageUrls = await uploadFile(imageUploads);
+    setUrlImgs(imageUrls);
+  };
+
+  useEffect(() => {
+    console.log(urlImgs);
+  }, [urlImgs]);
+
   const [blogposts, setBlogposts] = useState([
     {
       author: 'John Doe',
@@ -50,20 +73,67 @@ const Blogpost = () => {
   };
 
   return (
-    <div className="w-full bg-black">
-      <div className="flex items-center justify-center">
-        <div className="w-[60%] h-24">
-          <div className=" flex items-center justify-center">
-            <img
-              src="https://via.placeholder.com/200"
-              class="float-left rounded-full w-10 h-10 m-1 mr-3"
-            />
-            <input type="text" className="w-1/2 " />
+    <div theme="pastel" className="w-full bg-[#F1F0F1]">
+      <div className="pt-28 flex items-center justify-center">
+        <div className="w-[60%] h-20 border border-solid flex items-center justify-center shadow-md rounded-xl bg-white">
+          <div className="avatar online mr-4">
+            <div className="w-16 rounded-full">
+              <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+            </div>
           </div>
+          <input
+            onClick={() => document.getElementById('my_modal_2').showModal()}
+            type="text"
+            placeholder="What are you thinking ? "
+            className="input input-bordered input-warning w-full max-w-2xl"
+          />
         </div>
       </div>
+
+      <dialog id="my_modal_2" className="modal">
+        <div className="modal-box w-11/12 max-w-3xl">
+          <div className="w-full m-4">
+            <span>Title of the article</span>
+
+            <input
+              type="text"
+              placeholder="Type here"
+              className="input input-bordered input-primary w-full max-w-xs"
+            />
+          </div>
+          <div className="w-full m-4">
+            <span className="font-bold m-2">
+              Do you have any questions or concerns about products or beauty
+              care?
+            </span>
+            <textarea
+              placeholder="Bio"
+              className="textarea textarea-bordered textarea-lg w-full max-w-xl"
+            ></textarea>
+          </div>
+          <div className="w-full flex items-center justify-center m-4">
+            <input
+              type="file"
+              className="file-input file-input-bordered file-input-success w-full max-w-xs"
+              onChange={handleChange}
+              multiple
+            />
+          </div>
+          <div>
+            <button
+              className="btn btn-outline btn-success"
+              onClick={handlePost}
+            >
+              POST
+            </button>
+          </div>
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
       <div className="flex items-center justify-center">
-        <div className="w-[80%]">
+        <div className="w-[60%]">
           {blogposts.map(blogpost => {
             return (
               <div className="m-4" key={blogpost.id}>
@@ -74,7 +144,9 @@ const Blogpost = () => {
                       class="float-left rounded-full w-10 h-10 m-1 mr-3"
                     />
                     <div>
-                      <h3 class="text-lg font-bold">{blogpost.author}</h3>
+                      <h3 theme="pastel" class="text-lg font-bold">
+                        {blogpost.author}
+                      </h3>
                       <p class="text-sm text-gray-600">{blogpost.date}</p>
                     </div>
                   </header>
@@ -84,15 +156,13 @@ const Blogpost = () => {
                         {blogpost.title}
                       </span>
                     </div>
-                    <div className="w-full h-96">
-                      {/* <PhotoByBlogPost blog_id={blogpost.id} /> */}
-                    </div>
+                    <div className="w-full h-96"></div>
                     <div className="flex items-center justify-center">
                       <div className="w-[90%] bg-gray-200 border shadow-lg rounded-sm flex items-center justify-center">
-                        <div className="collapse bg-base-200">
+                        <div className="collapse bg-base-200 rounded-sm">
                           <input type="checkbox" />
-                          <div className="collapse-title text-xl font-medium">
-                            Xem thêm ...
+                          <div className="collapse-title text-base font-medium">
+                            etc ...
                           </div>
                           <div className="collapse-content">
                             <p style={{ whiteSpace: 'pre-line' }}>
@@ -118,7 +188,7 @@ const Blogpost = () => {
                               <icons.FcLikePlaceholder />
                             )}
                           </span>
-                          <span>{likes} Thích</span>
+                          <span>{likes} Like</span>
                         </span>
                       </div>
                       <div className="flex items-center justify-center">
@@ -126,7 +196,7 @@ const Blogpost = () => {
                           <span className="mr-2 ">
                             <icons.AiOutlineComment />
                           </span>
-                          <span>Bình Luận</span>
+                          <span>Comment</span>
                         </div>
                       </div>
                       <div className="flex items-center justify-center">
@@ -134,22 +204,7 @@ const Blogpost = () => {
                           <span className="mr-2 ">
                             <icons.BiShare />
                           </span>
-                          <div className="dropdown dropdown-hover">
-                            <div tabIndex={0} role="button" className="btn m-1">
-                              Chia Sẻ
-                            </div>
-                            <ul
-                              tabIndex={0}
-                              className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-                            >
-                              <li>
-                                <a>Item 1</a>
-                              </li>
-                              <li>
-                                <a>Item 2</a>
-                              </li>
-                            </ul>
-                          </div>
+                          <span>Share</span>
                         </div>
                       </div>
                     </div>

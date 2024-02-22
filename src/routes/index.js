@@ -16,6 +16,7 @@ import { Cushion } from '../pages';
 import { BlusherHighlighter } from '../pages';
 import { OrderDetail } from '../pages';
 import { Product } from '../pages';
+import { ProductDetail } from '../pages';
 
 const router = [
   { path: '/order', component: Order },
@@ -35,6 +36,13 @@ const router = [
   { path: '/concealer', component: Concealer },
   { path: '/cushion', component: Cushion },
   { path: '/blusher&highlighter', component: BlusherHighlighter },
+  { path: '/foundation/:productId', component:ProductDetail  },
+  { path: '/blusher&highlighter/:productId', component:ProductDetail  },
+  { path: '/makeupbase/:productId', component:ProductDetail  },
+  { path: '/power&pact/:productId', component:ProductDetail  },
+  { path: '/concealer/:productId', component:ProductDetail  },
+  { path: '/cushion/:productId', component:ProductDetail  },
+  { path: '/category/:productId', component:ProductDetail  },
 ];
 
 export { router };

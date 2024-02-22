@@ -331,7 +331,8 @@ function ProductItem({ product }) {
   return (
     <>
       <div className="w-40 flex item-center flex-col mx-auto" key={product.id}>
-        <img
+        <NavLink to={`${product.id}`}>
+    <img
           className="w-full self-center"
           src={require(`../../images/Cushion/${product.image}`)}
           alt={product.name}
@@ -348,12 +349,13 @@ function ProductItem({ product }) {
             )}
           </p>
         </div>
+    </NavLink>
       </div>
     </>
   );
 }
 
-export default function Concealer() {
+export default function Cushion() {
   return (
     <div className="px-20">
       <TextComponent />

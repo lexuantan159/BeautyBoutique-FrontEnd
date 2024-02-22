@@ -134,7 +134,8 @@ function ProductItem({ product }) {
   return (
     <>
       <div className="w-40 flex item-center flex-col mx-auto" key={product.id}>
-        <img
+        <NavLink to={`${product.id}`}>
+    <img
           className="w-full self-center"
           src={require(`../../images/PowerPact/${product.image}`)}
           alt={product.name}
@@ -151,6 +152,7 @@ function ProductItem({ product }) {
             )}
           </p>
         </div>
+    </NavLink>
       </div>
     </>
   );

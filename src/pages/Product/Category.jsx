@@ -44,7 +44,7 @@ const ProductStatistics = () => {
   const products = [
     {
       id: 1,
-      name: "Mask Fit Red Cushion (9 colors)",
+      name: "Mask Fit Red Cushion",
       image: "01.png",
       originalPrice: 25.0,
       discountPercent: 10,
@@ -58,101 +58,101 @@ const ProductStatistics = () => {
     },
     {
       id: 3,
-      name: "Play Bento (5 colors)",
+      name: "Play Bento",
       image: "03.png",
       originalPrice: 28.0,
       discountPercent: 30,
     },
     {
       id: 4,
-      name: "Whipped Dream (4 color)",
+      name: "Whipped Dream",
       image: "04.png",
       originalPrice: 21.0,
       discountPercent: 25,
     },
     {
       id: 5,
-      name: "Product 1",
+      name: "Cheeky Stamp",
       image: "05.png",
-      originalPrice: 30.99,
-      discountPercent: 10,
+      originalPrice: 37.00,
+      iscountPercent: 10,
     },
     {
       id: 6,
-      name: "Product 2",
+      name: "My Glow Cream Cushion Refill",
       image: "06.jpg",
-      originalPrice: 40.49,
-      discountPercent: 20,
+      originalPrice: 16.00,
+      discountPercent: 10,
     },
     {
       id: 7,
-      name: "Product 3",
+      name: "Mask Fit Black Cushion",
       image: "07.jpg",
-      originalPrice: 35.99,
+      originalPrice: 36.00,
       discountPercent: 15,
     },
     {
       id: 8,
-      name: "Product 4",
+      name: "Collagen Whitening Moisture Two-way Cake",
       image: "08.jpg",
-      originalPrice: 28.99,
-      discountPercent: 5,
+      originalPrice: 38.00,
+      discountPercent: 10,
     },
     {
       id: 9,
-      name: "Product 1",
+      name: "Sebum Soak Power 5g",
       image: "09.jpg",
-      originalPrice: 30.99,
-      discountPercent: 10,
+      originalPrice: 12.00,
+      discountPercent: 20,
     },
     {
       id: 10,
-      name: "Product 2",
+      name: "Idol Cover Concealer",
       image: "10.jpg",
-      originalPrice: 40.49,
-      discountPercent: 20,
-    },
-    {
-      id: 11,
-      name: "Product 3",
-      image: "11.jpg",
-      originalPrice: 35.99,
-      discountPercent: 15,
-    },
-    {
-      id: 12,
-      name: "Product 4",
-      image: "12.png",
-      originalPrice: 28.99,
-      discountPercent: 5,
-    },
-    {
-      id: 13,
-      name: "Product 1",
-      image: "13.png",
-      originalPrice: 30.99,
+      originalPrice: 12.00,
       discountPercent: 10,
     },
     {
-      id: 14,
-      name: "Product 2",
-      image: "14.png",
-      originalPrice: 40.49,
-      discountPercent: 20,
+      id: 11,
+      name: "Kill Cover High Glow Cushion Set (+refill)",
+      image: "11.jpg",
+      originalPrice: 36.00,
+      discountPercent: 17,
     },
     {
-      id: 15,
-      name: "Product 3",
-      image: "15.png",
-      originalPrice: 35.99,
+      id: 12,
+      name: "Shimmering Petit BB",
+      image: "12.png",
+      originalPrice: 5.80,
+      discountPercent: 10,
+    },
+    {
+      id: 13,
+      name: "Lip&Cheek Healthy Balm",
+      image: "13.png",
+      originalPrice: 17.00,
+      discountPercent: 24,
+    },
+    {
+      id: 14,
+      name: "Dew Wear Foundation",
+      image: "14.png",
+      originalPrice: 36.00,
       discountPercent: 15,
     },
     {
+      id: 15,
+      name: "Layered Matte Fit Cushion SPF50+ PA++",
+      image: "15.png",
+      originalPrice: 28.00,
+      discountPercent: 30,
+    },
+    {
       id: 16,
-      name: "Product 4",
+      name: "Liquid Care Cheek",
       image: "16.png",
-      originalPrice: 28.99,
-      discountPercent: 5,
+      originalPrice: 21.00,
+      discountPercent: 10,
     },
   ];
 
@@ -176,7 +176,8 @@ function ProductItem({ product }) {
   return (
     <>
       <div className="w-40 flex item-center flex-col mx-auto" key={product.id}>
-        <img
+        <NavLink to={`${product.id}`}>
+    <img
           className="w-full self-center"
           src={require(`../../images/Face Makeup/${product.image}`)}
           alt={product.name}
@@ -193,6 +194,7 @@ function ProductItem({ product }) {
             )}
           </p>
         </div>
+    </NavLink>
       </div>
     </>
   );

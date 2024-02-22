@@ -44,157 +44,157 @@ const ProductStatistics = () => {
   const products = [
     {
       id: 1,
-      name: "Mask Fit Red Cushion (9 colors)",
+      name: "Rich Gold Double Wear Radiance Foundation SPF 50",
       image: "01.jpg",
-      originalPrice: 25.0,
+      originalPrice: 24.00,
       discountPercent: 10,
     },
     {
       id: 2,
-      name: "Dont Settle",
+      name: "Shimmering Petit BB",
       image: "02.jpg",
-      originalPrice: 19.0,
-      discountPercent: 25,
+      originalPrice: 5.80,
+      discountPercent: 10,
     },
     {
       id: 3,
-      name: "Play Bento (5 colors)",
+      name: "Dew Wear Foundation",
       image: "03.jpg",
-      originalPrice: 28.0,
-      discountPercent: 30,
+      originalPrice: 36.00,
+      discountPercent: 15,
     },
     {
       id: 4,
-      name: "Whipped Dream (4 color)",
+      name: "Kill Cover Founwear Foundation",
       image: "04.jpg",
-      originalPrice: 21.0,
-      discountPercent: 25,
+      originalPrice: 16.00,
+      discountPercent: 6,
     },
     {
       id: 5,
-      name: "Product 1",
+      name: "Brilliance Fit Glow Foundation",
       image: "05.jpg",
-      originalPrice: 30.99,
+      originalPrice: 20.00,
       discountPercent: 10,
     },
     {
       id: 6,
-      name: "Product 2",
+      name: "Wink Sun Base 50ml",
       image: "06.jpg",
-      originalPrice: 40.49,
-      discountPercent: 20,
+      originalPrice: 20.00,
+      discountPercent: 10,
     },
     {
       id: 7,
-      name: "Product 3",
+      name: "Wink Foundation",
       image: "07.jpg",
-      originalPrice: 35.99,
-      discountPercent: 15,
+      originalPrice: 40.00,
+      discountPercent: 10,
     },
     {
       id: 8,
-      name: "Product 4",
+      name: "MBB Boomer 40ml",
       image: "08.jpg",
-      originalPrice: 28.99,
-      discountPercent: 5,
+      originalPrice: 14.00,
+      discountPercent: 46,
     },
     {
       id: 9,
-      name: "Product 1",
+      name: "Pro Tailor Be Glow Foundation SPF27 PA++ 30g",
       image: "09.jpg",
-      originalPrice: 30.99,
+      originalPrice: 40.00,
       discountPercent: 10,
     },
     {
       id: 10,
-      name: "Product 2",
+      name: "8 Peptide Foundation 100g",
       image: "10.jpg",
-      originalPrice: 40.49,
-      discountPercent: 20,
-    },
-    {
-      id: 11,
-      name: "Product 3",
-      image: "11.jpg",
-      originalPrice: 35.99,
-      discountPercent: 15,
-    },
-    {
-      id: 12,
-      name: "Product 4",
-      image: "12.jpg",
-      originalPrice: 28.99,
-      discountPercent: 5,
-    },
-    {
-      id: 13,
-      name: "Product 1",
-      image: "13.jpg",
-      originalPrice: 30.99,
+      originalPrice: 15.00,
       discountPercent: 10,
     },
     {
+      id: 11,
+      name: "Bloom Foundation",
+      image: "11.jpg",
+      originalPrice: 42.00,
+      discountPercent: 10,
+    },
+    {
+      id: 12,
+      name: "Double Serum Balm Foundation",
+      image: "12.jpg",
+      originalPrice: 39.00,
+      discountPercent: 20,
+    },
+    {
+      id: 13,
+      name: "Layered Cover Foundation",
+      image: "13.jpg",
+      originalPrice: 29.00,
+      discountPercent: 30,
+    },
+    {
       id: 14,
-      name: "Product 2",
+      name: "Wooncho Blur Matte Foundation",
       image: "14.jpg",
-      originalPrice: 40.49,
+      originalPrice: 32.00,
       discountPercent: 20,
     },
     {
       id: 15,
-      name: "Product 3",
+      name: "Wooncho Blue Glowy Foundation",
       image: "15.jpg",
-      originalPrice: 35.99,
+      originalPrice: 32.00,
       discountPercent: 15,
     },
     {
       id: 16,
-      name: "Product 4",
+      name: "M Choboyang BB Cream 50ml",
       image: "16.jpg",
-      originalPrice: 28.99,
-      discountPercent: 5,
+      originalPrice: 27.00,
+      discountPercent: 22,
     },
     {
       id: 17,
-      name: "Mask Fit Red Cushion (9 colors)",
+      name: "Kill Cover Founwear Foundation SPF30 PA+++",
       image: "17.jpg",
-      originalPrice: 25.0,
-      discountPercent: 10,
+      originalPrice: 34.00,
+      discountPercent: 6,
     },
     {
       id: 18,
-      name: "Dont Settle",
+      name: "Moringa Ceramide BB Cream SPF30 PA+++",
       image: "18.jpg",
-      originalPrice: 19.0,
-      discountPercent: 25,
+      originalPrice: 22.00,
+      discountPercent: 45,
     },
     {
       id: 19,
-      name: "Play Bento (5 colors)",
+      name: "Pro-Tailor Be Glow Stick Foundation",
       image: "19.jpg",
-      originalPrice: 28.0,
-      discountPercent: 30,
+      originalPrice: 28.00,
+      discountPercent: 10,
     },
     {
       id: 20,
-      name: "Whipped Dream (4 color)",
+      name: "Neo Foundation Matte",
       image: "20.jpg",
-      originalPrice: 21.0,
-      discountPercent: 25,
+      originalPrice: 58.00,
+      discountPercent: 15,
     },
     {
       id: 21,
-      name: "Product 1",
+      name: "Double Lasting Foundation #21W1 Beige",
       image: "21.jpg",
-      originalPrice: 30.99,
+      originalPrice: 39.00,
       discountPercent: 10,
     },
     {
       id: 22,
-      name: "Product 2",
+      name: "Radiance Perfect-Fit Foundation #N23 SPF30 PA++ 35ml",
       image: "22.jpg",
       originalPrice: 40.49,
-      discountPercent: 20,
+      discountPercent: 5,
     },
   ];
 
@@ -218,23 +218,22 @@ function ProductItem({ product }) {
   return (
     <>
       <div className="w-40 flex item-center flex-col mx-auto" key={product.id}>
-        <img
+    <NavLink to={`${product.id}`}>
+    <img
           className="w-full self-center"
           src={require(`../../images/Foundation/${product.image}`)}
           alt={product.name}
         />
-        <div className="flex flex-col justify-center text-center">
+        <div className="flex flex-col justify-center text-center ">
           <p>{product.name}</p>
-          <p>Original Price: ${product.originalPrice}</p>
-          <p>Discount: {product.discountPercent}%</p>
-          <p>
-            Discounted Price: $
-            {calculateDiscountedPrice(
-              product.originalPrice,
-              product.discountPercent
-            )}
+          <strike className="text-gray-400 font-normal text-base"> {product.originalPrice} USD </strike>
+          <p className="text-neutral-1000 font-semibold text-lg"> 
+            <span className="text-red-600 font-semibold text-lg"> {product.discountPercent}% &nbsp; </span>
+            {calculateDiscountedPrice( product.originalPrice, product.discountPercent )} USD
           </p>
         </div>
+    </NavLink>
+        
       </div>
     </>
   );

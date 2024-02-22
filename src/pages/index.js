@@ -19,3 +19,4 @@ export { default as PowerPact } from './Product/PowerPact';
 export { default as Concealer } from './Product/Concealer';
 export { default as Cushion } from './Product/Cushion';
 export { default as BlusherHighlighter } from './Product/BlusherHighlighter';
+export { default as ProductDetail } from './Product/Product_Detail';

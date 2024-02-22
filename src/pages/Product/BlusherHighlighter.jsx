@@ -154,6 +154,69 @@ const ProductStatistics = () => {
       originalPrice: 28.99,
       discountPercent: 5,
     },
+    {
+      id: 17,
+      name: "Mask Fit Red Cushion (9 colors)",
+      image: "17.jpg",
+      originalPrice: 25.0,
+      discountPercent: 10,
+    },
+    {
+      id: 18,
+      name: "Dont Settle",
+      image: "18.jpg",
+      originalPrice: 19.0,
+      discountPercent: 25,
+    },
+    {
+      id: 19,
+      name: "Play Bento (5 colors)",
+      image: "19.jpg",
+      originalPrice: 28.0,
+      discountPercent: 30,
+    },
+    {
+      id: 20,
+      name: "Whipped Dream (4 color)",
+      image: "20.jpg",
+      originalPrice: 21.0,
+      discountPercent: 25,
+    },
+    {
+      id: 21,
+      name: "Product 1",
+      image: "21.jpg",
+      originalPrice: 30.99,
+      discountPercent: 10,
+    },
+    {
+      id: 22,
+      name: "Product 2",
+      image: "22.jpg",
+      originalPrice: 40.49,
+      discountPercent: 20,
+    },
+    {
+      id: 23,
+      name: "Product 3",
+      image: "23.jpg",
+      originalPrice: 35.99,
+      discountPercent: 15,
+    },
+    {
+      id: 24,
+      name: "Product 4",
+      image: "24.jpg",
+      originalPrice: 28.99,
+      discountPercent: 5,
+    },
+    {
+      id: 25,
+      name: "Product 1",
+      image: "25.jpg",
+      originalPrice: 30.99,
+      discountPercent: 10,
+    },
   ];
 
   return (
@@ -178,7 +241,7 @@ function ProductItem({ product }) {
       <div className="w-40 flex item-center flex-col mx-auto" key={product.id}>
         <img
           className="w-full self-center"
-          src={require(`../../images/Foundation/${product.image}`)}
+          src={require(`../../images/BlusherHighlighter/${product.image}`)}
           alt={product.name}
         />
         <div className="flex flex-col justify-center text-center">

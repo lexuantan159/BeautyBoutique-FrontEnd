@@ -112,48 +112,6 @@ const ProductStatistics = () => {
       originalPrice: 40.49,
       discountPercent: 20,
     },
-    {
-      id: 11,
-      name: "Product 3",
-      image: "11.jpg",
-      originalPrice: 35.99,
-      discountPercent: 15,
-    },
-    {
-      id: 12,
-      name: "Product 4",
-      image: "12.jpg",
-      originalPrice: 28.99,
-      discountPercent: 5,
-    },
-    {
-      id: 13,
-      name: "Product 1",
-      image: "13.jpg",
-      originalPrice: 30.99,
-      discountPercent: 10,
-    },
-    {
-      id: 14,
-      name: "Product 2",
-      image: "14.jpg",
-      originalPrice: 40.49,
-      discountPercent: 20,
-    },
-    {
-      id: 15,
-      name: "Product 3",
-      image: "15.jpg",
-      originalPrice: 35.99,
-      discountPercent: 15,
-    },
-    {
-      id: 16,
-      name: "Product 4",
-      image: "16.jpg",
-      originalPrice: 28.99,
-      discountPercent: 5,
-    },
   ];
 
   return (
@@ -178,7 +136,7 @@ function ProductItem({ product }) {
       <div className="w-40 flex item-center flex-col mx-auto" key={product.id}>
         <img
           className="w-full self-center"
-          src={require(`../../images/Foundation/${product.image}`)}
+          src={require(`../../images/PowerPact/${product.image}`)}
           alt={product.name}
         />
         <div className="flex flex-col justify-center text-center">

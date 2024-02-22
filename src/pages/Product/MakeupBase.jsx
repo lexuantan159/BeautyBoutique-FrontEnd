@@ -178,7 +178,7 @@ function ProductItem({ product }) {
       <div className="w-40 flex item-center flex-col mx-auto" key={product.id}>
         <img
           className="w-full self-center"
-          src={require(`../../images/Foundation/${product.image}`)}
+          src={require(`../../images/MakeupBase/${product.image}`)}
           alt={product.name}
         />
         <div className="flex flex-col justify-center text-center">

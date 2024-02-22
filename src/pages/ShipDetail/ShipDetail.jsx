@@ -40,7 +40,7 @@ const ShipDetail = () => {
 
                 </div>
                 <div className="bg-white col-span-4 flex-grow">
-                    <div className="w-full flex justify-between gap-2 ">
+                    <div className="w-full flex justify-between gap-2">
                         <button type="button"
                                 className="w-full text-center bg-white border py-3 px-4 rounded font-bold hover:opacity-90 mr-3">
                             Add Other
@@ -51,7 +51,7 @@ const ShipDetail = () => {
                         </button>
                     </div>
                     <div
-                        className="w-full mt-4 bg-white rounded-lg shadow-md p-3 max-h-[260px] overflow-y-scroll no-scrollbar">
+                        className="w-full mt-4 bg-white rounded-lg shadow-md p-3 max-h-[260px] overflow-y-scroll no-scrollbar border-[0.2px] border-gray-300">
                         <div className="flex gap-4 p-2 mb-2">
                             <img
                                 src="https://img.freepik.com/premium-photo/vibrant-packaging-design-skinca-stair-scene-concept-creative-design-luxury-elegant_655090-472454.jpg"
@@ -86,7 +86,7 @@ const ShipDetail = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="w-full mt-4 bg-white rounded-lg shadow-md px-3 mb-2">
+                    <div className="w-full mt-4 bg-white rounded-lg shadow-md px-3 mb-2 border-[0.2px] border-gray-300">
                         <div className="mx-3 mb-3 flex justify-between items-center border-b-[1px] border-gray-300">
                             <p className="py-2 ">Price </p>
                             <p className="py-2 ">12$ </p>

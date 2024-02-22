@@ -23,6 +23,9 @@ module.exports = {
                     "-ms-overflow-style": "none",
                     "scrollbar-width": "none"
                 },
+                '.fill-available': {
+                    width: '-webkit-fill-available',
+                },
             };
             addUtilities(newUtilities)
         }

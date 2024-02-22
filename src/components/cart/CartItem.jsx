@@ -31,7 +31,6 @@ const CartItem = ({item, actionChange, action}) => {
         if (/^\d*$/.test(input)) {
             const newQuantity = parseInt(input);
             if (newQuantity >= 0 && !isNaN(newQuantity)) {
-                console.log(1);
                 setQuantity(newQuantity);
                 setCartItem(prevState => ({...prevState, totalPrice: prevState.price * newQuantity}));
                 updateQuantity(newQuantity);
@@ -60,8 +59,6 @@ const CartItem = ({item, actionChange, action}) => {
             params = {...params, quantity: newQuantity}
         }
         const responseIncreaseItem = await cartService.updateCartItem(params);
-        console.log(params)
-        responseIncreaseItem?.status === 200 && console.log("call API >>>")
         responseIncreaseItem?.status === 200 && actionChange(!action)
     }
 

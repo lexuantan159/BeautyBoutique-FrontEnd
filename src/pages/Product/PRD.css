@@ -4,7 +4,7 @@
   height: 22px;
   display: flex;
   align-items: center;
-  margin-left: 20px;
+  margin-left: 80px;
 }
 
 .custom-text {
@@ -17,12 +17,12 @@
 
 /* FrameComponent.css */
 .frame-container {
-  margin-bottom: 5px;
+  margin-bottom: 20px;
     top: 249px;
     left: 30px;
-    width: 100%;
-    margin-left: 20px;
-    margin-right: 20px;
+    width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
     height: 66px;
     display: flex;
     justify-content: center;
@@ -86,4 +86,8 @@
 .discount-percent {
   margin: 5px 0;
   font-size: 14px;
+}
+.py-4 {
+    padding-top: 7rem;
+    padding-bottom: 1rem;
 }

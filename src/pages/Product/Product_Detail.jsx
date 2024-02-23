@@ -2,6 +2,7 @@ import React from "react";
 import "./PRD.css";
 import { NavLink } from 'react-router-dom';
 import { useParams } from "react-router-dom";
+import { calculateNewValue } from "@testing-library/user-event/dist/utils";
 const product =[
   // Category
   {
@@ -500,11 +501,42 @@ export default function ProductDetail() {
       <TextComponent /> 
       <FrameComponent /> 
 
-      <a href="/Category" style={{display: 'block', fontSize: '14px', textDecoration: 'underline',paddingTop: '7px',marginLeft:'20px'}}>Go [Face Makeup] HOME</a>
+      <a href="/Category" style={{display: 'block', fontSize: '14px', textDecoration: 'underline',paddingTop: '7px',marginLeft:'80px'}}>Go [Face Makeup] HOME</a>
       <div className="flex ">
-      <img src={require(`../../images/Face Makeup/${prd.image}`)} alt=""
-          width={405} height={405} style={{ marginLeft:'50px', paddingTop:'20px' }}/>
-      <p className="text-center"> {prd.name}</p>
+        <img src={require(`../../images/Face Makeup/${prd.image}`)} alt=""
+          width={405} height={405} style={{ marginLeft:'120px', paddingTop:'32px' }}/>
+        <p style={{ marginLeft:'120px', paddingTop:'26px', fontSize: '20px', fontWeight: '600', fontFamily: '"Roboto", sans-serif;'}}> {prd.name}</p>
+        
+        <td className="py-4" colSpan={2}>
+  <input type="hidden" id="it_price" className="VN" value="22.50" />
+  <table style={{ width: '100%', borderTop: '1px solid #dddddd' }}>
+    <tbody>
+      <tr>
+        <td style={{ height: '16px' }} colSpan={2}></td>
+      </tr>
+      <tr>
+        <td style={{ width: '70px' }}>PRICE</td>
+        <td>
+          <div style={{ display: 'inline' }}>
+            <span style={{ color: '#323232', fontSize: '24px', fontWeight: 'bold' }}>{prd.originalPrice} USD</span>&nbsp;&nbsp;&nbsp;
+            <span style={{ color: '#ee2f49', fontSize: '24px', fontWeight: 'bold' }}>{prd.discountPercent}%</span>
+          </div>
+          <div className="cb"></div>
+          <input type="hidden" id="it_price" value="22.50" />
+          <div style={{ clear: 'both' }}></div>
+          <div></div>
+        </td>
+      </tr>
+      <tr>
+        <td style={{ paddingTop: '10px' }}>RETAIL</td>
+        <td style={{ paddingTop: '10px' }}>
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</td>
+
       </div>
     </div>
   );

@@ -228,7 +228,7 @@ function ProductItem({ product }) {
           <p>{product.name}</p>
           <strike className="text-gray-400 font-normal text-base"> {product.originalPrice} USD </strike>
           <p className="text-neutral-1000 font-semibold text-lg"> 
-            <span className="text-red-600 font-semibold text-lg"> {product.discountPercent}% &nbsp; </span>
+            <span className="text-red-600 font-semibold text-lg"> {product.discountPercent}% &nbsp;</span>
             {calculateDiscountedPrice( product.originalPrice, product.discountPercent )} USD
           </p>
         </div>

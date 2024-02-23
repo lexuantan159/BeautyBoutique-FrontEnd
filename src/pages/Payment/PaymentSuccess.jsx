@@ -1,6 +1,4 @@
 const PaymentSuccess = () => {
-
-    return (<>
-    </>)
-}
-export default PaymentSuccess
+  return <></>;
+};
+export default PaymentSuccess;

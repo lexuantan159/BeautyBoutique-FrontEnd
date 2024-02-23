@@ -1,7 +1,3 @@
+const DropList = ({ title, listItem, Icon }) => {};
 
-const DropList = ({title, listItem, Icon}) => {
-
-}
-
-
-export default DropList
+export default DropList;

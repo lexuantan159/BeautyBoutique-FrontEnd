@@ -1,13 +1,13 @@
-import { FiSearch, FiSend } from "react-icons/fi";
-import { HiReceiptPercent } from "react-icons/hi2";
+import { FiSearch, FiSend } from 'react-icons/fi';
+import { HiReceiptPercent } from 'react-icons/hi2';
 import {
   MdShoppingCart,
   MdCategory,
   MdOutlineDoNotDisturbAlt,
   MdDeleteForever,
-} from "react-icons/md";
-import { CiLocationOn } from "react-icons/ci";
-import { FcLike, FcLikePlaceholder } from "react-icons/fc";
+} from 'react-icons/md';
+import { CiLocationOn } from 'react-icons/ci';
+import { FcLike, FcLikePlaceholder } from 'react-icons/fc';
 
 import {
   AiOutlineEye,
@@ -21,7 +21,7 @@ import {
   AiOutlineSearch,
   AiOutlineUnorderedList,
   AiOutlineComment,
-} from "react-icons/ai";
+} from 'react-icons/ai';
 import {
   FaUserCircle,
   FaAddressCard,
@@ -37,17 +37,17 @@ import {
   FaRegAddressCard,
   FaPlus,
   FaMinus,
-} from "react-icons/fa";
+} from 'react-icons/fa';
 
-import { FcGoogle } from "react-icons/fc";
-import { ImKey, ImAndroid } from "react-icons/im";
+import { FcGoogle } from 'react-icons/fc';
+import { ImKey, ImAndroid } from 'react-icons/im';
 import {
   RiBankCardFill,
   RiImageAddFill,
   RiListUnordered,
-} from "react-icons/ri";
-import { GoListOrdered, GoCheck } from "react-icons/go";
-import { RxDotFilled } from "react-icons/rx";
+} from 'react-icons/ri';
+import { GoListOrdered, GoCheck } from 'react-icons/go';
+import { RxDotFilled } from 'react-icons/rx';
 import {
   BsFillBookmarkHeartFill,
   BsCameraFill,
@@ -65,7 +65,7 @@ import {
   BsInstagram,
   BsTwitter,
   BsFillPenFill,
-} from "react-icons/bs";
+} from 'react-icons/bs';
 import {
   IoArrowUndoCircleOutline,
   IoArrowRedoCircleOutline,
@@ -79,7 +79,7 @@ import {
   IoShirtSharp,
   IoInformationCircleOutline,
   IoAlbumsOutline,
-} from "react-icons/io5";
+} from 'react-icons/io5';
 
 import {
   BiChevronUp,
@@ -89,13 +89,13 @@ import {
   BiSolidBank,
   BiUser,
   BiShare,
-} from "react-icons/bi";
+} from 'react-icons/bi';
 
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { DiMongodb } from "react-icons/di";
-import { GrNode, GrReactjs } from "react-icons/gr";
-import { SiExpress, SiTailwindcss } from "react-icons/si";
-import { GiSkeletonKey } from "react-icons/gi";
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import { DiMongodb } from 'react-icons/di';
+import { GrNode, GrReactjs } from 'react-icons/gr';
+import { SiExpress, SiTailwindcss } from 'react-icons/si';
+import { GiSkeletonKey } from 'react-icons/gi';
 
 export const icons = {
   BsEyeSlashFill,

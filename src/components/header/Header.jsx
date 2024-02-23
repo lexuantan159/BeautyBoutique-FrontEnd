@@ -47,7 +47,7 @@ function Header() {
   };
   return (
     <div
-      className={`sticky mb-8 max-w-[1200px] top-0 left-0 right-0 w-full z-50  mx-auto transition-transform transform duration-300 ${
+      className={`sticky mb-8 max-w-[1200px] top-0 left-0 right-0 w-full bg-transparent z-50  mx-auto transition-transform transform duration-300 ${
         isVisible ? "translate-y-0" : "-translate-y-full"
       }`}
     >

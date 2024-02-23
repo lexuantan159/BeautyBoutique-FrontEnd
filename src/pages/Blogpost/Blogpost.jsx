@@ -1,21 +1,21 @@
-import React, { useContext, useEffect, useState } from "react";
-import { icons } from "../../utils/icons";
-import MethodContext from "../../context/methodProvider";
-import Comment from "./Comment";
-import InputImage from "../../components/fileinput/InputImage";
-import * as blogApi from "../../service/blogpost";
-import ImageBlog from "./ImageBlog";
+import React, { useContext, useEffect, useState } from 'react';
+import { icons } from '../../utils/icons';
+import MethodContext from '../../context/methodProvider';
+import Comment from './Comment';
+import InputImage from '../../components/fileinput/InputImage';
+import * as blogApi from '../../service/blogpost';
+import ImageBlog from './ImageBlog';
 
 const Blogpost = () => {
   const { uploadFile } = useContext(MethodContext);
   const [imageUploads, setImageUpload] = useState([]);
   const [urlImgs, setUrlImgs] = useState([]);
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     for (let i = 0; i < e.target.files.length; i++) {
       const newImage = e.target.files[i];
-      newImage["id"] = Math.random();
-      setImageUpload((prevState) => [...prevState, newImage]);
+      newImage['id'] = Math.random();
+      setImageUpload(prevState => [...prevState, newImage]);
     }
   };
   const handlePost = async () => {
@@ -30,7 +30,7 @@ const Blogpost = () => {
         console.log(bloggData.blogList);
         //setVouchers(vouchersData.voucherList);
       } catch (error) {
-        console.error("Error fetching blogposts:", error);
+        console.error('Error fetching blogposts:', error);
       }
     };
     fetchData();
@@ -38,41 +38,41 @@ const Blogpost = () => {
 
   const [blogposts, setBlogposts] = useState([
     {
-      author: "John Doe",
-      date: "January 10, 2024",
-      title: "The Art of Makeup",
+      author: 'John Doe',
+      date: 'January 10, 2024',
+      title: 'The Art of Makeup',
       content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam aliquet magna sed dolor rhoncus, et dapibus neque pretium. Sed pulvinar ligula et urna aliquam, non lacinia arcu consectetur. Nunc eget risus id lorem sollicitudin pulvinar. Sed viverra sodales risus, eget condimentum nisi consectetur vel. Cras nec faucibus nulla. Nullam sed dui in neque tempus sagittis. Nulla placerat ligula ac massa feugiat, a tempor ex aliquet.",
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam aliquet magna sed dolor rhoncus, et dapibus neque pretium. Sed pulvinar ligula et urna aliquam, non lacinia arcu consectetur. Nunc eget risus id lorem sollicitudin pulvinar. Sed viverra sodales risus, eget condimentum nisi consectetur vel. Cras nec faucibus nulla. Nullam sed dui in neque tempus sagittis. Nulla placerat ligula ac massa feugiat, a tempor ex aliquet.',
     },
     {
-      author: "Jane Smith",
-      date: "February 5, 2024",
-      title: "Beauty Tips for Every Occasion",
+      author: 'Jane Smith',
+      date: 'February 5, 2024',
+      title: 'Beauty Tips for Every Occasion',
       content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam aliquet magna sed dolor rhoncus, et dapibus neque pretium. Sed pulvinar ligula et urna aliquam, non lacinia arcu consectetur. Nunc eget risus id lorem sollicitudin pulvinar. Sed viverra sodales risus, eget condimentum nisi consectetur vel. Cras nec faucibus nulla. Nullam sed dui in neque tempus sagittis. Nulla placerat ligula ac massa feugiat, a tempor ex aliquet.",
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam aliquet magna sed dolor rhoncus, et dapibus neque pretium. Sed pulvinar ligula et urna aliquam, non lacinia arcu consectetur. Nunc eget risus id lorem sollicitudin pulvinar. Sed viverra sodales risus, eget condimentum nisi consectetur vel. Cras nec faucibus nulla. Nullam sed dui in neque tempus sagittis. Nulla placerat ligula ac massa feugiat, a tempor ex aliquet.',
     },
     {
-      author: "Michael Johnson",
-      date: "March 20, 2024",
-      title: "The Evolution of Makeup Trends",
+      author: 'Michael Johnson',
+      date: 'March 20, 2024',
+      title: 'The Evolution of Makeup Trends',
       content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam aliquet magna sed dolor rhoncus, et dapibus neque pretium. Sed pulvinar ligula et urna aliquam, non lacinia arcu consectetur. Nunc eget risus id lorem sollicitudin pulvinar. Sed viverra sodales risus, eget condimentum nisi consectetur vel. Cras nec faucibus nulla. Nullam sed dui in neque tempus sagittis. Nulla placerat ligula ac massa feugiat, a tempor ex aliquet.",
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam aliquet magna sed dolor rhoncus, et dapibus neque pretium. Sed pulvinar ligula et urna aliquam, non lacinia arcu consectetur. Nunc eget risus id lorem sollicitudin pulvinar. Sed viverra sodales risus, eget condimentum nisi consectetur vel. Cras nec faucibus nulla. Nullam sed dui in neque tempus sagittis. Nulla placerat ligula ac massa feugiat, a tempor ex aliquet.',
     },
     {
-      author: "Emily Williams",
-      date: "April 15, 2024",
-      title: "Makeup Tips for a Natural Look",
+      author: 'Emily Williams',
+      date: 'April 15, 2024',
+      title: 'Makeup Tips for a Natural Look',
       content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam aliquet magna sed dolor rhoncus, et dapibus neque pretium. Sed pulvinar ligula et urna aliquam, non lacinia arcu consectetur. Nunc eget risus id lorem sollicitudin pulvinar. Sed viverra sodales risus, eget condimentum nisi consectetur vel. Cras nec faucibus nulla. Nullam sed dui in neque tempus sagittis. Nulla placerat ligula ac massa feugiat, a tempor ex aliquet.",
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam aliquet magna sed dolor rhoncus, et dapibus neque pretium. Sed pulvinar ligula et urna aliquam, non lacinia arcu consectetur. Nunc eget risus id lorem sollicitudin pulvinar. Sed viverra sodales risus, eget condimentum nisi consectetur vel. Cras nec faucibus nulla. Nullam sed dui in neque tempus sagittis. Nulla placerat ligula ac massa feugiat, a tempor ex aliquet.',
     },
   ]);
   const [imageList, setImageList] = useState([
-    "https://firebasestorage.googleapis.com/v0/b/beautyboutique-7ebb3.appspot.com/o/Blog-post%2F1.png?alt=media&token=6bd2273d-b34f-4df2-adfd-55d1e1506a48",
-    "https://firebasestorage.googleapis.com/v0/b/beautyboutique-7ebb3.appspot.com/o/Blog-post%2F1.png?alt=media&token=6bd2273d-b34f-4df2-adfd-55d1e1506a48",
-    "https://firebasestorage.googleapis.com/v0/b/beautyboutique-7ebb3.appspot.com/o/Blog-post%2F1.png?alt=media&token=6bd2273d-b34f-4df2-adfd-55d1e1506a48",
-    "https://firebasestorage.googleapis.com/v0/b/beautyboutique-7ebb3.appspot.com/o/Blog-post%2F1.png?alt=media&token=6bd2273d-b34f-4df2-adfd-55d1e1506a48",
-    "https://firebasestorage.googleapis.com/v0/b/beautyboutique-7ebb3.appspot.com/o/Blog-post%2F1.png?alt=media&token=6bd2273d-b34f-4df2-adfd-55d1e1506a48",
-    "https://firebasestorage.googleapis.com/v0/b/beautyboutique-7ebb3.appspot.com/o/Blog-post%2F1.png?alt=media&token=6bd2273d-b34f-4df2-adfd-55d1e1506a48",
+    'https://firebasestorage.googleapis.com/v0/b/beautyboutique-7ebb3.appspot.com/o/Blog-post%2F1.png?alt=media&token=6bd2273d-b34f-4df2-adfd-55d1e1506a48',
+    'https://firebasestorage.googleapis.com/v0/b/beautyboutique-7ebb3.appspot.com/o/Blog-post%2F1.png?alt=media&token=6bd2273d-b34f-4df2-adfd-55d1e1506a48',
+    'https://firebasestorage.googleapis.com/v0/b/beautyboutique-7ebb3.appspot.com/o/Blog-post%2F1.png?alt=media&token=6bd2273d-b34f-4df2-adfd-55d1e1506a48',
+    'https://firebasestorage.googleapis.com/v0/b/beautyboutique-7ebb3.appspot.com/o/Blog-post%2F1.png?alt=media&token=6bd2273d-b34f-4df2-adfd-55d1e1506a48',
+    'https://firebasestorage.googleapis.com/v0/b/beautyboutique-7ebb3.appspot.com/o/Blog-post%2F1.png?alt=media&token=6bd2273d-b34f-4df2-adfd-55d1e1506a48',
+    'https://firebasestorage.googleapis.com/v0/b/beautyboutique-7ebb3.appspot.com/o/Blog-post%2F1.png?alt=media&token=6bd2273d-b34f-4df2-adfd-55d1e1506a48',
   ]);
 
   const [likes, setLikes] = useState(0);
@@ -98,7 +98,7 @@ const Blogpost = () => {
             </div>
           </div>
           <input
-            onClick={() => document.getElementById("my_modal_2").showModal()}
+            onClick={() => document.getElementById('my_modal_2').showModal()}
             type="text"
             placeholder="What are you thinking ? "
             className="input input-bordered input-warning w-full max-w-2xl"
@@ -147,7 +147,7 @@ const Blogpost = () => {
       </dialog>
       <div className="flex items-center justify-center">
         <div className="w-[60%]">
-          {blogposts.map((blogpost) => {
+          {blogposts.map(blogpost => {
             return (
               <div className="m-4" key={blogpost.id}>
                 <div class="bg-white rounded shadow-lg max-w-[80%] mx-auto ">
@@ -180,7 +180,7 @@ const Blogpost = () => {
                             etc ...
                           </div>
                           <div className="collapse-content">
-                            <p style={{ whiteSpace: "pre-line" }}>
+                            <p style={{ whiteSpace: 'pre-line' }}>
                               {blogpost.content}
                             </p>
                           </div>

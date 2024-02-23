@@ -1,7 +1,7 @@
-import React, { useContext, useState, useEffect } from "react";
-import logo from "../../public/img/logo.jpg";
-import MethodContext from "../../context/methodProvider";
-import * as voucherApi from "../../service/voucher";
+import React, { useContext, useState, useEffect } from 'react';
+import logo from '../../public/img/logo.jpg';
+import MethodContext from '../../context/methodProvider';
+import * as voucherApi from '../../service/voucher';
 
 const Voucher = () => {
   const { formatDateTime } = useContext(MethodContext);
@@ -13,14 +13,14 @@ const Voucher = () => {
         const vouchersData = await voucherApi.getAllVoucher();
         setVouchers(vouchersData.voucherList);
       } catch (error) {
-        console.error("Error fetching blogposts:", error);
+        console.error('Error fetching blogposts:', error);
       }
     };
     fetchData();
   }, []);
   return (
     <div className="w-full h-auto pt-32 bg-[#F5F6F6] ">
-      {vouchers.map((voucher) => {
+      {vouchers.map(voucher => {
         return (
           <div className="flex items-center justify-center m-4 ">
             <div className="w-[50%] h-52 bg-[#F8EFEA] rounded-xl shadow-lg">
@@ -47,7 +47,7 @@ const Voucher = () => {
                       Minimum purchase : {voucher.minimumOrder} $
                     </span>
                     <span className="block">
-                      Maximum discount :{voucher.maximDiscount} ${" "}
+                      Maximum discount :{voucher.maximDiscount} ${' '}
                     </span>
                     <span className="block">{voucher.title}</span>
                     <span className="block">

@@ -552,11 +552,12 @@ const scrollToReview = () => {
       <scrollToDetail />
      
 
+    
      
       <a href="/Category" style={{display: 'block', fontSize: '14px', textDecoration: 'underline',paddingTop: '7px',marginLeft:'80px'}}>Go [Face Makeup] HOME</a>
 
       <div className="flex ">
-        <img src={require(`../../images/Face Makeup/${prd.image}`)} alt=""
+        <img src={require(`../../images/Face Makeup/${prd.image}`) } alt=""
           width={405} height={405} style={{ marginLeft:'150px', paddingTop:'32px' }}/>
       <div style={{ marginLeft: "auto", marginRight: "auto"}}> 
          <p style={{ marginLeft:'3px', paddingTop:'26px', fontSize: '20px', fontWeight: '600', fontFamily: '"Roboto", sans-serif;'}}> {prd.name}</p>
@@ -623,17 +624,17 @@ const scrollToReview = () => {
 
 
       <div>
-        <div style={{ height: '70px', display: 'flex', paddingTop: '30px', marginLeft: '150px' }}>
+        <div style={{ height: '65px', display: 'flex', paddingTop: '30px', marginLeft: '150px' }}>
       <a onClick={scrollToDetail}>
-        <p style={{ width: '10%', height: '50px', textAlign: 'center', borderTop: '1px solid #ccc', borderRight: '1px solid #ccc', borderLeft: '1px solid #ccc' }}>DETAIL</p>
+        <p style={{ width: '90px', height: '50px', textAlign: 'center', borderTop: '1px solid #ccc', borderRight: '1px solid #ccc', borderLeft: '1px solid #ccc' }}>DETAIL</p> 
       </a>
 
       <a onClick={scrollToReview}>
-        <p style={{ width: '10%', textAlign: 'center' }}>REVIEW</p>
+        <p style={{ width: '90px', textAlign: 'center' }}>REVIEW</p>
       </a>
       
       <a onClick={scrollToShipping}>
-        <p style={{ width: '10%', textAlign: 'center' }}>SHIPPING</p>
+        <p style={{ width: '90px', textAlign: 'center' }}>SHIPPING</p>
       </a>
     </div>
 
@@ -721,7 +722,7 @@ const scrollToReview = () => {
       </div>
 
       <div id="shippingSection">
-        <div style={{ height: '70px', display: 'flex', paddingTop: '-20px', marginLeft:'150px'}}> 
+        <div style={{ height: '55px', display: 'flex', paddingTop: '-20px', marginLeft:'150px'}}> 
           <p style={{ width: '10%', height: '50px', textAlign: 'center', borderTop: '1px solid #ccc', borderRight: '1px solid #ccc', borderLeft: '1px solid #ccc', }} > SHIPPING </p>
         </div>
         <div>
@@ -770,7 +771,7 @@ const scrollToReview = () => {
 
 
       <div id="reviewSection"> 
-        <div style={{ height: '70px', display: 'flex', paddingTop: '40px', marginLeft:'150px'}}> 
+        <div style={{ height: '55px', display: 'flex', paddingTop: '40px', marginLeft:'150px'}}> 
           <p style={{ paddingBottom: '40px', width: '10%', height: '50px', textAlign: 'center', borderTop: '1px solid #ccc', borderRight: '1px solid #ccc', borderLeft: '1px solid #ccc', }} > REVIEW </p>
         </div>
         <div>

@@ -17,6 +17,7 @@ import { BlusherHighlighter } from '../pages';
 import { OrderDetail } from '../pages';
 import { Product } from '../pages';
 import { ProductDetail } from '../pages';
+import { ProductDetail2 } from '../pages';
 
 const router = [
   { path: '/order', component: Order },
@@ -43,6 +44,9 @@ const router = [
   { path: '/concealer/:productId', component:ProductDetail  },
   { path: '/cushion/:productId', component:ProductDetail  },
   { path: '/category/:productId', component:ProductDetail  },
+
+
+ 
 ];
 
 export { router };

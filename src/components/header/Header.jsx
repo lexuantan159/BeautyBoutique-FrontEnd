@@ -114,7 +114,7 @@ function Header() {
 
               <Navbar.Collapse className="text-black">
                 <div className="text-black hover:text-red-500">
-                  <Link to="/">HOME</Link>
+                  <Link to="/home">HOME</Link>
                 </div>
 
                 <div className="text-black hover:text-red-500">

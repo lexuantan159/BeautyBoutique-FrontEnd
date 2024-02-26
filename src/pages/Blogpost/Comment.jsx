@@ -4,6 +4,7 @@ import { Button } from 'flowbite-react';
 import { ToastContainer, toast } from 'react-toastify';
 import { Spinner } from '@material-tailwind/react';
 
+
 const Comment = ({ commentss }) => {
 
     const [loading, setLoading] = useState(false);
@@ -19,22 +20,29 @@ const Comment = ({ commentss }) => {
         name: 'Bun Ca',
         avatar_url: 'https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg',
         id: 2,
-        date: '24/02/2022',
+        date: '26/02/2022',
         content: ' et dapibus neque pretium. Sed pulvinar ligula et urna aliquam, non lacinia arcu consectetur. Nunc eget risus id lorem sollicitudin pulvinar. Sed viverra sodales risus, eget condimentum nisi consectetur vel. Cras nec faucibus nulla. Nullam sed dui in neque tempus sagittis. Nulla placerat ligula ac massa feugiat, a tempor ex aliquet.'
     },
     {
         name: 'Bun Bo',
         avatar_url: 'https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg',
         id: 3,
-        date: '24/02/2022',
+        date: '26/02/2022',
         content: 'Been using it every day and my skin looks fantastic after just a few weeks of use. Love the texture so much.'
     },
     {
         name: 'Bong Lan Trung Muoi',
         avatar_url: 'https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg',
         id: 4,
-        date: '24/02/2022',
+        date: '26/02/2022',
         content: 'I relly excited to use beauty of joasen serum ! I relly excited to use beauty of joasen serum ! I relly excited to use beauty of joasen serum ! I relly excited to use beauty of joasen serum ! I relly excited to use beauty of joasen serum ! I relly excited to use beauty of joasen serum ! I relly excited to use beauty of joasen serum ! I relly excited to use beauty of joasen serum !'
+    },
+    {
+        name: 'Lasea',
+        avatar_url: 'https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg',
+        id: 4,
+        date: '26/02/2022',
+        content: 'I got this for my mom & brother. Both have a deep medium complexion & acne scars. This product helped with their overall complextion by making it brighter & more even toned. '
     }
     ]);
 

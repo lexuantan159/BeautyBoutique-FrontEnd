@@ -54,10 +54,10 @@ function Header() {
                             <span className="text-orange-400 mr-2 font-bold">
                                 <icons.CiLocationOn />
                             </span>
-                            <span className="max-sm:hidden max-md:hidden">FPT Complex Đà Nắng</span>
+                            <span className="max-sm:hidden max-md:hidden font-bold">FPT Complex Đà Nắng</span>
                         </li>
-                        <li className="flex justify-center items-center ">
-                            <span className="text-btnprimary mr-2 font-bold" >
+                        <li className="flex justify-center items-center font-bold">
+                            <span className="text-btnprimary mr-2 " >
                                 <icons.AiOutlineMail />
                             </span>
                             <span>beautyboutique@gmail.com</span>
@@ -69,31 +69,31 @@ function Header() {
                     <ul className="flex justify-center items-center cursor-pointer">
                         <li className="flex justify-center items-center mr-1 ">
                             <a href="https://www.facebook.com/studiofotofusion">
-                                <icons.BsInstagram />
+                                <icons.BsInstagram className="text-base" />
                             </a>
                         </li>
                         <li className="flex justify-center items-center mr-1 ">
                             <a href="https://www.facebook.com/studiofotofusion">
-                                <icons.AiOutlineFacebook />
+                                <icons.AiOutlineFacebook className="text-base" />
                             </a>
                         </li>
                         <li className="flex justify-center items-center mr-1 ">
                             <a href="https://www.facebook.com/studiofotofusion">
-                                <icons.BsTwitter />
+                                <icons.BsTwitter className="text-base" />
                             </a>
                         </li>
                         <li className="flex justify-center items-center mr-1 ">
                             <a href="https://www.facebook.com/studiofotofusion">
-                                <icons.AiOutlineYoutube />
+                                <icons.AiOutlineYoutube className="text-base" />
                             </a>
                         </li>
                     </ul>
                 </div>
             </div>
             <div className="w-full ">
-                <div className="bg-white rounded-lg shadow-2xl flex items-center justify-center">
+                <div className="bg-white rounded-lg  flex items-center justify-center">
                     <div className="w-full border border-black rounded-lg">
-                        <Navbar className="w-full z-50 shadow-lg bg-opacity-10 rounded-lg">
+                        <Navbar className="w-full z-50 bg-opacity-10 rounded-lg">
                             <Navbar.Brand >
                                 <div className="avatar">
                                     <div className="w-14 rounded-full">
@@ -111,7 +111,7 @@ function Header() {
                                 </div>
 
                                 <div className="text-black hover:text-red-500">
-                                    <Link to='/' >
+                                    <Link to='/category' >
                                         PRODUCT
                                     </Link>
                                 </div>

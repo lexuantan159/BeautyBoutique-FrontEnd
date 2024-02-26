@@ -1,64 +1,110 @@
 import React from 'react'
-import { Footer } from 'flowbite-react';
-import { BsDribbble, BsFacebook, BsGithub, BsInstagram, BsTwitter } from 'react-icons/bs';
-import logo from "../../public/img/logo.jpg";
+import { useNavigate, Link } from 'react-router-dom';
+import logo from '../../public/img/logo.jpg';
+import { icons } from '../../utils/icons';
+import { Avatar, Dropdown, Navbar } from 'flowbite-react';
 
-const footer = () => {
+//Navigator
+const Navigator = () => {
     return (
-        <div className=' w-full flex items-center justify-center bg-[#F5F6F6]'>
-            <div className='w-4/5'>
-                <Footer container>
-                    <div className="w-full">
-                        <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
-                            <div className='flex items-center justify-center'>
-                                <div>
-                                    <div className="avatar">
-                                        <div className="w-36 rounded-full">
-                                            <img alt={"logo"} src={logo} />
-                                        </div>
-                                    </div>
-                                    <div className="self-center whitespace-nowrap text-xl font-semibold text-black">BEAUTY BOUTIQUE</div>
-                                </div>
-                            </div>
-                            <div className="grid grid-cols-2 gap-8 sm:mt-4 sm:grid-cols-3 sm:gap-6">
-                                <div>
-                                    <Footer.Title title="about" />
-                                    <Footer.LinkGroup col>
-                                        <Footer.Link href="#">Flowbite</Footer.Link>
-                                        <Footer.Link href="#">Tailwind CSS</Footer.Link>
-                                    </Footer.LinkGroup>
-                                </div>
-                                <div>
-                                    <Footer.Title title="Follow us" />
-                                    <Footer.LinkGroup col>
-                                        <Footer.Link href="#">Github</Footer.Link>
-                                        <Footer.Link href="#">Discord</Footer.Link>
-                                    </Footer.LinkGroup>
-                                </div>
-                                <div>
-                                    <Footer.Title title="Legal" />
-                                    <Footer.LinkGroup col>
-                                        <Footer.Link href="#">Privacy Policy</Footer.Link>
-                                        <Footer.Link href="#">Terms &amp; Conditions</Footer.Link>
-                                    </Footer.LinkGroup>
-                                </div>
-                            </div>
+        <div style={{ paddingTop: '20px' }} >
+            <div style={{ backgroundColor: '#FBFCF3', borderTop: '1px solid #ddd', paddingTop: '20px', position: 'relative', width: '1200px', height: 'auto !important', background: '', zoom: 1, clear: 'both' }}>
+                <div>
+                    <div style={{ display: 'flex' }}>
+                        <div style={{ width: '255px', height: '255px', marginLeft: '9px', paddingBottom: '20px' }}>
+                            <strong>CATEGORY</strong>
+                            <ul>
+                                <li style={{ paddingTop: '10px' }}><a href="/category">Face Makeup</a></li>
+                                <li style={{ paddingTop: '10px' }}><a href=" ">Eye Makeup</a></li>
+                                <li style={{ paddingTop: '10px' }}><a href=" ">Lips Makeup</a></li>
+                                <li style={{ paddingTop: '10px' }}><a href=" ">Nail</a></li>
+                            </ul>
                         </div>
-                        <Footer.Divider />
-                        <div className="w-full sm:flex sm:items-center sm:justify-between">
-                            <Footer.Copyright href="#" by="Group 5 FPT Intenship" />
-                            <div className="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
-                                <Footer.Icon href="#" icon={BsFacebook} />
-                                <Footer.Icon href="#" icon={BsInstagram} />
-                                <Footer.Icon href="#" icon={BsTwitter} />
-                                <Footer.Icon href="#" icon={BsGithub} />
-                                <Footer.Icon href="#" icon={BsDribbble} />
-                            </div>
+                        <div style={{ width: '255px', height: '255px', marginLeft: '35px', paddingBottom: '20px' }}>
+                            <strong>MY ACCOUNT</strong>
+                            <ul>
+                                <li style={{ paddingTop: '10px' }}><a href=" ">My Account</a></li>
+                                <li style={{ paddingTop: '10px' }}><a href=" ">Customer Service</a></li>
+                                <li style={{ paddingTop: '10px' }}><a href=" ">Shipping</a></li>
+                            </ul>
+                        </div>
+                        <div style={{ width: '255px', height: '255px', marginLeft: '35px', paddingBottom: '20px' }}>
+                            <strong>CORPORATE INFORMATION</strong>
+                            <ul>
+                                <li style={{ paddingTop: '10px' }}><a href=" ">About Us</a></li>
+                                <li style={{ paddingTop: '10px' }}><a href=" ">Contact Us</a></li>
+                                <li style={{ paddingTop: '10px' }}><a href=" ">Site Map</a></li>
+                                <li style={{ paddingTop: '10px' }}><a href=" ">Mobile Version</a></li>
+                            </ul>
+                        </div>
+                        <div style={{ width: '255px', height: '255px', marginLeft: '65px', paddingBottom: '20px' }}>
+                            <strong>POLICIES</strong>
+                            <ul>
+                                <li style={{ paddingTop: '10px' }}><a href=" ">Privacy</a></li>
+                                <li style={{ paddingTop: '10px' }}><a href=" ">Return</a></li>
+                                <li style={{ paddingTop: '10px' }}><a href=" ">Terms Of Use</a></li>
+                            </ul>
                         </div>
                     </div>
-                </Footer>
+                </div>
             </div>
         </div>
     );
+};
+
+
+//Footer
+const Footerr = () => {
+    return (
+        <div id="footer">
+            <div style={{ width: '1200px', height: '200px', margin: '-50px auto', position: 'relative', backgroundColor: 'black', color: '#FFFFFF', }} >
+                <div style={{ float: 'left', width: '200px', height: '333px' }}>
+                    <img alt={"sds"} src={logo} />
+                </div>
+                <div style={{ width: '730px', float: 'right', lineHeight: '20px' }}>
+                    <ul style={{ borderRight: '1px solid #646464', float: 'left', padding: '0 15px 0 0', margin: '0 15px 0 0', color: '#e0e0e0', fontSize: '12px', display: 'flex' }}>
+                        <li style={{ paddingLeft: '0', important: true }}>SILICON2 CO.,LTD - STYLE</li>
+                        <li>CEO Pham Yen Ngoc</li>
+                        <li style={{ borderRight: '0', important: true }}>Business Licence No. 214-87-03359</li>
+                    </ul>
+                    <address>#907, Phase S. H-SQUARE, 680 Sampyeong-Dong, Bundang-Gu, Seongnam-City, Gyeonggi-Do, Korea</address>
+                    <div className="copyright">Copyright © Since 2024           All Rights Reserved.</div>
+                    <div style={{ marginTop: '10px' }}>
+                        <li className="flex justify-center items-center mr-1 ">
+                            <a href="https://www.facebook.com/studiofotofusion">
+                                <icons.BsInstagram />
+                            </a>
+                        </li>
+                        <li className="flex justify-center items-center mr-1 ">
+                            <a href="https://www.facebook.com/studiofotofusion">
+                                <icons.AiOutlineFacebook />
+                            </a>
+                        </li>
+                        <li className="flex justify-center items-center mr-1 ">
+                            <a href="https://www.facebook.com/studiofotofusion">
+                                <icons.BsTwitter />
+                            </a>
+                        </li>
+                        <li className="flex justify-center items-center mr-1 ">
+                            <a href="https://www.facebook.com/studiofotofusion">
+                                <icons.AiOutlineYoutube />
+                            </a>
+                        </li>
+                    </div>
+                </div>
+                <div style={{ clear: 'both' }}></div>
+            </div>
+        </div>
+    );
+};
+
+export default function Footer() {
+    return (
+        <div>
+            < Navigator />
+            < Footerr />
+        </div>
+
+
+    );
 }
-export default footer

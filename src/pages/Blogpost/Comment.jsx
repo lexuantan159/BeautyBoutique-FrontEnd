@@ -4,7 +4,7 @@ import { Button } from 'flowbite-react';
 import { ToastContainer, toast } from 'react-toastify';
 import { Spinner } from '@material-tailwind/react';
 
-const Comment = ({ id }) => {
+const Comment = ({ commentss }) => {
 
     const [loading, setLoading] = useState(false);
 
@@ -12,24 +12,30 @@ const Comment = ({ id }) => {
         name: 'Thien Quang',
         avatar_url: 'https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg',
         id: 1,
+        date: '24/02/2022',
         content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam aliquet magna sed dolor rhoncus, et dapibus neque pretium. Sed pulvinar ligula et urna aliquam, non lacinia arcu consectetur. Nunc eget risus id lorem sollicitudin pulvinar. Sed viverra sodales risus, eget condimentum nisi consectetur vel. Cras nec faucibus nulla. Nullam sed dui in neque tempus sagittis. Nulla placerat ligula ac massa feugiat, a tempor ex aliquet.'
     },
     {
         name: 'Thien Quang',
         avatar_url: 'https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg',
         id: 2,
+        date: '24/02/2022',
+
         content: ' et dapibus neque pretium. Sed pulvinar ligula et urna aliquam, non lacinia arcu consectetur. Nunc eget risus id lorem sollicitudin pulvinar. Sed viverra sodales risus, eget condimentum nisi consectetur vel. Cras nec faucibus nulla. Nullam sed dui in neque tempus sagittis. Nulla placerat ligula ac massa feugiat, a tempor ex aliquet.'
     },
     {
         name: 'Thien Quang',
         avatar_url: 'https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg',
         id: 3,
+        date: '24/02/2022',
+
         content: 'sdajhsdhausdyghusgadygasda'
     },
     {
         name: 'Thien Quang',
         avatar_url: 'https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg',
         id: 4,
+        date: '24/02/2022',
         content: 'Lorem ipsum dolor sit amet. Sed pulvinar ligula et urna aliquam, non lacinia arcu consectetur. Nunc eget risus id lorem sollicitudin pulvinar. Sed viverra sodales risus, eget condimentum nisi consectetur vel. Cras nec faucibus nulla. Nullam sed dui in neque tempus sagittis. Nulla placerat ligula ac massa feugiat, a tempor ex aliquet.'
     }
     ]);
@@ -81,7 +87,7 @@ const Comment = ({ id }) => {
     return (
         <>
             <ToastContainer />
-            <div className='w-full h-auto border'>
+            <div className='w-full h-auto'>
                 <div className='flex items-start justify-center m-2'>
                     <div className="avatar-group -space-x-6 rtl:space-x-reverse w-[10%]">
                         <div className="avatar">
@@ -118,16 +124,18 @@ const Comment = ({ id }) => {
                     <>
                         <div key={comment.id} className='flex items-start justify-center'>
                             <div className='w-4/5 flex items-start justify-center'>
-                                <div className='w-[10%] avatar-group flex justify-center items-end'>
-                                    <div className='avatar'>
-                                        <div className='w-8'>
-                                            <img src={comment.avatar_url} alt='Avatar' />
-                                        </div>
-                                    </div>
-                                </div>
                                 <div className='w-[90%] border bg-gray-100 p-1 rounded-xl my-2'>
-                                    <div className='flex items-start justify-start '>
-                                        <h1 className='text-base font-semibold'>{comment.name}</h1>
+                                    <div className=' avatar-group'>
+                                        <div className='avatar'>
+                                            <div className='w-10'>
+                                                <img src={comment.avatar_url} alt='Avatar' />
+                                            </div>
+                                        </div>
+                                        <div className='ml-2'>
+                                            <h1 className='text-base font-semibold'>{comment.name}</h1>
+                                            <h1 className='text-sm'>{comment.date}</h1>
+                                        </div>
+
                                     </div>
                                     <div className='px-2'>
                                         <h2>{comment.content}</h2>

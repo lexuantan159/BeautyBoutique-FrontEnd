@@ -1,4 +1,5 @@
 import React from 'react';
+
 const ImageBlog = ({ imageUrls = [] }) => {
     return (
         <div>
@@ -27,6 +28,7 @@ const ImageBlog = ({ imageUrls = [] }) => {
                     </div>
                 )
             )}
+
         </div>
     );
 };

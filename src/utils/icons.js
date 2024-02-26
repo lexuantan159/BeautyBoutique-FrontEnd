@@ -1,3 +1,4 @@
+
 import { FiSearch, FiSend } from "react-icons/fi";
 import { HiReceiptPercent } from "react-icons/hi2";
 import { HiOutlineDotsVertical, HiOutlineExclamationCircle } from "react-icons/hi";
@@ -9,7 +10,6 @@ import {
 } from "react-icons/md";
 import { CiLocationOn } from "react-icons/ci";
 import { FcLike, FcLikePlaceholder } from "react-icons/fc";
-
 
 import {
     AiOutlineEye,
@@ -158,4 +158,4 @@ export const icons = {
     IoCheckmarkSharp,
     IoCloseSharp,
     IoShirtSharp,
-};
+}

@@ -71,6 +71,7 @@ function Header() {
           </ul>
         </div>
 
+
         <div className="text-black flex justify-center items-center font-sans text-lg">
           <ul className="flex justify-center items-center cursor-pointer gap-2">
             <li className="flex justify-center items-center mr-1 ">
@@ -117,14 +118,14 @@ function Header() {
                 </div>
 
                 <div className="text-black hover:text-red-500">
-                  <Link to="/">PRODUCT</Link>
+                  <Link to="/category">PRODUCT</Link>
                 </div>
 
                 <div className="text-black hover:text-red-500">
-                  <Link to="/">ABOUT</Link>
+                  <Link to="/https://www.siliconii.com/">ABOUT</Link>
                 </div>
                 <div className="text-black hover:text-red-500">
-                  <Link to="">CONTACT</Link>
+                  <Link to="/contact">CONTACT</Link>
                 </div>
                 <div className="text-black hover:text-red-500">
                   <Link to="/blogpost">BLOG</Link>

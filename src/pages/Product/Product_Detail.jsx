@@ -552,6 +552,7 @@ const scrollToReview = () => {
       <scrollToDetail />
      
 
+
     
      
       <a href="/Category" style={{display: 'block', fontSize: '14px', textDecoration: 'underline',paddingTop: '7px',marginLeft:'80px'}}>Go [Face Makeup] HOME</a>

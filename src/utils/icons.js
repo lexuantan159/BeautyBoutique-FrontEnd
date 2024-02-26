@@ -1,5 +1,6 @@
 import { FiSearch, FiSend } from "react-icons/fi";
 import { HiReceiptPercent } from "react-icons/hi2";
+import { HiOutlineDotsVertical, HiOutlineExclamationCircle } from "react-icons/hi";
 import {
     MdShoppingCart,
     MdCategory,
@@ -56,7 +57,7 @@ import {
     BsFillPhoneVibrateFill,
     BsMessenger,
     BsFillPersonPlusFill,
-    BsEyeSlashFill,BsCart4,
+    BsEyeSlashFill, BsCart4,
     BsInstagram, BsTwitter, BsFillPenFill,
 } from "react-icons/bs";
 import {
@@ -82,12 +83,12 @@ import { SiExpress, SiTailwindcss } from "react-icons/si";
 import { GiSkeletonKey } from "react-icons/gi";
 
 export const icons = {
-    BsEyeSlashFill, FcLike, FcLikePlaceholder, FiSend,
+    BsEyeSlashFill, FcLike, FcLikePlaceholder, FiSend, HiOutlineDotsVertical, HiOutlineExclamationCircle,
     BsInstagram, BsTwitter, BsFillPenFill,
     IoInformationCircleOutline, IoAlbumsOutline,
     CiLocationOn, BiShare, AiOutlineComment,
     BiUser, FaPlus, FaMinus, FaCartPlus,
-    AiOutlineMail,BsCart4,
+    AiOutlineMail, BsCart4,
     AiOutlineFacebook,
     AiOutlineYoutube,
     AiOutlineDown,

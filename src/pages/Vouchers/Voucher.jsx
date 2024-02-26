@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react'
 import logo from "../../public/img/logo.jpg";
 import MethodContext from '../../context/methodProvider';
-import * as voucherApi from '../../service/voucher'
+import * as voucherApi from '../../services/voucher'
 
 const Voucher = () => {
     const { formatDateTime } = useContext(MethodContext)
@@ -23,7 +23,7 @@ const Voucher = () => {
         <div className='w-full h-auto pt-32 bg-[#F5F6F6] '>
             {vouchers.map((voucher) => {
                 return (
-                    <div className='flex items-center justify-center m-4 '>
+                    <div className='flex items-center justify-center p-4 '>
                         <div className='w-[50%] h-52 bg-[#F8EFEA] rounded-xl shadow-lg'>
                             <div className='h-full flex items-center justify-center'>
                                 <div className='w-1/4 flex items-center justify-center'>

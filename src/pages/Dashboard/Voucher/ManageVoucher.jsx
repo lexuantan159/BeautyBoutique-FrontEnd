@@ -1,6 +1,6 @@
 import { Modal, Table, Button } from 'flowbite-react'
 import React, { useEffect, useState } from 'react'
-import * as voucherApi from '../../../service/voucher'
+import * as voucherApi from '../../../services/voucher'
 import CRUVoucher from './CRUVoucher';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 
@@ -14,7 +14,7 @@ const ManageVoucher = () => {
             try {
                 const vouchersData = await voucherApi.getAllVoucher();
                 setVouchers(vouchersData.voucherList);
-                console.log(vouchersData.voucherList);
+                // console.log(vouchersData.voucherList);
             } catch (error) {
                 console.error('Error fetching blogposts:', error);
             }
@@ -31,7 +31,6 @@ const ManageVoucher = () => {
             else
                 console.log("Delete failed");
         } catch (error) {
-
         }
     }
     const handleDelete = async (id) => {
@@ -100,8 +99,8 @@ const ManageVoucher = () => {
                                                 <Modal.Header />
                                                 <Modal.Body>
                                                     <div className="text-center">
-                                                        <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
-                                                        <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                                                        <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 " />
+                                                        <h3 className="mb-5 text-lg font-normal text-gray-500 ">
                                                             Are you sure you want to delete this voucher?
                                                         </h3>
                                                         <div className="flex justify-center gap-4">

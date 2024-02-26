@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { FiSend } from "react-icons/fi";
 import { Button } from 'flowbite-react';
-
-
 import { ToastContainer, toast } from 'react-toastify';
 import { Spinner } from '@material-tailwind/react';
 

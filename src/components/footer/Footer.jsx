@@ -8,10 +8,10 @@ import { Avatar, Dropdown, Navbar } from 'flowbite-react';
 const Navigator = () => {
   return (
     <div style={{paddingTop:'20px'}} >
-      <div style={{ backgroundColor: '#FBFCF3', borderTop: '1px solid #ddd', paddingTop:'20px', position: 'relative', width: '100%', height: 'auto !important', background: '', zoom: 1, clear: 'both'}}>
+      <div style={{ backgroundColor: '#FBFCF3', borderTop: '1px solid #ddd', paddingTop:'20px', position: 'relative', width: '1200px', height: 'auto !important', background: '', zoom: 1, clear: 'both'}}>
         <div>
           <div style={{display:'flex'}}>
-            <div style={{ width: '255px', height: '255px', marginLeft: '240px', paddingBottom:'20px' }}>
+            <div style={{ width: '255px', height: '255px', marginLeft: '9px', paddingBottom:'20px' }}>
               <strong>CATEGORY</strong>
               <ul>
                 <li style={{paddingTop:'10px'}}><a href="/category">Face Makeup</a></li>
@@ -52,12 +52,13 @@ const Navigator = () => {
   );
 };
 
+
 //Footer
 const Footerr = () => {
   return (
     <div id="footer">
-      <div style={{ width: '995px', margin: '0 auto', position: 'relative' }} >
-        <div style={{ float: 'left' }}><img alt={'sds'} src={logo}/></div>
+      <div style={{ width: '1200px', height:'200px', margin: '-50px auto', position: 'relative', backgroundColor:'black',  color: '#FFFFFF', }} >
+        <div style={{ float: 'left', width:'200px', height:'333px' }}><img src={require(`./logo.png`)} alt=""/></div>
         <div style={{ width: '730px', float: 'right', lineHeight: '20px' }}>
           <ul style={{ borderRight: '1px solid #646464', float: 'left', padding: '0 15px 0 0', margin: '0 15px 0 0', color: '#e0e0e0', fontSize: '12px', display:'flex' }}>
             <li style={{ paddingLeft: '0', important: true }}>SILICON2 CO.,LTD - STYLE</li>

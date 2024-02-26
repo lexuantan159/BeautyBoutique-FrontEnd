@@ -3,6 +3,7 @@ import "./PRD.css";
 import { NavLink } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 import { FaCheckCircle } from 'react-icons/fa';
+import Comment from "../Blogpost/Comment";
 
 
 const product =[
@@ -770,9 +771,10 @@ const scrollToReview = () => {
         </div>
       </div>
 
-
+    <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="" />
+    <div>
       <div id="reviewSection"> 
-        <div style={{ height: '55px', display: 'flex', paddingTop: '40px', marginLeft:'150px'}}> 
+        <div style={{ height: '25px', display: 'flex', paddingTop: '5px', marginLeft:'150px'}}> 
           <p style={{ paddingBottom: '40px', width: '10%', height: '50px', textAlign: 'center', borderTop: '1px solid #ccc', borderRight: '1px solid #ccc', borderLeft: '1px solid #ccc', }} > REVIEW </p>
         </div>
         <div>
@@ -792,50 +794,19 @@ const scrollToReview = () => {
                         boxShadow: '5px 5px 0px 0px #f0f0f0',  
                       }}>
               <div style={{
-                        textAlign: 'center',
-                        fontSize: '14px',
-                        color: '#000',
-                        padding: '30px 0 10px'
-                      }}> Be the first reviewer of this item &amp; get double the amount of points!
-              </div>
-                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '5px', marginBottom: '30px'}}>
-                  <div style={{
-                              width: '140px',
-                              height: '36px',
-                              marginRight: '15px',
-                              textAlign: 'center',
-                              lineHeight: '36px',
-                              cursor: 'pointer',
-                              borderRadius: '4px',
-                              backgroundColor: '#000',
-                              color: '#fff'
-                             }}> WRITE A REVIEW
-                  </div>
-                  <div style={{ 
-                              width: '140px',
-                              height: '36px',
-                              marginRight: '15px',
-                              textAlign: 'center',
-                              lineHeight: '36px',
-                              cursor: 'pointer',
-                              borderRadius: '4px',
-                              backgroundColor: '#fff',
-                              color: '#000',
-                              border: '1px solid #000'
-                             }}> SEE ALL REVIEWS
-                    </div>
-              </div>
-              <p style={{ borderTop: '1px solid #e2e2e2',
-                          borderBottom: '1px solid #e2e2e2',
-                          padding: '20px 0',
-                          textAlign: 'center',}}> No reviews. </p>
-              
-            </div>
+                  width: "full",
+                  margin: '-20 0 40px',
+                  position: 'relative',
+                  zIndex: 4,
+                  background: '#fff',
 
+                }}>
+                  <Comment />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
-      
     </div>
   );
 }

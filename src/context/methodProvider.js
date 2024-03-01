@@ -19,7 +19,7 @@ export const MethodProvider = ({ children }) => {
         const year = dateTime.getFullYear();
         const hours = dateTime.getHours().toString().padStart(2, '0');
         const minutes = dateTime.getMinutes().toString().padStart(2, '0');
-        const formattedDateTime = `${month}-${day}-${year} ${hours} : ${minutes}`;
+        const formattedDateTime = `${month}-${day}-${year} ${hours}:${minutes}`;
         return formattedDateTime;
     }
     const uploadFile = async (imageUploads) => {
@@ -58,6 +58,17 @@ export const MethodProvider = ({ children }) => {
             throw error;
         }
     };
+    const deleteAImage = async (imageId) => {
+        try {
+            const imageRef = ref(storage, `/Blog-post/${imageId}`);
+            await deleteObject(imageRef);
+            console.log(`Image ${imageId} deleted successfully.`);
+            return 200;
+        } catch (error) {
+            console.error("Error deleting image: ", error);
+            throw error;
+        }
+    };
     const notify = (message, type) => {
         const toastType = type === 'success' ? toast.success : toast.error;
         return toastType(message);
@@ -88,7 +99,7 @@ export const MethodProvider = ({ children }) => {
     }
 
     return (
-        <MethodContext.Provider value={{ formatDateTime, uploadFile, notify, toastLoadingId, toastUpdateLoadingId, deleteImage }}>
+        <MethodContext.Provider value={{ formatDateTime, uploadFile, notify, toastLoadingId, toastUpdateLoadingId, deleteImage, deleteAImage }}>
             {children}
         </MethodContext.Provider>
     );

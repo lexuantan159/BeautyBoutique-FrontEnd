@@ -35,9 +35,33 @@ const createNewBlog = async (title, content, imageIds, imageUrls, userId) => {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-        console.log(creteBlog.status);
-        console.log(creteBlog.data);
+        return {
+            statusCode: creteBlog.status,
+            message: creteBlog.data
+        }
 
+    } catch (error) {
+        const statusCode = error.status || (error.response && error.response.status) || 500;
+        return {
+            error,
+            statusCode,
+        };
+    }
+}
+const updateBlogPost = async (id, title, content, imageIds, imageUrls, userId) => {
+    try {
+        const creteBlog = await request.put(`/blog/update-blog?id=${id}&userId=${userId}`,
+            {
+                title: title,
+                content: content,
+                imageIds: imageIds,
+                imageUrls: imageUrls,
+            },
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
         return {
             statusCode: creteBlog.status,
             message: creteBlog.data
@@ -59,10 +83,20 @@ const deleteBlog = async (id, userId) => {
         console.error("Error deleting blog:", error);
     }
 };
+const deleteImageBlog = async (id) => {
+    try {
+        const response = await request.deleteRe(`/blog/delete-image-blog-id/?id=${id}`);
+        return response.status
+    } catch (error) {
+        console.error("Error deleting blog:", error);
+    }
+}
 
 export {
     createNewBlog,
     getAllBlogPost,
     deleteBlog,
+    deleteImageBlog,
+    updateBlogPost
 
 };

@@ -1,92 +1,73 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { FiSend } from "react-icons/fi";
 import { Button } from 'flowbite-react';
-import { ToastContainer, toast } from 'react-toastify';
 import { Spinner } from '@material-tailwind/react';
+import * as commentApi from '../../services/comment'
+import MethodContext from '../../context/methodProvider';
 
-const Comment = ({ commentss }) => {
+const Comment = ({ commentId, index, setChange, change }) => {
 
+    const [comments, setComments] = useState([])
     const [loading, setLoading] = useState(false);
-
-    const [comments, setComments] = useState([{
-        name: 'Thien Quang',
-        avatar_url: 'https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg',
-        id: 1,
-        date: '24/02/2022',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam aliquet magna sed dolor rhoncus, et dapibus neque pretium. Sed pulvinar ligula et urna aliquam, non lacinia arcu consectetur. Nunc eget risus id lorem sollicitudin pulvinar. Sed viverra sodales risus, eget condimentum nisi consectetur vel. Cras nec faucibus nulla. Nullam sed dui in neque tempus sagittis. Nulla placerat ligula ac massa feugiat, a tempor ex aliquet.'
-    },
-    {
-        name: 'Thien Quang',
-        avatar_url: 'https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg',
-        id: 2,
-        date: '24/02/2022',
-
-        content: ' et dapibus neque pretium. Sed pulvinar ligula et urna aliquam, non lacinia arcu consectetur. Nunc eget risus id lorem sollicitudin pulvinar. Sed viverra sodales risus, eget condimentum nisi consectetur vel. Cras nec faucibus nulla. Nullam sed dui in neque tempus sagittis. Nulla placerat ligula ac massa feugiat, a tempor ex aliquet.'
-    },
-    {
-        name: 'Thien Quang',
-        avatar_url: 'https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg',
-        id: 3,
-        date: '24/02/2022',
-
-        content: 'sdajhsdhausdyghusgadygasda'
-    },
-    {
-        name: 'Thien Quang',
-        avatar_url: 'https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg',
-        id: 4,
-        date: '24/02/2022',
-        content: 'Lorem ipsum dolor sit amet. Sed pulvinar ligula et urna aliquam, non lacinia arcu consectetur. Nunc eget risus id lorem sollicitudin pulvinar. Sed viverra sodales risus, eget condimentum nisi consectetur vel. Cras nec faucibus nulla. Nullam sed dui in neque tempus sagittis. Nulla placerat ligula ac massa feugiat, a tempor ex aliquet.'
-    }
-    ]);
-
     const [newComment, setNewComment] = useState('');
+    const [updateNewComment, setUpdateNewComment] = useState('');
+    const { formatDateTime, } = useContext(MethodContext)
 
-    // const fetchData = async () => {
-    //     try {
-    //         const response = await commentApi.getAllCommentByBlogPostID(id);
-    //         setComments(response);
-    //     } catch (error) {
-    //         console.error('Lỗi khi lấy bình luận:', error);
-    //     }
-    // };
-    // const postComment = async () => {
-    //     try {
-    //         if (newComment.trim() === '') {
-    //             return;
-    //         }
-    //         await commentApi.CreateACommentForBlog(auth.accessToken, auth.id, id, newComment);
-    //         setLoading(false)
-    //         fetchData();
-    //         setNewComment('');
-    //     } catch (error) {
+    const [isEdit, setIsEdit] = useState(false)
+    const [idEdit, setIdEdit] = useState(false)
 
-    //         setLoading(false)
-    //     }
-    // };
-    // const deleteComment = async (cmtid) => {
-    //     try {
-    //         await commentApi.deleteComment(auth.accessToken, cmtid);
-    //         fetchData();
-    //         notify('Bình luận đã được xóa.', 'success');
-    //     } catch (error) {
-    //         notify('Lỗi khi xóa bình luận:', 'error');
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const commentData = await commentApi.getAllCommentByBlogId(commentId)
+                setComments(commentData.commentList)
+                //console.log(bloggData);
+            } catch (error) {
+                console.error('Error fetching blogposts:', error);
+            }
+        };
+        fetchData();
+    }, [change]);
 
-    //     }
-    // };
-    // useEffect(() => {
-    //     if (id) {
-    //         fetchData();
-    //     }
-    // }, [id]);
+    const postComment = async () => {
+        try {
+            if (newComment.trim() === '') {
+                return;
+            }
+            await commentApi.createNewComment(newComment, commentId, 1);
+            setLoading(false)
+            setChange(!change)
+            setNewComment('');
 
-    // useEffect(() => {
-    //     console.log(comments);
-    // }, [comments]);
+        } catch (error) {
+            setChange(!change)
+            setLoading(false)
+        }
+    };
+    const deleteComment = async (cmtid) => {
+        try {
+            await commentApi.deleteComment(cmtid, 1);
+            setChange(!change)
+            // notify('Bình luận đã được xóa.', 'success');
+        } catch (error) {
+            //notify('Lỗi khi xóa bình luận:', 'error');
+
+        }
+    };
+    const updateComment = async (id) => {
+        try {
+            await commentApi.updateComment(id, updateNewComment, 1);
+            setChange(!change)
+            // notify('Bình luận đã được xóa.', 'success');
+        } catch (error) {
+            //notify('Lỗi khi xóa bình luận:', 'error');
+
+        }
+    };
+
 
     return (
         <>
-            <ToastContainer />
             <div className='w-full h-auto'>
                 <div className='flex items-start justify-center m-2'>
                     <div className="avatar-group -space-x-6 rtl:space-x-reverse w-[10%]">
@@ -108,56 +89,94 @@ const Comment = ({ commentss }) => {
                         ></textarea>
                         <div className='flex items-center justify-center ml-4'>
                             <Button gradientMonochrome="lime"
-                                // onClick={postComment} 
+                                onClick={postComment}
                                 disabled={loading}>
                                 {loading ? (
                                     <div className="flex items-center justify-center">
                                         <Spinner className="h-6 w-6 mr-4" /> <span>Loading...</span>
                                     </div>
-                                ) : (<FiSend />
+                                ) : (
+                                    <FiSend />
                                 )}
                             </Button>
                         </div>
                     </div>
                 </div>
-                {comments.map((comment) => (
-                    <>
+                {comments && comments.length > 0 ? (
+                    comments.map((comment) => (
                         <div key={comment.id} className='flex items-start justify-center'>
                             <div className='w-4/5 flex items-start justify-center'>
                                 <div className='w-[90%] border bg-gray-100 p-1 rounded-xl my-2'>
                                     <div className=' avatar-group'>
                                         <div className='avatar'>
                                             <div className='w-10'>
-                                                <img src={comment.avatar_url} alt='Avatar' />
+                                                <img src={comment.user.imageURL} alt='Avatar' />
                                             </div>
                                         </div>
                                         <div className='ml-2'>
-                                            <h1 className='text-base font-semibold'>{comment.name}</h1>
-                                            <h1 className='text-sm'>{comment.date}</h1>
+                                            <h1 className='text-base font-semibold'>{comment.user.userName}</h1>
+                                            <h1 className='text-sm'>{formatDateTime(comment.createdAt)}</h1>
                                         </div>
-
                                     </div>
                                     <div className='px-2'>
-                                        <h2>{comment.content}</h2>
+                                        {isEdit && idEdit === comment.id ? (
+                                            <input type="text"
+                                                placeholder={comment.content}
+                                                value={updateNewComment}
+                                                onChange={(e) => setUpdateNewComment(e.target.value)}
+                                                className="input input-bordered input-accent w-full max-w-xl" />
+                                        ) : (
+                                            <h2>{comment.content}</h2>
+                                        )}
                                     </div>
-                                    {/* {auth.id === comment.user_id && ( */}
                                     <div className='flex items-end justify-end'>
-                                        <button className='text-xs mx-2 text-red-500'
-                                        // onClick={() => deleteComment(comment.id)}
-                                        >
-                                            Xóa</button>
+                                        {isEdit && idEdit === comment.id ? (
+                                            <>
+                                                <button className='text-xs mx-2 link link-accent'
+                                                    onClick={() => {
+                                                        updateComment(comment.id)
+                                                        setIdEdit(false)
+                                                        setUpdateNewComment('')
+                                                    }}
+                                                >
+                                                    Save
+                                                </button>
+
+                                                <button className='text-xs mx-2 link link-error'
+                                                    onClick={() => {
+                                                        setIdEdit(false)
+                                                        setUpdateNewComment('')
+                                                    }}
+                                                >
+                                                    Cance
+                                                </button>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <button className='text-xs mx-2 link link-accent'
+                                                    onClick={() => {
+                                                        setIdEdit(comment.id)
+                                                        setIsEdit(true)
+                                                    }}
+                                                >
+                                                    Edit
+                                                </button>
+
+                                                <button className='text-xs mx-2 link link-error'
+                                                    onClick={() => deleteComment(comment.id)}
+                                                >
+                                                    Delete
+                                                </button>
+                                            </>
+                                        )}
                                     </div>
-                                    {/* )} */}
-
                                 </div>
-
                             </div>
-
                         </div>
-
-                    </>
-                ))}
-
+                    ))
+                ) : (
+                    <div className="text-center text-xl">There are no comments for this post yet.</div>
+                )}
 
 
             </div>

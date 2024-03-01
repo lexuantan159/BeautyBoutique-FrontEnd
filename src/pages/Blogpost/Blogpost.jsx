@@ -1,11 +1,10 @@
-
 import React, { useContext, useEffect, useState } from 'react'
 import { icons } from '../../utils/icons';
 import Comment from './Comment';
 import * as blogApi from '../../services/blogpost'
 import ImageBlog from './ImageBlog';
 import MethodContext from '../../context/methodProvider';
-import CreateBlog from './CreateBlog';
+import CreateAndUpdateBlog from './CreateAndUpdateBlog';
 import { Modal, Dropdown, Button } from 'flowbite-react'
 
 
@@ -17,12 +16,15 @@ const Blogpost = () => {
     const [blogposts, setBlogposts] = useState([]);
     const [change, setChange] = useState(true)
     const [deleteItem, setDeleteItem] = useState({ isDelete: false })
-
+    const [blogCommentId, setBlogCommentId] = useState('')
+    const [editBlogpost, setEditBlogpost] = useState(null);
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const bloggData = await blogApi.getAllBlogPost()
                 setBlogposts(bloggData.blogList)
+
+                console.log(bloggData);
             } catch (error) {
                 console.error('Error fetching blogposts:', error);
             }
@@ -61,7 +63,16 @@ const Blogpost = () => {
         setDeleteItem(preDeleteItem => ({ ...preDeleteItem, id: id, userId: userId, imageIds: imageIds }))
         setOpenModal(true)
     }
-
+    const handleModalComment = (id) => {
+        setBlogCommentId(id)
+        document.getElementById('my_modal_2_1').showModal()
+        setChange(!change)
+    }
+    const handleOpenModalEdit = (blogpost) => {
+        console.log(blogpost);
+        setEditBlogpost(blogpost);
+        setIsOpenForm({ index: blogpost.id, isOpen: true });
+    };
     const [likes, setLikes] = useState(0);
     const [liked, setLiked] = useState(false);
     const handleLikeClick = () => {
@@ -89,8 +100,9 @@ const Blogpost = () => {
                         placeholder="What are you thinking ? "
                         className="input input-bordered input-warning w-full max-w-2xl" />
                     {
-                        isOpenForm.index === null && isOpenForm.isOpen && <CreateBlog closeModal={setIsOpenForm} isOpenForm={isOpenForm} setChange={setChange} change={change}></CreateBlog>
+                        isOpenForm.index === null && isOpenForm.isOpen && <CreateAndUpdateBlog closeModal={setIsOpenForm} isOpenForm={isOpenForm} setChange={setChange} change={change} blogpost={null}></CreateAndUpdateBlog>
                     }
+
                 </div>
             </div>
             <div className='flex items-center justify-center'>
@@ -101,7 +113,7 @@ const Blogpost = () => {
                                 <div class="bg-white rounded shadow-lg max-w-[80%] mx-auto ">
                                     <header class="p-4 flex justify-between">
                                         <div className='w-1/2'>
-                                            <img src="https://via.placeholder.com/200" alt='' className="float-left rounded-full w-10 h-10 m-1 mr-3" />
+                                            <img src={blogpost.user.imageURL} alt='' className="float-left rounded-full w-10 h-10 m-1 mr-3" />
                                             <div>
                                                 <h3 theme='pastel' class="text-lg font-bold">{blogpost.user.userName}</h3>
                                                 <p class="text-sm text-gray-600">{formatDateTime(blogpost.createDate)}</p>
@@ -113,8 +125,27 @@ const Blogpost = () => {
                                                 size="sm"
                                                 className='bg-blue-100 font-semibold text-base text-black'>
                                                 <Dropdown.Item onClick={() => openDeleteModal(blogpost.id, blogpost.user.id, blogpost.images)}>Delete Blog</Dropdown.Item>
-                                                <Dropdown.Item>Edit Blog</Dropdown.Item>
+                                                <Dropdown.Item
+                                                    onClick={() => {
+
+                                                        handleOpenModalEdit(blogpost)
+                                                    }}>Edit Blog
+
+
+                                                </Dropdown.Item>
                                             </Dropdown>
+                                            {editBlogpost && (
+                                                <CreateAndUpdateBlog
+                                                    closeModal={() => {
+                                                        setIsOpenForm({ index: null, isOpen: false });
+                                                        setEditBlogpost(null); // Đóng modal và xóa thông tin về blogpost được chỉnh sửa
+                                                    }}
+                                                    isOpenForm={isOpenForm}
+                                                    setChange={setChange}
+                                                    change={change}
+                                                    blogpost={editBlogpost}
+                                                />
+                                            )}
 
                                         </div>
                                     </header>
@@ -159,12 +190,14 @@ const Blogpost = () => {
                                             </div>
                                             <div className='flex items-center justify-center'>
                                                 <div className='py-2 px-6 rounded-md cursor-pointer hover:bg-blue-300 font-semibold flex items-center justify-center'
-                                                    onClick={() => document.getElementById('my_modal_2_1').showModal()}
+                                                    onClick={() => {
+                                                        handleModalComment(blogpost.id)
+                                                    }}
                                                 >
                                                     <span className='mr-2 '>
                                                         <icons.AiOutlineComment />
                                                     </span>
-                                                    <span >Comment</span>
+                                                    <span>Comment</span>
                                                 </div>
                                             </div>
                                             <div className='flex items-center justify-center'>
@@ -177,23 +210,21 @@ const Blogpost = () => {
                                             </div>
                                         </div>
 
-                                        <dialog id="my_modal_2_1" className="modal">
-                                            <div className="modal-box w-10/12 max-w-5xl">
-                                                <Comment id={blogpost.id} />
-                                            </div>
-                                            <form method="dialog" className="modal-backdrop">
-                                                <button>close</button>
-                                            </form>
-                                        </dialog>
                                     </footer>
                                 </div>
                             </div>
                         );
                     })}
-
-
                 </div >
-            </div>
+                <dialog id="my_modal_2_1" className="modal">
+                    <div className="modal-box w-10/12 max-w-5xl no-scrollbar">
+                        <Comment index={1} commentId={blogCommentId} setChange={setChange} change={change} />
+                    </div>
+                    <form method="dialog" className="modal-backdrop">
+                        <button>close</button>
+                    </form>
+                </dialog>
+            </div >
             <div>
                 <Modal show={openModal} size="md" onClose={() => setOpenModal(false)} popup>
                     <Modal.Header />

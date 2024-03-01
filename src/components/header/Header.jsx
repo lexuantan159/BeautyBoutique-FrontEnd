@@ -51,7 +51,7 @@ function Header() {
                 <div className="flex justify-center items-center font-sans text-xs">
                     <ul className="flex justify-center items-center">
                         <li className="flex justify-center items-center mr-4 ">
-                            <span className="text-orange-400 mr-2 font-bold">
+                            <span className="text-orange-400 mr-2 font-bold ">
                                 <icons.CiLocationOn />
                             </span>
                             <span className="max-sm:hidden max-md:hidden font-bold">FPT Complex Đà Nắng</span>

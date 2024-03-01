@@ -5,10 +5,12 @@ import * as blogApi from '../../services/blogpost'
 import MethodContext from '../../context/methodProvider';
 
 
-const CreateBlog = ({ closeModal, isOpenForm, setChange, change }) => {
-    const { uploadFile } = useContext(MethodContext)
+const CreateBlog = ({ closeModal, isOpenForm, setChange, change, blogpost }) => {
+    const { uploadFile, deleteAImage } = useContext(MethodContext)
     const [imageUploads, setImageUpload] = useState(Array(6).fill(null));
     const [imagesDisplay, setImagesDisplay] = useState(Array(6).fill(null));
+    const [images, setImages] = useState([])
+    const [id, setId] = useState('')
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
     const [loading, setLoading] = useState(false)
@@ -16,8 +18,22 @@ const CreateBlog = ({ closeModal, isOpenForm, setChange, change }) => {
     useEffect(() => {
         if (isOpenForm.isOpen) {
             document.getElementById('my_modal_2').showModal();
-        } else
-            ;
+        }
+        if (blogpost) {
+            setId(blogpost?.id)
+            setTitle(blogpost?.title)
+            setContent(blogpost?.content)
+            setImages(blogpost?.images)
+            if (blogpost && blogpost.images) {
+                const initialImages = blogpost.images.map(image => image.imageUrl);
+                const filledImages = [...initialImages, ...Array(6 - initialImages.length).fill(null)];
+                setImagesDisplay(filledImages);
+            } else {
+                setImagesDisplay(Array(6).fill(null));
+            }
+        }
+
+
     }, [])
 
     const handleFileChange = (index, e) => {
@@ -53,8 +69,18 @@ const CreateBlog = ({ closeModal, isOpenForm, setChange, change }) => {
         const updatedImages = [...imageUploads];
         updatedImages[index] = null;
         setImageUpload(updatedImages);
-        setImagesDisplay(updatedImages)
+
+        const updatedDisplayImages = [...imagesDisplay];
+        updatedDisplayImages[index] = null;
+        setImagesDisplay(updatedDisplayImages);
     };
+    const handleDeleteImageUpdate = async (index) => {
+        const deleteImage = await blogApi.deleteImageBlog(images[index].id)
+        const deleteImageFirebase = await deleteAImage(images[index].id)
+        if (deleteImage === 200 && deleteImageFirebase === 200) {
+            console.log('xóa hình ảnh thành công ');
+        }
+    }
 
     const updateImageToFirebase = async () => {
         const validImages = imageUploads.filter(image => image !== null);
@@ -67,7 +93,6 @@ const CreateBlog = ({ closeModal, isOpenForm, setChange, change }) => {
     }
 
     const handlePost = async () => {
-        setLoading(true)
         const img = await updateImageToFirebase();
         if (img.imageIds.length > 0 && img.imageURLs.length > 0) {
             const createBlog = await blogApi.createNewBlog(title, content, img.imageIds, img.imageURLs, 1);
@@ -79,8 +104,43 @@ const CreateBlog = ({ closeModal, isOpenForm, setChange, change }) => {
             // } else {
             //     notify("tạo bài viết không thành công")
         }
+    }
+
+    const handUpdate = async () => {
+        const validImages = imageUploads.filter(image => image !== null);
+        if (validImages.length > 0) {
+            const img = await updateImageToFirebase();
+            if (img.imageIds.length > 0 && img.imageURLs.length > 0) {
+                const createBlog = await blogApi.updateBlogPost(id, title, content, img.imageIds, img.imageURLs, 1);
+                if (createBlog.statusCode === 201) {
+                    setChange(!change)
+                    closeModal({ index: null, isOpen: false })
+                    // notify("tạo bài viết thành công", 'success')
+                }
+                // } else {
+                //     notify("tạo bài viết không thành công")
+            }
+        } else {
+            const updateBlog = await blogApi.updateBlogPost(id, title, content, [], [], 1);
+            if (updateBlog.statusCode === 201) {
+                setChange(!change)
+                closeModal({ index: null, isOpen: false })
+                // notify("tạo bài viết thành công", 'success')
+            }
+            // } else {
+            //     notify("tạo bài viết không thành công")
+        }
+    }
+    const handleSubmit = async () => {
+        setLoading(true)
+        if (blogpost) {
+            await handUpdate()
+        } else {
+            await handlePost()
+        }
         setLoading(false)
     }
+
 
     return (
         <div>
@@ -118,7 +178,10 @@ const CreateBlog = ({ closeModal, isOpenForm, setChange, change }) => {
                                                     alt={`Uploaded image ${index + 1}`}
                                                     className="h-full w-full object-cover rounded-lg" />
                                                 <button className="btn btn-outline btn-error btn-sm"
-                                                    onClick={() => handleDeleteImage(index)}
+                                                    onClick={() => {
+                                                        handleDeleteImage(index)
+                                                        handleDeleteImageUpdate(index)
+                                                    }}
                                                 >DELETE</button>
                                             </>
                                         ) : (
@@ -153,12 +216,18 @@ const CreateBlog = ({ closeModal, isOpenForm, setChange, change }) => {
                     <div className='flex items-center justify-center'>
 
                         <button className="btn btn-outline btn-success px-6"
-                            onClick={handlePost}
+                            onClick={handleSubmit}
                         >{loading ? (
                             <span className="loading loading-spinner text-secondary"></span>
 
                         ) : (
-                            <span>POST</span>
+                            <div>
+                                {blogpost ? (
+                                    <span>UPDATE</span>
+                                ) : (
+                                    <span>POST</span>
+                                )}
+                            </div>
                         )}
 
                         </button>

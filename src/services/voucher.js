@@ -45,6 +45,31 @@ const createNewVouccher = async (title, content, quantity, numUsedVoucher, disco
         };
     }
 }
+const saveVoucher = async (userId, voucherId) => {
+    try {
+        const saveVouUser = await request.post('/voucher/save-voucher-for-user',
+            {
+            },
+            {
+                params: {
+                    userId: userId,
+                    voucherId: voucherId
+                },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
+        console.log(saveVouUser.data);
+        return saveVouUser.data
+
+    } catch (error) {
+        const statusCode = error.status || (error.response && error.response.status) || 500;
+        return {
+            error,
+            statusCode,
+        };
+    }
+}
 const updateVouccher = async (id, title, content, quantity, numUsedVoucher, discount, maximDiscount, minimumOrder, startDate, endDate) => {
     try {
         return await request.put(`/voucher/update-voucher?id=${id}`,
@@ -86,6 +111,7 @@ export {
     getAllVoucher,
     createNewVouccher,
     updateVouccher,
-    deleteVoucher
+    deleteVoucher,
+    saveVoucher
 
 }

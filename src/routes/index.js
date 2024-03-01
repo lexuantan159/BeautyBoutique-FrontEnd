@@ -3,7 +3,8 @@ import {
 } from '../pages/index';
 
 import {
-    LayoutAdmin
+    LayoutAdmin,
+    LayoutDefault
 } from '../layouts/index';
 
 const router = [
@@ -12,7 +13,7 @@ const router = [
     {path: '/voucher', component: Voucher},
     {path: '/cart', component: Cart},
     {path: '/ship-detail', component: ShipDetail},
-    {path: '/payment-success', component: PaymentSuccess},
+    {path: '/payment-success', layout: LayoutDefault, component: PaymentSuccess},
     {path: '/admin/order', layout: LayoutAdmin, component: Order},
 
 ];

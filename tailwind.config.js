@@ -25,7 +25,7 @@ module.exports = {
                 },
                 '.fill-available': {
                     width: '-webkit-fill-available',
-                },
+                }
             };
             addUtilities(newUtilities)
         }

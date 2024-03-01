@@ -5,6 +5,7 @@ export { default as Cart } from './Cart/Cart'
 export { default as ShipDetail } from './ShipDetail/ShipDetail'
 export { default as PaymentSuccess } from './Payment/PaymentSuccess'
 export { default as Order } from './Order/Order'
+export { default as NotFound } from './NotFound/NotFound'
 
 
 

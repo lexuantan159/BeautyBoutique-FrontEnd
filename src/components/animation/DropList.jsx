@@ -5,10 +5,11 @@ import {GoChevronRight} from "react-icons/go";
 
 const DropList = ({title, listItem = [], Icon}) => {
     const [isExpanded, setIsExpanded] = useState(false);
-
+    const [itemDrop, setItemDrop] = useState({});
     const handleClick = () => {
         setIsExpanded(!isExpanded);
     };
+
 
     const container = {
         hidden: {opacity: 0, height: "0px", backgroundColor: "white"},
@@ -44,7 +45,7 @@ const DropList = ({title, listItem = [], Icon}) => {
                 className="flex justify-between items-center cursor-pointer"
             >
                 <motion.p className="flex items-center uppercase">
-                    <Icon className="mr-2"/> {title}
+                    <Icon className="mr-2"/> {Object.keys(itemDrop).length ===0 ? title : itemDrop?.name}
                 </motion.p>
                 <motion.p animate={isExpanded ? itemCross.show : itemCross.hidden}
                 >
@@ -58,11 +59,12 @@ const DropList = ({title, listItem = [], Icon}) => {
                 className={`${isExpanded ? "block mt-2" : "hidden"}`}
             >
                 {
-                    listItem.length > 0 && listItem.map((item, index) => {
+                     listItem.map((item) => {
                         return (
-                            <motion.p key={index} variants={item}
-                                      className={isExpanded ? "block text-lg rounded hover:bg-gray-300 py-2 px-3 " : "hidden"}>
-                                {item}
+                            <motion.p key={item?.id} variants={item}
+                                      onClick={() => setItemDrop(item)}
+                                      className={isExpanded ? "block text-lg rounded hover:bg-gray-200 py-2 px-3 transition-all" : "hidden"}>
+                                {item?.name}
                             </motion.p>
                         )
                     })

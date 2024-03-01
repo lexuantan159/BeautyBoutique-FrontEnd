@@ -10,7 +10,7 @@ import {useState} from "react"
 const LayoutAdmin = ({children}) => {
 
     return (<>
-        <div className="flex">
+        <div className="flex bg-gray-100">
             <div className="flex">
                 <Sidebar>
                     <SidebarItem icon={<IoIosHome size={20} />} text="Home" />

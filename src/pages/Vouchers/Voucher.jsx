@@ -80,7 +80,7 @@ const Voucher = () => {
                                 <div className='w-1/4 flex items-center justify-center'>
                                     <div className="avatar relative">
                                         <div className="w-40 rounded-full ">
-                                            <img src={logo} />
+                                            <img src={logo} alt={"sd"} />
                                         </div>
                                         <div className='bg-white h-16 w-16 rounded-full absolute top-[-20px] right-0 '>
                                             <span className='block p-2'>UP TO {voucher.discount * 100} %</span>

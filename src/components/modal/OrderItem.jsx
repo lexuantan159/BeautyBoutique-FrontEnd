@@ -5,7 +5,7 @@ const OrderItem = () => {
 
     return (
         <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle w-[80%] mx-auto">
-            <div className="modal-box relative left-0 right-0 overflow-y-scroll no-scrollbar rounded-lg">
+            <div className="modal-box relative left-0 right-0 overflow-y-scroll no-scrollbar rounded-lg sm:max-w-full">
                 <form method="dialog">
                     <button
                         className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 border-none outline-none">✕

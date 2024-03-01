@@ -4,7 +4,7 @@ import MethodContext from '../../../context/methodProvider';
 
 const CRUVoucher = ({ closeModal, isOpenForm, setChange, change, voucher }) => {
 
-    const { convertDateFormat } = useContext(MethodContext)
+    const { convertDate } = useContext(MethodContext)
     const [id, setId] = useState(null);
     const [title, setTitle] = useState(null);
     const [content, setContent] = useState(null);
@@ -39,7 +39,7 @@ const CRUVoucher = ({ closeModal, isOpenForm, setChange, change, voucher }) => {
 
     const addNewVoucher = async () => {
         try {
-            const newVoucher = await voucherApi.createNewVouccher(title, content, quantity, numUsedVoucher, discount, maximDiscount, minimumOrder, convertDateFormat(startDate), convertDateFormat(endDate))
+            const newVoucher = await voucherApi.createNewVouccher(title, content, quantity, numUsedVoucher, discount, maximDiscount, minimumOrder, convertDate(startDate), convertDate(endDate))
             console.log(newVoucher);
         } catch (error) {
             console.error('Error fetching voucher:', error);
@@ -47,7 +47,7 @@ const CRUVoucher = ({ closeModal, isOpenForm, setChange, change, voucher }) => {
     }
     const updateVoucher = async () => {
         try {
-            const updateVoucher = await voucherApi.updateVouccher(id, title, content, quantity, numUsedVoucher, discount, maximDiscount, minimumOrder, convertDateFormat(startDate), convertDateFormat(endDate))
+            const updateVoucher = await voucherApi.updateVouccher(id, title, content, quantity, numUsedVoucher, discount, maximDiscount, minimumOrder, convertDate(startDate), convertDate(endDate))
             if (updateVoucher === 200) console.log("Update succesfully");
             else console.log("Update failed");
         } catch (error) {

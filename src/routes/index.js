@@ -1,8 +1,12 @@
 
 import {
-    Blog, ManageVoucher, Foundation, Voucher, Home, Cart, ShipDetail, PaymentSuccess, Product, Category, MakeupBase, PowerPact, Concealer, Cushion, BlusherHighlighter, ProductDetail
+    Blog, ManageVoucher, Foundation, Voucher, Home, Cart, ShipDetail, PaymentSuccess,
+    Category, MakeupBase, PowerPact, Concealer, Cushion, BlusherHighlighter, ProductDetail, Order, ManagementBlog
 } from '../pages/index';
-
+import {
+    LayoutAdmin,
+    LayoutDefault
+} from '../layouts/index';
 const router = [
     { path: '/', component: Home },
     { path: '/blogpost', component: Blog },
@@ -10,7 +14,9 @@ const router = [
     { path: '/cart', component: Cart },
     { path: '/ship-detail', component: ShipDetail },
     { path: '/payment-success', component: PaymentSuccess },
-    { path: '/managevoucher', component: ManageVoucher },
+    { path: '/admin/voucher', layout: LayoutAdmin, component: ManageVoucher },
+    { path: '/admin/blog', layout: LayoutAdmin, component: ManagementBlog },
+
 
     { path: '/category', component: Category },
     { path: '/foundation', component: Foundation },
@@ -27,8 +33,15 @@ const router = [
     { path: '/cushion/:productId', component: ProductDetail },
     { path: '/category/:productId', component: ProductDetail },
 
+    { path: '/payment-success', layout: LayoutDefault, component: PaymentSuccess },
+    { path: '/admin/order', layout: LayoutAdmin, component: Order },
+
 ];
 
 
 
 export { router }
+
+
+
+

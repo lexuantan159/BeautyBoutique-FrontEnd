@@ -18,6 +18,7 @@ const Blogpost = () => {
     const [deleteItem, setDeleteItem] = useState({ isDelete: false })
     const [blogCommentId, setBlogCommentId] = useState('')
     const [editBlogpost, setEditBlogpost] = useState(null);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -51,7 +52,6 @@ const Blogpost = () => {
         await deleteBlogPost(id, userId)
         setChange(!change)
     }
-
     useEffect(() => {
         if (deleteItem.isDelete) {
             handleDelete(deleteItem.id, deleteItem.userId, deleteItem.imageIds)
@@ -63,6 +63,7 @@ const Blogpost = () => {
         setDeleteItem(preDeleteItem => ({ ...preDeleteItem, id: id, userId: userId, imageIds: imageIds }))
         setOpenModal(true)
     }
+
     const handleModalComment = (id) => {
         setBlogCommentId(id)
         document.getElementById('my_modal_2_1').showModal()
@@ -127,7 +128,6 @@ const Blogpost = () => {
                                                 <Dropdown.Item onClick={() => openDeleteModal(blogpost.id, blogpost.user.id, blogpost.images)}>Delete Blog</Dropdown.Item>
                                                 <Dropdown.Item
                                                     onClick={() => {
-
                                                         handleOpenModalEdit(blogpost)
                                                     }}>Edit Blog
 

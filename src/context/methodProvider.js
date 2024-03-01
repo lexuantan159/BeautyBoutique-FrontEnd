@@ -22,6 +22,19 @@ export const MethodProvider = ({ children }) => {
         const formattedDateTime = `${month}-${day}-${year} ${hours}:${minutes}`;
         return formattedDateTime;
     }
+    function convertDate(inputDate) {
+        var outputDate = null;
+        var inputDateObject = new Date(inputDate);
+
+        if (isNaN(inputDateObject.getTime())) {
+            console.error("Invalid input date format. Please provide date in 'yyyy-MM-dd' format.");
+            return outputDate;
+        }
+
+        outputDate = inputDateObject.toLocaleString("en-US", { timeZone: "UTC", hour12: false, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+        return outputDate;
+    }
     const uploadFile = async (imageUploads) => {
         try {
             const imageIds = [];
@@ -99,7 +112,7 @@ export const MethodProvider = ({ children }) => {
     }
 
     return (
-        <MethodContext.Provider value={{ formatDateTime, uploadFile, notify, toastLoadingId, toastUpdateLoadingId, deleteImage, deleteAImage }}>
+        <MethodContext.Provider value={{ formatDateTime, convertDate, uploadFile, notify, toastLoadingId, toastUpdateLoadingId, deleteImage, deleteAImage }}>
             {children}
         </MethodContext.Provider>
     );

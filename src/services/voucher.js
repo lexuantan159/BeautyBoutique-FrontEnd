@@ -1,3 +1,4 @@
+
 import * as request from '../utils/request'
 
 const getAllVoucher = async () => {
@@ -17,6 +18,8 @@ const getAllVoucher = async () => {
     }
 };
 const createNewVouccher = async (title, content, quantity, numUsedVoucher, discount, maximDiscount, minimumOrder, startDate, endDate) => {
+    console.log(startDate);
+    console.log(endDate);
     try {
         return await request.post('/voucher/create-voucher',
             {
@@ -115,3 +118,18 @@ export {
     saveVoucher
 
 }
+
+const GET_VOUCHER = "voucher/get-voucher"
+
+export const getVoucher = async (param) => {
+    try {
+        return await request.get(GET_VOUCHER, {
+            params: param,
+            headers: {
+                "Content-Type": "Application/json",
+            }
+        });
+    } catch (error) {
+        return error
+    }
+};

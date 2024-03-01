@@ -7,16 +7,21 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { MethodProvider } from "./context/methodProvider";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 
-
+const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Router>
-    <MethodProvider>
-      <App />
-    </MethodProvider>
-    <ToastContainer />
+    <QueryClientProvider client={queryClient}>
+      <MethodProvider>
+        <App />
+      </MethodProvider>
+      <ToastContainer />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+    </QueryClientProvider>
   </Router>
 );
 

@@ -9,29 +9,24 @@ import {useQuery} from "react-query";
 import * as shipDetailService from "../../services/shipDetail";
 import * as cartService from "../../services/cart";
 import {Navigate, useLocation} from 'react-router-dom';
+import CartItem from "../../components/cart/CartItem";
 
 const ShipDetail = () => {
 
     const [action, setAction] = useState(false)
     const [discount, setDiscount] = useState(0)
-    const [shipDetail, setShipDetail] = useState({})
+    const [shipDetail, setShipDetail] = useState({id:1})
     let totalPriceWithDiscount = 0;
     const {
         data: shipDetails,
         isLoading,
-    } = useQuery(["shipDetails", action], () => shipDetailService.getShipDetails({userId: 1}));
+    } = useQuery(["shipDetails"], () => shipDetailService.getShipDetails({userId: 1}));
     const {
         data: cartData,
     } = useQuery(["cart", action], () => cartService.getCart({userId: 1}));
-    const location = useLocation();
 
-    console.log(shipDetails)
 
     useEffect(() => {
-        // if (!location.state || !location.state.fromCart) {
-        //     return <Navigate to="/cart"/>;
-        // }
-
         if (cartData) {
             totalPriceWithDiscount = discount === 0 ? cartData?.data?.totalPrice : cartData?.data?.totalPrice * discount;
         }
@@ -48,7 +43,7 @@ const ShipDetail = () => {
                             {
                                 isLoading ? <div>LOADING...</div> :
                                     shipDetails?.status === 200 && shipDetails?.data?.shipDetails.length > 0 ?
-                                        shipDetails?.data?.shipDetails.map(item => {
+                                        shipDetails?.data?.shipDetails.slice(0, 3).map(item => {
                                             return (
                                                 <div
                                                     key={item?.id}
@@ -69,7 +64,8 @@ const ShipDetail = () => {
                                 <p className="text-gray-300 mt-2">Add new address</p>
                             </div>
                         </div>
-                        <ShipDetailItem shipDetails={shipDetails?.data?.shipDetails} itemShip={shipDetail} setItemShip={setShipDetail}/>
+                        <ShipDetailItem shipDetails={shipDetails?.data?.shipDetails} itemShip={shipDetail}
+                                        setItemShip={setShipDetail}/>
                     </div>
                     {/*Method*/}
                     <DropList title={"method shipping"} listItem={[{id: 2, name: "J&T"}]}
@@ -94,39 +90,23 @@ const ShipDetail = () => {
                     </div>
                     <div
                         className="w-full mt-4 bg-white rounded-lg shadow-md p-3 max-h-[260px] overflow-y-scroll no-scrollbar border-[0.2px] border-gray-300">
-                        <div className="flex gap-4 p-2 mb-2">
-                            <img
-                                src="https://img.freepik.com/premium-photo/vibrant-packaging-design-skinca-stair-scene-concept-creative-design-luxury-elegant_655090-472454.jpg"
-                                alt="product" className="w-[66px] h-[66px] object-cover"/>
-                            <div className="w-full flex flex-col justify-between">
-                                <p className="block text-sm">Nước Tẩy Trang Chacott Cleansing Water 500ml</p>
-                                <p className="block text-sm"><span className="font-medium">350.000</span> ₫(trị giá
-                                    650.000
-                                    ₫)</p>
-                            </div>
-                        </div>
-                        <div className="flex gap-4 p-2 mb-2">
-                            <img
-                                src="https://img.freepik.com/premium-photo/vibrant-packaging-design-skinca-stair-scene-concept-creative-design-luxury-elegant_655090-472454.jpg"
-                                alt="product" className="w-[66px] h-[66px] object-cover"/>
-                            <div className="w-full flex flex-col justify-between">
-                                <p className="block text-sm">Nước Tẩy Trang Chacott Cleansing Water 500ml</p>
-                                <p className="block text-sm"><span className="font-medium">350.000</span> ₫(trị giá
-                                    650.000
-                                    ₫)</p>
-                            </div>
-                        </div>
-                        <div className="flex gap-4 p-2 mb-2">
-                            <img
-                                src="https://img.freepik.com/premium-photo/vibrant-packaging-design-skinca-stair-scene-concept-creative-design-luxury-elegant_655090-472454.jpg"
-                                alt="product" className="w-[66px] h-[66px] object-cover"/>
-                            <div className="w-full flex flex-col justify-between">
-                                <p className="block text-sm">Nước Tẩy Trang Chacott Cleansing Water 500ml</p>
-                                <p className="block text-sm"><span className="font-medium">350.000</span> ₫(trị giá
-                                    650.000
-                                    ₫)</p>
-                            </div>
-                        </div>
+                        {isLoading ? <span
+                            className="loading loading-dots loading-lg text-xl "></span> : (cartData.status === 200 && cartData?.data?.carts.length > 0) && cartData?.data?.carts.map((item) => {
+                            return (<div className="flex gap-4 p-2 mb-2">
+                                <img
+                                    src={item?.product?.images[0]?.imageUrl}
+                                    alt={item?.product?.productName} className="w-[66px] h-[66px] object-cover"/>
+                                <div className="w-full flex flex-col justify-between">
+                                    <p className="block text-sm">{item?.product?.productName}</p>
+                                    <p className="block text-sm"><span
+                                        className="font-medium">{item?.product?.actualPrice}</span> ₫(trị giá
+                                        {item?.product?.salePrice}
+                                        ₫)</p>
+                                </div>
+                            </div>)
+                        })
+                        }
+
                     </div>
                     <div className="w-full mt-4 bg-white rounded-lg shadow-md px-3 mb-2 border-[0.2px] border-gray-300">
                         <div className="mx-3 mb-3 flex justify-between items-center border-b-[1px] border-gray-300">

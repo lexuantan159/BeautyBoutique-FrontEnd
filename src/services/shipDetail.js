@@ -19,7 +19,7 @@ const CREATE_SHIP_DETAIL = "ship-detail/create-ship"
 
 export const createShipDetail = async (param , body) => {
     try {
-        return await request.put(CREATE_SHIP_DETAIL, body, {
+        return await request.post(CREATE_SHIP_DETAIL, body, {
             params: param,
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"

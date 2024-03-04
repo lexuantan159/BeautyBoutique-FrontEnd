@@ -1,18 +1,18 @@
 import React, {useContext} from "react";
 import MethodContext from "../../context/methodProvider"
-import {useQuery} from "react-query";
-import * as cartService from "../../services/cart";
 import  logo from "../../public/img/logo.jpg";
 
 
-const ModalVoucher = ({vouchers = [] , conditionApply}) => {
+const ModalVoucher = ({vouchers = [] , conditionApply, voucherActive}) => {
     const {notify} = useContext(MethodContext)
 
-    const handleApplyVoucher = () => {
+    const handleApplyVoucher = (item) => {
         if(conditionApply < 0 ) {
             notify("Cannot apply voucher as your cart is empty!" ,"error")
             return;
         }
+        // console.log(item)
+        voucherActive(item);
 
     }
 
@@ -40,7 +40,7 @@ const ModalVoucher = ({vouchers = [] , conditionApply}) => {
                                     <div className="flex items-center justify-between">
                                         <p className="text-sm text-gray italic">{item?.voucher?.startDate} - {item?.voucher?.endDate}</p>
                                         <p className="text-sm text-red-500 font-semibold hover:underline hover:cursor-pointer "
-                                        onClick={() => handleApplyVoucher}
+                                        onClick={() => handleApplyVoucher(item?.voucher)}
                                         >Apply</p>
                                     </div>
                                 </div>

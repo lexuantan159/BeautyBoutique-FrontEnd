@@ -12,7 +12,7 @@ const router = [
     {path: '/blogpost', component: Blog},
     {path: '/voucher', component: Voucher},
     {path: '/cart', component: Cart},
-    {path: '/ship-detail', component: ShipDetail},
+    {path: '/ship-detail/:cartItemIds', component: ShipDetail},
     {path: '/payment-success', layout: LayoutDefault, component: PaymentSuccess},
     {path: '/admin/order', layout: LayoutAdmin, component: Order},
 

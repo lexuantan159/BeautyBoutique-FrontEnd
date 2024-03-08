@@ -3,7 +3,7 @@ import {motion} from "framer-motion";
 import {MdOutlineLocalShipping, MdOutlinePayments} from "react-icons/md";
 import {GoChevronRight} from "react-icons/go";
 
-const DropList = ({title, listItem = [], Icon}) => {
+const DropList = ({title, listItem = [], type="shipping", setItem}) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const [itemDrop, setItemDrop] = useState({});
     const handleClick = () => {
@@ -44,9 +44,14 @@ const DropList = ({title, listItem = [], Icon}) => {
             <motion.div
                 className="flex justify-between items-center cursor-pointer"
             >
-                <motion.p className="flex items-center uppercase">
-                    <Icon className="mr-2"/> {Object.keys(itemDrop).length ===0 ? title : itemDrop?.name}
-                </motion.p>
+                {type === "shipping" ?
+                    <motion.p className="flex items-center uppercase">
+                        <MdOutlineLocalShipping size={20} className="mr-2"/> {Object.keys(itemDrop).length === 0 ? title : itemDrop?.name}
+                    </motion.p>
+                :
+                    <motion.p className="flex items-center uppercase">
+                        <MdOutlinePayments size={20} className="mr-2"/> {Object.keys(itemDrop).length === 0 ? title : itemDrop?.name}
+                    </motion.p>}
                 <motion.p animate={isExpanded ? itemCross.show : itemCross.hidden}
                 >
                     <GoChevronRight className="text-xl"/>
@@ -59,10 +64,13 @@ const DropList = ({title, listItem = [], Icon}) => {
                 className={`${isExpanded ? "block mt-2" : "hidden"}`}
             >
                 {
-                     listItem.map((item) => {
+                    listItem.map((item) => {
                         return (
                             <motion.p key={item?.id} variants={item}
-                                      onClick={() => setItemDrop(item)}
+                                      onClick={() => {
+                                          setItemDrop(item)
+                                          setItem(item)
+                                      }}
                                       className={isExpanded ? "block text-lg rounded hover:bg-gray-200 py-2 px-3 transition-all" : "hidden"}>
                                 {item?.name}
                             </motion.p>

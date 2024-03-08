@@ -79,8 +79,31 @@ export const MethodProvider = ({children}) => {
             });
         }
     };
+
+
+    const formatNumber = (number) => {
+        // Check if number is undefined or null
+        if (number === undefined || number === null) {
+            return 0; // Return empty string or any other default value as needed
+        }
+
+        // Convert number to string and split integer and decimal parts
+        let parts = number.toString().split(".");
+
+        // Format integer part
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+        // Format decimal part, limit to maximum 3 digits after the decimal point
+        if (parts[1] && parts[1].length > 3) {
+            parts[1] = parts[1].substring(0, 3);
+        }
+
+        // Combine back into a string and return
+        return parts.join(".");
+    }
+
     return (
-        <MethodContext.Provider value={{formatDateTime, uploadFile, notify, toastLoadingId, toastUpdateLoadingId}}>
+        <MethodContext.Provider value={{formatDateTime, uploadFile, notify, toastLoadingId, toastUpdateLoadingId, formatNumber}}>
             {children}
         </MethodContext.Provider>
     );

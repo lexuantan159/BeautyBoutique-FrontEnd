@@ -53,7 +53,7 @@ const ShipDetailItem = ({shipDetails = [], itemShip, setItemShip}) => {
     }
 
     return (
-        <dialog id="my_modal_5"
+        <dialog id="my_modal_4"
                 className="modal modal-bottom sm:modal-middle px-3 md:w-[90%] lg:w-[80%] md:mx-auto">
             <div
                 className="modal-box sm:max-w-full sm:w-full relative left-0 right-0 overflow-y-scroll no-scrollbar rounded-lg ">

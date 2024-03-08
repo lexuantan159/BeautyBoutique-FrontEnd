@@ -11,8 +11,8 @@ const ModalVoucher = ({vouchers = [] , conditionApply, voucherActive}) => {
             notify("Cannot apply voucher as your cart is empty!" ,"error")
             return;
         }
-        // console.log(item)
         voucherActive(item);
+        document.getElementById('my_modal_5').close()
 
     }
 

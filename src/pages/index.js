@@ -23,3 +23,4 @@ export { default as ProductDetail } from './Product/Product_Detail';
 export { default as Order } from './Order/Order'
 export { default as NotFound } from './NotFound/NotFound'
 
+export { default as AddProduct } from './Dashboard/Product/AddProduct'

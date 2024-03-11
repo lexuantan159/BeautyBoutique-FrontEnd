@@ -22,36 +22,36 @@ const FrameComponent = () => {
   return (
     <div className="frame-container">
       <div className="frame">
-        <div className="frame2 hover:text-red-500">
-          <NavLink to='/foundation'>
-            <p className="frame-text">Foundation</p>
-          </NavLink>
-        </div>
-        <div className="frame2 hover:text-red-500">
-          <NavLink to='/makeupbase'>
-            <p className="frame-text">Makeup Base</p>
-          </NavLink>
-        </div>
-        <div className="frame2 hover:text-red-500">
-          <NavLink to='/power&pact'>
-            <p className="frame-text">Powder &amp; Pact</p>
-          </NavLink>
-        </div>
-        <div className="frame2 hover:text-red-500">
-          <NavLink to='/concealer'>
-            <p className="frame-text">Concealer</p>
-          </NavLink>
-        </div>
-        <div className="frame2 hover:text-red-500">
-          <NavLink to='/cushion'>
-            <p className="frame-text">Cushion</p>
-          </NavLink>
-        </div>
-        <div className="frame2 hover:text-red-500">
-          <NavLink to='/blusher&highlighter'>
-            <p className="frame-text">Blusher &amp; Highlighter</p>
-          </NavLink>
-        </div>
+      <div className="frame2 hover:text-red-500">
+      <NavLink to='/foundation'>
+        <p className="frame-text">Foundation</p>
+        </NavLink>
+     </div>
+     <div className="frame2 hover:text-red-500">
+      <NavLink to='/makeupbase'>
+        <p className="frame-text">Makeup Base</p>
+        </NavLink>
+      </div>
+      <div className="frame2 hover:text-red-500">
+      <NavLink to='/power&pact'>
+        <p className="frame-text">Powder &amp; Pact</p>
+        </NavLink>
+      </div>
+      <div className="frame2 hover:text-red-500">
+      <NavLink to='/concealer'>
+        <p className="frame-text">Concealer</p>
+        </NavLink>
+      </div>
+      <div className="frame2 hover:text-red-500">
+      <NavLink to='/cushion'>
+        <p className="frame-text">Cushion</p>
+        </NavLink>
+      </div>
+      <div className="frame2 hover:text-red-500">
+      <NavLink to='/blusher&highlighter'>
+        <p className="frame-text">Blusher &amp; Highlighter</p>
+        </NavLink>
+      </div>
       </div>
     </div>
   );

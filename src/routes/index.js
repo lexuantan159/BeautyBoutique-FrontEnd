@@ -1,7 +1,7 @@
 
 import {
     Blog, ManageVoucher, Foundation, Voucher, Home, Cart, ShipDetail, PaymentSuccess,
-    Category, MakeupBase, PowerPact, Concealer, Cushion, BlusherHighlighter, ProductDetail, Order, ManagementBlog
+    Category, MakeupBase, PowerPact, Concealer, Cushion, BlusherHighlighter, ProductDetail, Order, ManagementBlog, AddProduct
 } from '../pages/index';
 import {
     LayoutAdmin,
@@ -35,6 +35,8 @@ const router = [
 
     { path: '/payment-success', layout: LayoutDefault, component: PaymentSuccess },
     { path: '/admin/order', layout: LayoutAdmin, component: Order },
+
+    { path: '/dashboard/addproduct', component: AddProduct },
 
 ];
 

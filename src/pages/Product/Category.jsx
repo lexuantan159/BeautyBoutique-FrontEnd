@@ -10,9 +10,14 @@ const TextComponent = () => {
         Products &gt;{' '}
         <NavLink to='/category' className="hover:text-red-500">Face Makeup</NavLink>
       </p>
+      <p className="custom-text">
+        Products &gt;{' '}
+        <NavLink to='/category' className="hover:text-red-500">Face Makeup</NavLink>
+      </p>
     </div>
   );
 };
+
 
 
 // FrameComponent.js
@@ -20,36 +25,36 @@ const FrameComponent = () => {
   return (
     <div className="frame-container">
       <div className="frame">
-        <div className="frame2 hover:text-red-500">
-          <NavLink to='/foundation'>
-            <p className="frame-text">Foundation</p>
-          </NavLink>
-        </div>
-        <div className="frame2 hover:text-red-500">
-          <NavLink to='/makeupbase'>
-            <p className="frame-text">Makeup Base</p>
-          </NavLink>
-        </div>
-        <div className="frame2 hover:text-red-500">
-          <NavLink to='/power&pact'>
-            <p className="frame-text">Powder &amp; Pact</p>
-          </NavLink>
-        </div>
-        <div className="frame2 hover:text-red-500">
-          <NavLink to='/concealer'>
-            <p className="frame-text">Concealer</p>
-          </NavLink>
-        </div>
-        <div className="frame2 hover:text-red-500">
-          <NavLink to='/cushion'>
-            <p className="frame-text">Cushion</p>
-          </NavLink>
-        </div>
-        <div className="frame2 hover:text-red-500">
-          <NavLink to='/blusher&highlighter'>
-            <p className="frame-text">Blusher &amp; Highlighter</p>
-          </NavLink>
-        </div>
+      <div className="frame2 hover:text-red-500">
+      <NavLink to='/foundation'>
+        <p className="frame-text">Foundation</p>
+        </NavLink>
+     </div>
+     <div className="frame2 hover:text-red-500">
+      <NavLink to='/makeupbase'>
+        <p className="frame-text">Makeup Base</p>
+        </NavLink>
+      </div>
+      <div className="frame2 hover:text-red-500">
+      <NavLink to='/power&pact'>
+        <p className="frame-text">Powder &amp; Pact</p>
+        </NavLink>
+      </div>
+      <div className="frame2 hover:text-red-500">
+      <NavLink to='/concealer'>
+        <p className="frame-text">Concealer</p>
+        </NavLink>
+      </div>
+      <div className="frame2 hover:text-red-500">
+      <NavLink to='/cushion'>
+        <p className="frame-text">Cushion</p>
+        </NavLink>
+      </div>
+      <div className="frame2 hover:text-red-500">
+      <NavLink to='/blusher&highlighter'>
+        <p className="frame-text">Blusher &amp; Highlighter</p>
+        </NavLink>
+      </div>
       </div>
     </div>
   );
@@ -64,6 +69,7 @@ const ProductStatistics = () => {
       image: "01.png",
       originalPrice: 25.0,
       discountPercent: 10,
+
     },
     {
       id: 2,
@@ -193,24 +199,24 @@ function ProductItem({ product }) {
     <>
       <div className="w-40 flex item-center flex-col mx-auto" key={product.id}>
         <NavLink to={`${product.id}`}>
-          <img
-            className="w-full self-center"
-            src={require(`../../images/Face Makeup/${product.image}`)}
-            alt={product.name}
-          />
-          <div className="flex flex-col justify-center text-center">
-            <p>{product.name}</p>
-            <p>Original Price: ${product.originalPrice}</p>
-            <p>Discount: {product.discountPercent}%</p>
-            <p>
-              Discounted Price: $
-              {calculateDiscountedPrice(
-                product.originalPrice,
-                product.discountPercent
-              )}
-            </p>
-          </div>
-        </NavLink>
+    <img
+          className="w-full self-center"
+          src={require(`../../images/Face Makeup/${product.image}`)}
+          alt={product.name}
+        />
+        <div className="flex flex-col justify-center text-center">
+          <p>{product.name}</p>
+          <p>Original Price: ${product.originalPrice}</p>
+          <p>Discount: {product.discountPercent}%</p>
+          <p>
+            Discounted Price: $
+            {calculateDiscountedPrice(
+              product.originalPrice,
+              product.discountPercent
+            )}
+          </p>
+        </div>
+    </NavLink>
       </div>
     </>
   );
@@ -225,3 +231,4 @@ export default function Category() {
     </div>
   );
 }
+

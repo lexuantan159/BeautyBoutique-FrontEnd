@@ -98,7 +98,7 @@ function Header() {
       </div>
       <div className="w-full ">
         <div className="bg-white rounded-lg flex items-center justify-center">
-          <div className="w-full border-slate-300 border-2 rounded-lg">
+          <div className="w-full border-slate-200 border-2 rounded-lg">
             <Navbar className="w-full py-2 z-50 shadow-sm bg-opacity-10 rounded-lg">
               <Navbar.Brand>
                 <div className="avatar">

@@ -1,208 +1,93 @@
-import {RiDeleteBinLine} from "react-icons/ri";
-import {PiNewspaperClippingLight} from "react-icons/pi";
-import {GoChevronRight} from "react-icons/go";
+import { useQuery } from "react-query";
+import * as cartService from "../../services/cart"
+import React, { useContext, useEffect, useState } from "react";
+import CartItem from "../../components/cart/CartItem";
+import VoucherCom from "../../components/voucher/VoucherCom";
+import { Link } from "react-router-dom";
+import MethodContext from "../../context/methodProvider";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
+    const [action, setAction] = useState(false)
+    const {
+        data: cart,
+        isLoading,
+    } = useQuery(["cart", action], () => cartService.getCart({ userId: 1 }));
+    const navigate = useNavigate();
+    const { notify } = useContext(MethodContext)
+    const [discount, setDiscount] = useState(0)
+    let totalPriceWithDiscount = 0;
 
-    return (<>
-        <div className="max-w-[1200px] grid grid-cols-12 gap-2 mt-40 mx-auto">
-            <h1 className="col-span-12 font-bold text-xl">My Cart <span className="font-normal">(2 san pham)</span></h1>
-            <div className="bg-white col-span-8 rounded-lg shadow-lg max-h-[430px] overflow-y-scroll no-scrollbar">
-                <div className="border-b-[2px] border-gray-200 flex gap-4 p-3 mb-3">
-                    <img
-                        src="https://img.freepik.com/premium-photo/vibrant-packaging-design-skinca-stair-scene-concept-creative-design-luxury-elegant_655090-472454.jpg"
-                        alt="product" className="w-[86px] h-[86px] object-cover"/>
+    useEffect(() => {
+        // totalPriceWithDiscount = discount === 0 ? cart?.data?.totalPrice : cart?.data?.totalPrice * discount;
+        totalPriceWithDiscount = 10;
+    }, [cart, discount])
 
-                    <div className="w-full flex flex-col justify-between">
-                        <p className="block ">Nước Tẩy Trang Chacott Cleansing Water 500ml</p>
-                        <p className="block"><span className="font-medium">350.000</span> ₫(trị giá 650.000 ₫)</p>
-                        <form className="w-full mx-auto flex justify-between">
-                            <div className="flex items-center">
-                                <button type="button" id="decrement-button" data-input-counter-decrement="counter-input"
-                                        className="flex-shrink-0 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-7 w-7 ">
-                                    <svg className="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true"
-                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
-                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
-                                              strokeWidth="2" d="M1 1h16"/>
-                                    </svg>
-                                </button>
-                                <input type="text" id="counter-input" dataInputCounter
-                                       className="flex-shrink-0 text-gray-900 active:border-none bg-transparent text-sm font-normal max-w-[2.5rem] text-center "
-                                       required/>
-                                <button type="button" id="increment-button" data-input-counter-increment="counter-input"
-                                        className="flex-shrink-0 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-7 w-7 ">
-                                    <svg className="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true"
-                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
-                                              strokeWidth="2" d="M9 1v16M1 9h16"/>
-                                    </svg>
-                                </button>
-                            </div>
-                            <button type="button" id="decrement-button" data-input-counter-decrement="counter-input"
-                                    className="bg-gray-100 h-7 px-3 rounded flex items-center hover:text-white hover:bg-red-500 mr-4">
-                                <RiDeleteBinLine className="mr-2"/>
-                                Delete
-                            </button>
-                        </form>
-                    </div>
+    const handlePayment = () => {
+        if (totalPriceWithDiscount <= 0) {
+            console.log(totalPriceWithDiscount)
+            notify("Cannot payment with no products", "error");
+            return;
+        }
+        navigate("/ship-detail");
+    }
+
+    return (
+        <>
+            <div className="max-w-[1200px] grid grid-cols-12 gap-5 mt-40 mx-10 lg:px-2 lg:mx-auto">
+                <h1 className="col-span-12 font-semibold text-xl">My Cart <span
+                    className="font-normal">{cart?.data?.quantity <= 1 ? `( ${cart?.data?.quantity === 0 ? 0 : cart?.data?.quantity} product )` : `( ${cart?.data?.quantity} products )`}</span>
+                </h1>
+                <div
+                    className="bg-white col-span-12 lg:col-span-8 rounded-lg shadow-lg max-h-[430px] overflow-y-scroll no-scrollbar border-[0.2px] border-gray-300">
+                    {isLoading ? <span
+                        className="loading loading-dots loading-lg text-xl "></span> : (cart.status === 200 && cart?.data?.carts.length > 0) ? cart?.data?.carts.map((item) => {
+                            return (<CartItem key={item?.id} item={item} actionChange={setAction} action={action} />)
+                        })
+                        : <div className="h-full flex flex-col justify-center items-center py-10">
+                            <img className="w-10 h-10 md:w-30 md:h-30 "
+                                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAEnUlEQVR4nO1bS4gcRRguFYyKDxQ0PhDBkw8UFDSIIfiEgWR3+/uaykGQHH0haECF5DBB9iCiKAHxIChofAuiBz2oFx8HvQWjEh9Xk40eorKP+mezLbVb3dR2Znp7dvq5sx/8zExNT0311/X/X/1/dSu1iU0sQ4C3DXBKyMg3AxwzYXiLqgCR1hcJ8JMAR+x7VSUMcCJ98okBb1QxBiF3eP+7o4r/TCBhuM0A04Z8LjYBDi/PAvLPSKkzVMnoheFdMQH2vaobEgQPJ65QgRs0joC5qamrPTfYN3YEWAj5s3ODb9Q4EmCAFxwBvWjnzoubTICNUwb4YtnIB4sa1L1eHNitCoYEwe0CPBp1OlvSBNg2AR6zx+QlwFORbiEDjDqdLQb4ryw5NOTfcd9pAmybW4ucyOpjnry2R95nLZ4BloC4beRBCvlJWXJoyM/99Ua/94b8LLMP4IA7bimrrZFyGE1MbLXEDlqEGXJmdnLyyloJmCOvKVMObZwZsAxf7AH3rPX70l2gCjmMr1jKhgpkpQTBquQw0vosQ37lXf0vbVvtMliVHMbxIMkGJya2qiYh0vpsQ/7rSHhdjSMklkPgWBXZYeMgFWeHjcOcJ4eGfDWWmZbZ3VGnc+G6SRAbpAZVjtpiwOGR5VBabHblWYwcAs83YErnM+B+Q866GfB+MXKIaoqlRcCE4Y3eLHhk7ORQbF3BEbAQBNePnRwK+YHz/5mRL9pcxcXSUbGcI5DH3Xjfa12xtFH+H8MAL7o4sBhpfYkaF/+PYaWl7Oywkf7fNjksxf/bJIdD+X80OXmBIZ91ldp316rHrZJD4FbVQNg9h1z+HwGXCfBHas28JOTTuYql5P41BxOG2wR4pkoz5PfuXI5nzlIhD3kn86MBTrorK1nMxdlhHjlMNkHqyQCz1/8G+Mcd/KH9vKD1DV4He4solgrwTr/yd0WW7f/GXfGYgFTw2FtnsbR0/7cQ4C1vuhxZ5QLkdaqmvcOC9D/b/y0irS8dEASfUi2UQ6f/M0Pl/5HW59sdGrsZae8ay7tH30Q5TMWwYtb/bcoOS1n/tyk7LGX935bssPD1v5B3xiurNshh4fm/kN24w0HTKSWHn9ZZAfZL94X4v+QgwJfDptjI/m9W1gHWrw9kta1xk0N9BAAvr/vkRyWg7o0Qm3lG3e6ZahRInFaSXe8G6pW2INieRYDaSJD8MSDXcRuXgGDVhsnuDUVCHtiqUq1Fj9NVYMnmNKpK9IBOw0iYUVUjWqkvPiTka54kLdq01JAvCfBbMkjgV/8plVwGzHv9fm0XPvbVa5t3x00LcJuqC0Lujwe1ACAhSOtzk2IlcNJ+zt1nEGwfpPOGPJgQGwR3qLohwMfuKv+S/s6QDyQnMjV10xB9PpkEZK0v97+b1foqb2Y9rhpDAHk0k4AwvHmIPp9ICACuaDoB+xIXIMO4Pdq16zxD/pC4wJ4956zLBciDsdS6FPiVdbuA9HlsblSzd5R6/npKgI+cn/7uReqjIwbBb21gNcB3pwXB/r+d7vsEiiH/qluyKpPGfk+gCHmoxk2LKk/ezsQ3h3KPTaiNi/8Bz/mfErhQWrYAAAAASUVORK5CYII="
+                                alt="sdfd" />
+                            <p className="hidden md:block text-lg font-medium mt-2 text-red-400">Your cart is empty!</p>
+                        </div>
+                    }
+
                 </div>
-                <div className="border-b-[2px] border-gray-200 flex gap-4 p-3 mb-3">
-                    <img
-                        src="https://img.freepik.com/premium-photo/vibrant-packaging-design-skinca-stair-scene-concept-creative-design-luxury-elegant_655090-472454.jpg"
-                        alt="product" className="w-[86px] h-[86px] object-cover"/>
-
-                    <div className="w-full flex flex-col justify-between">
-                        <p className="block ">Nước Tẩy Trang Chacott Cleansing Water 500ml</p>
-                        <p className="block"><span className="font-medium">350.000</span> ₫(trị giá 650.000 ₫)</p>
-                        <form className="w-full mx-auto flex justify-between">
-                            <div className="flex items-center">
-                                <button type="button" id="decrement-button" data-input-counter-decrement="counter-input"
-                                        className="flex-shrink-0 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-7 w-7 ">
-                                    <svg className="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true"
-                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
-                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
-                                              strokeWidth="2" d="M1 1h16"/>
-                                    </svg>
-                                </button>
-                                <input type="text" id="counter-input" dataInputCounter
-                                       className="flex-shrink-0 text-gray-900 active:border-none bg-transparent text-sm font-normal max-w-[2.5rem] text-center "
-                                       required/>
-                                <button type="button" id="increment-button" data-input-counter-increment="counter-input"
-                                        className="flex-shrink-0 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-7 w-7 ">
-                                    <svg className="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true"
-                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
-                                              strokeWidth="2" d="M9 1v16M1 9h16"/>
-                                    </svg>
-                                </button>
-                            </div>
-                            <button type="button" id="decrement-button" data-input-counter-decrement="counter-input"
-                                    className="bg-gray-100 h-7 px-3 rounded flex items-center hover:text-white hover:bg-red-500 mr-4">
-                                <RiDeleteBinLine className="mr-2"/>
-                                Delete
+                <div className="bg-white col-span-12 lg:col-span-4 flex-grow mt-5 lg:mt-0 ">
+                    <div className="w-full flex justify-between gap-2">
+                        <Link to="/products" relative={"route"} className="w-full">
+                            <button type="button"
+                                className="w-full text-center bg-white hover:bg-red-500 hover:text-white border-[1px] border-red-400 py-3 px-4 rounded font-bold mr-3 shadow-lg transition-all">
+                                Add Other
                             </button>
-                        </form>
+                        </Link>
+
+                        <button type="button"
+                            onClick={handlePayment}
+                            className="w-full text-center bg-red-500 hover:bg-white hover:border-[1px] hover:border-red-400 hover:text-black text-white font-bold py-3 px-4 rounded shadow-lg transition-all">
+                            Payment
+                        </button>
+
                     </div>
-                </div>
-
-                <div className="border-b-[2px] border-gray-200 flex gap-4 p-3 mb-3">
-                    <img
-                        src="https://img.freepik.com/premium-photo/vibrant-packaging-design-skinca-stair-scene-concept-creative-design-luxury-elegant_655090-472454.jpg"
-                        alt="product" className="w-[86px] h-[86px] object-cover"/>
-
-                    <div className="w-full flex flex-col justify-between">
-                        <p className="block ">Nước Tẩy Trang Chacott Cleansing Water 500ml</p>
-                        <p className="block"><span className="font-medium">350.000</span> ₫(trị giá 650.000 ₫)</p>
-                        <form className="w-full mx-auto flex justify-between">
-                            <div className="flex items-center">
-                                <button type="button" id="decrement-button" data-input-counter-decrement="counter-input"
-                                        className="flex-shrink-0 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-7 w-7 ">
-                                    <svg className="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true"
-                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
-                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
-                                              strokeWidth="2" d="M1 1h16"/>
-                                    </svg>
-                                </button>
-                                <input type="text" id="counter-input" dataInputCounter
-                                       className="flex-shrink-0 text-gray-900 active:border-none bg-transparent text-sm font-normal max-w-[2.5rem] text-center "
-                                       required/>
-                                <button type="button" id="increment-button" data-input-counter-increment="counter-input"
-                                        className="flex-shrink-0 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-7 w-7 ">
-                                    <svg className="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true"
-                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
-                                              strokeWidth="2" d="M9 1v16M1 9h16"/>
-                                    </svg>
-                                </button>
-                            </div>
-                            <button type="button" id="decrement-button" data-input-counter-decrement="counter-input"
-                                    className="bg-gray-100 h-7 px-3 rounded flex items-center hover:text-white hover:bg-red-500 mr-4">
-                                <RiDeleteBinLine className="mr-2"/>
-                                Delete
-                            </button>
-                        </form>
-                    </div>
-                </div>
-
-                <div className="flex gap-4 p-3 mb-3">
-                    <img
-                        src="https://img.freepik.com/premium-photo/vibrant-packaging-design-skinca-stair-scene-concept-creative-design-luxury-elegant_655090-472454.jpg"
-                        alt="product" className="w-[86px] h-[86px] object-cover"/>
-
-                    <div className="w-full flex flex-col justify-between">
-                        <p className="block ">Nước Tẩy Trang Chacott Cleansing Water 500ml</p>
-                        <p className="block"><span className="font-medium">350.000</span> ₫(trị giá 650.000 ₫)</p>
-                        <form className="w-full mx-auto flex justify-between">
-                            <div className="flex items-center">
-                                <button type="button"
-                                        className="flex-shrink-0 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-7 w-7 ">
-                                    <svg className="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true"
-                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
-                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
-                                              strokeWidth="2" d="M1 1h16"/>
-                                    </svg>
-                                </button>
-                                <input type="text"
-                                       className="flex-shrink-0 text-gray-900 active:border-none bg-transparent text-sm font-normal max-w-[2.5rem] text-center "
-                                       required/>
-                                <button type="button"
-                                        className="flex-shrink-0 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-7 w-7 ">
-                                    <svg className="w-2.5 h-2.5 text-gray-900 dark:text-white" aria-hidden="true"
-                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
-                                              strokeWidth="2" d="M9 1v16M1 9h16"/>
-                                    </svg>
-                                </button>
-                            </div>
-                            <button type="button" id="decrement-button" data-input-counter-decrement="counter-input"
-                                    className="bg-gray-100 h-7 px-3 rounded flex items-center hover:text-white hover:bg-red-500 mr-4">
-                                <RiDeleteBinLine className="mr-2"/>
-                                Delete
-                            </button>
-                        </form>
+                    {/*Voucher*/}
+                    <VoucherCom conditionApply={totalPriceWithDiscount} />
+                    <div className="w-full mt-4 bg-white rounded-lg shadow-md px-3 mb-2 border-[0.2px] border-gray-300">
+                        <div className="mx-3 mb-3 flex justify-between items-center border-b-[1px] border-gray-300">
+                            <p className="py-2 ">Price </p>
+                            <p className="py-2 ">{cart?.data?.totalPrice}$ </p>
+                        </div>
+                        <div className="mx-3 mb-3 flex justify-between items-center border-b-[1px] border-gray-300">
+                            <p className="py-2 ">Discount </p>
+                            <p className="py-2 ">{discount}% </p>
+                        </div>
+                        <div className="mx-3 mb-3 flex justify-between items-center text-[#FF9FA0]">
+                            <p className="py-2 ">Total </p>
+                            <p className="py-2 ">{totalPriceWithDiscount}$ </p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div className="bg-white col-span-4 flex-grow">
-                <div className="w-full flex justify-between gap-2 ">
-                    <button type="button"
-                            className="w-full text-center bg-white border py-3 px-4 rounded font-bold hover:opacity-90 mr-3">
-                        Add Other
-                    </button>
-                    <button type="button"
-                            className="w-full text-center bg-[#FF9FA0] text-white font-bold py-3 px-4 rounded hover:text-white">
-                        Payment
-                    </button>
-                </div>
-                <div className="w-full mt-4 bg-white rounded-lg shadow-md px-3 pb-3 ">
-                    <p className="flex items-center py-3 text-lg"><PiNewspaperClippingLight
-                        className="pr-4 text-black"/>Voucher
-                    </p>
-                    <button
-                        className="w-full flex items-center justify-between text-gray-300  text-left py-2 px-3 border-[1px] rounded-lg border-gray-400 mb-2">Code
-                        Discount <GoChevronRight className="text-xl"/>
-                    </button>
-                    <p className="p-3 bg-gray-200 text-black rounded-lg border-[0.5px] border-gray-300">Nhận ngay quà
-                        trị giá 200K cho đơn hàng từ 500K
-                        tại Lixibox (HSD: 30/06/2024</p>
-                </div>
-                <div className="w-full mt-4 bg-white rounded-lg shadow-md px-3 mb-2">
-                    <div className="mx-3 mb-3 flex justify-between items-center border-b-[1px] border-gray-300">
-                        <p className="py-2 ">Price </p>
-                        <p className="py-2 ">12$ </p>
-                    </div>
-                    <div className="mx-3 mb-3 flex justify-between items-center border-b-[1px] border-gray-300">
-                        <p className="py-2 ">Discount </p>
-                        <p className="py-2 ">20% </p>
-                    </div>
-                    <div className="mx-3 mb-3 flex justify-between items-center text-[#FF9FA0]">
-                        <p className="py-2 ">Total </p>
-                        <p className="py-2 ">8$ </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </>)
+        </>)
 }
 
 export default Cart;

@@ -47,23 +47,23 @@ function Header() {
   };
   return (
     <div
-      className={`sticky mb-8 max-w-[1200px] top-0 left-0 right-0 w-full z-50  mx-auto transition-transform transform duration-300 ${
+      className={`mb-2 sticky max-w-[1200px] top-0 left-0 right-0 w-full z-50  mx-auto transition-transform transform duration-300 ${
         isVisible ? 'translate-y-0' : '-translate-y-full'
       }`}
     >
       <div className="w-full flex justify-between p-2 bg-white text-black bg-opacity-50">
-        <div className="flex justify-center items-center font-sans text-lg">
+        <div className="flex justify-center items-center font-sans text-xs">
           <ul className="flex justify-center items-center">
             <li className="flex justify-center items-center mr-4 ">
-              <span className="text-orange-400 mr-2 font-bold">
+              <span className="text-orange-400 mr-2 font-bold ">
                 <icons.CiLocationOn />
               </span>
-              <span className="max-sm:hidden max-md:hidden">
-                FPT Complex Đà Nẵng
+              <span className="max-sm:hidden max-md:hidden font-bold">
+                FPT Complex Đà Nắng
               </span>
             </li>
-            <li className="flex justify-center items-center ">
-              <span className="text-btnprimary mr-2 font-bold">
+            <li className="flex justify-center items-center font-bold">
+              <span className="text-btnprimary mr-2 ">
                 <icons.AiOutlineMail />
               </span>
               <span>beautyboutique@gmail.com</span>
@@ -71,35 +71,35 @@ function Header() {
           </ul>
         </div>
 
-        <div className="text-black flex justify-center items-center font-sans text-lg">
-          <ul className="flex justify-center items-center cursor-pointer gap-2">
+        <div className="text-black flex justify-center items-center font-sans text-xs">
+          <ul className="flex justify-center items-center cursor-pointer">
             <li className="flex justify-center items-center mr-1 ">
               <a href="https://www.facebook.com/studiofotofusion">
-                <icons.BsInstagram />
+                <icons.BsInstagram className="text-base" />
               </a>
             </li>
             <li className="flex justify-center items-center mr-1 ">
               <a href="https://www.facebook.com/studiofotofusion">
-                <icons.AiOutlineFacebook />
+                <icons.AiOutlineFacebook className="text-base" />
               </a>
             </li>
             <li className="flex justify-center items-center mr-1 ">
               <a href="https://www.facebook.com/studiofotofusion">
-                <icons.BsTwitter />
+                <icons.BsTwitter className="text-base" />
               </a>
             </li>
             <li className="flex justify-center items-center mr-1 ">
               <a href="https://www.facebook.com/studiofotofusion">
-                <icons.AiOutlineYoutube />
+                <icons.AiOutlineYoutube className="text-base" />
               </a>
             </li>
           </ul>
         </div>
       </div>
       <div className="w-full ">
-        <div className="bg-white rounded-lg flex items-center justify-center">
-          <div className="w-full border-slate-200 border-2 rounded-lg">
-            <Navbar className="w-full py-2 z-50 shadow-sm bg-opacity-10 rounded-lg">
+        <div className="bg-white rounded-lg  flex items-center justify-center">
+          <div className="w-full border border-black rounded-lg">
+            <Navbar className="w-full z-50 bg-opacity-10 rounded-lg dark:bg-white">
               <Navbar.Brand>
                 <div className="avatar">
                   <div className="w-14 rounded-full">
@@ -117,7 +117,7 @@ function Header() {
                 </div>
 
                 <div className="text-black hover:text-red-500">
-                  <Link to="/">PRODUCT</Link>
+                  <Link to="/product">PRODUCT</Link>
                 </div>
 
                 <div className="text-black hover:text-red-500">

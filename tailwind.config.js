@@ -1,12 +1,36 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  content: [
+    './src/**/*.{js,jsx,ts,tsx}',
+    'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}',
+  ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'island-moments': ['Island Moments', 'sans-serif'],
+      },
+    },
   },
-  plugins: [require('daisyui')],
+  plugins: [
+    require('daisyui'),
+    function ({ addUtilities }) {
+      const newUtilities = {
+        '.no-scrollbar::-webkit-scrollbar': {
+          display: 'none',
+        },
+        '.no-scrollbar': {
+          '-ms-overflow-style': 'none',
+          'scrollbar-width': 'none',
+        },
+        '.fill-available': {
+          width: '-webkit-fill-available',
+        },
+      };
+      addUtilities(newUtilities);
+    },
+  ],
   daisyui: {
-    themes: false,
+    themes: 'pastel',
     darkTheme: 'dark',
     base: true,
     styled: true,

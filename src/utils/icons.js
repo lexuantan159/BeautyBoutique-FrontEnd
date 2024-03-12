@@ -1,6 +1,10 @@
 import { FiSearch, FiSend } from 'react-icons/fi';
 import { HiReceiptPercent } from 'react-icons/hi2';
 import {
+  HiOutlineDotsVertical,
+  HiOutlineExclamationCircle,
+} from 'react-icons/hi';
+import {
   MdShoppingCart,
   MdCategory,
   MdOutlineDoNotDisturbAlt,
@@ -102,6 +106,8 @@ export const icons = {
   FcLike,
   FcLikePlaceholder,
   FiSend,
+  HiOutlineDotsVertical,
+  HiOutlineExclamationCircle,
   BsInstagram,
   BsTwitter,
   BsFillPenFill,

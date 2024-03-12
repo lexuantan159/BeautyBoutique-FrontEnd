@@ -114,8 +114,8 @@ export default function Footer() {
             < Navigator />
             < Footerr />
         </div>
-    );
 
-   
+
+    );
 }
 

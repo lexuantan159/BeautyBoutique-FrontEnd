@@ -35,6 +35,8 @@ export const MethodProvider = ({ children }) => {
 
         return outputDate;
     }
+
+    //upload file 
     const uploadFile = async (imageUploads) => {
         try {
             const imageIds = [];

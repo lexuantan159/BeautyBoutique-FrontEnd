@@ -84,7 +84,7 @@ const Comment = ({ commentId, index, setChange, change }) => {
                             onChange={(e) => setNewComment(e.target.value)}
                             value={newComment}
                             className="textarea textarea-accent w-[90%]"
-                            placeholder="Viết bình luận của bạn..."
+                            placeholder="Write Your Comment..."
                             required
                         ></textarea>
                         <div className='flex items-center justify-center ml-4'>

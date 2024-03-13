@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import * as productApi from "../../services/product";
 import { Card } from "flowbite-react";
+import { NavLink } from 'react-router-dom';
+
 const Product = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -37,9 +39,9 @@ const Product = () => {
     }
   }, []);
   return (
-    <div className="w-full ">
+    <div className="w-full mx-auto ">
       <div className="flex items-center justify-center">
-        <div className="mx-auto w-[1200px] h-16 flex justify-around items-center border shadow-md rounded-lg mt-4 ">
+        <div className="mx-auto w-[1200px] h-16 flex justify-around items-center border shadow-md rounded-lg mt-5 mb-5 ">
           <div className=" w-full mx-auto h-full flex justify-center items-center">
           <div className="grid grid-cols-7">
             <button className="font-inter font-semibold text-center text-[16px] hover:text-red-500" onClick={() =>{setCategoryID('')}}> All Product </button>
@@ -58,24 +60,26 @@ const Product = () => {
       </div>
 
       <div className="flex items-center justify-center">
-        <div className="w-[70%]">
-          <div className="grid grid-cols-4 gap-4">
+        <div className="w-[1200px]">
+          <div className="grid grid-cols-4 gap-6">
             {products.map((item) => {
               return (
                 <>
+                <NavLink to={`${item.id}`}>
                   <Card
                     className="max-w-sm"
                     imgAlt={item.productName}
                     imgSrc={item.images[0].imageUrl}
                   >
-                    <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                    <h5 className="text-xl h-[80px] font-semibold tracking-tight text-gray-900 dark:text-white">
                       {item.productName}
                     </h5>
 
                     <div className="flex items-center justify-between">
-                      <span className="text-3xl font-bold text-gray-900 dark:text-white">
-                        ${item.salePrice}
+                      <span className="text-2xl font-bold text-gray-900 dark:text-white ">
+                        ${item.salePrice.toFixed(2)}
                       </span>
+                      
                       <button
                         href="#"
                         className="rounded-lg bg-cyan-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
@@ -84,6 +88,7 @@ const Product = () => {
                       </button>
                     </div>
                   </Card>
+                  </NavLink>
                 </>
               );
             })}

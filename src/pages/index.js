@@ -13,9 +13,7 @@ export { Admin } from './Admin/Admin'
 
 export { default as Product } from './Product/Product.jsx'
 
-
-export { default as PowerPact } from './Product/PowerPact';
-export { default as ProductDetail } from './Product/Product_Detail';
+export { default as ProductDetail } from './Product/Product_Detail.jsx'
 
 
 export { default as Order } from './Order/Order'

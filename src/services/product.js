@@ -80,9 +80,29 @@ const getCategory = async () => {
     };
     }
 }
+const getProductById = async(id) =>{
+    try {
+        const product = await request.get(`/product/get/${id}`,{
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        return{
+            data : product.data,
+            statusCode : product.status
+        }
+    } catch (error) {
+        const statusCode = error.status || (error.response && error.response.status) || 500;
+        return {
+            error,
+            statusCode,
+        };
+    }
+}
 export {
     addProduct,
     getProduct,
     getProductByCategory,
-    getCategory
+    getCategory,
+    getProductById
 };

@@ -9,7 +9,8 @@ import { Avatar, Dropdown, Navbar } from 'flowbite-react';
 //Navigator
 const Navigator = () => {
   return (
-    <div style={{paddingTop:'20px', marginLeft: '160px'}} >
+    <div className="w-[1200px] mx-auto items-center justify-center"> 
+      <div style={{paddingTop:'20px'}} >
       <div style={{ backgroundColor: '#FBFCF3', borderTop: '1.5px solid #665C5C', paddingTop:'20px', position: 'relative', width: '1200px', height: 'auto !important', background: '', zoom: 1, clear: 'both'}}>
         <div>
           <div style={{display:'flex'}}>
@@ -51,6 +52,8 @@ const Navigator = () => {
         </div>
       </div>
     </div>
+    </div>
+    
   );
 };
 

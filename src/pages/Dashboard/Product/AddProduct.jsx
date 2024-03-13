@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
-import * as productApi from "../../../services/product";
 import MethodContext from "../../../context/methodProvider";
+import * as productApi from "../../../services/product";
 
 const AddProduct = () => {
   const [productName, setProductName] = useState("");
@@ -46,6 +46,7 @@ const AddProduct = () => {
       );
       if (createBlog.statusCode === 201) {
         alert("tạo sản phẩm  mới thành công");
+         window.location.reload();
       } else alert("tạo sản phẩm không thành công");
     }
   };
@@ -86,12 +87,11 @@ const AddProduct = () => {
           <div>
             <div className="my-4">
               <span className="block my-2">Description</span>
-              <input
-                type="text"
+              <textarea className="textarea textarea-accent w-full" type="text"
                 placeholder="Type here"
-                className="input input-bordered input-accent w-full max-w-xs"
-                onChange={(e) => setDescription(e.target.value)}
-              />
+                 onChange={(e) => setDescription(e.target.value)}
+                 ></textarea>
+             
             </div>
             <div className="my-4">
               <span className="block my-2">Category ID</span>

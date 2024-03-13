@@ -109,7 +109,7 @@ function Header() {
                 </div>
 
                                 <div className="text-black hover:text-red-500">
-                                    <Link to='/category' >
+                                    <Link to='/product' >
                                         PRODUCT
                                     </Link>
                                 </div>

@@ -16,7 +16,7 @@ const addProduct = async (productName, actualPrice, salePrice, description, cate
             },
             {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'application/json'
                 }
             });
         return {
@@ -48,7 +48,41 @@ const getProduct = async() =>{
         };
     }
 }
+const getProductByCategory = async (id)=>{
+try {
+    const response = await request.get(`/product/getProductByC/${id}`)
+    return{
+        statusCode : response.status,
+        data : response.data
+    }
+} catch (error) {
+    const statusCode = error.status || (error.response && error.response.status) || 500;
+    return {
+        error,
+        statusCode,
+    };
+    
+}
+}
+const getCategory = async () => {
+    try {
+        const quang = await request.get('/category/get-all')
+        return{
+            statusCode : quang.status,
+            data : quang.data
+        }
+        
+    } catch (error) {
+        const statusCode = error.status || (error.response && error.response.status) || 500;
+    return {
+        error,
+        statusCode,
+    };
+    }
+}
 export {
     addProduct,
-    getProduct
+    getProduct,
+    getProductByCategory,
+    getCategory
 };

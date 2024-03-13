@@ -15,13 +15,13 @@ const LayoutAdmin = ({children}) => {
                 <Sidebar>
                     <SidebarItem icon={<IoIosHome size={20} />} text="Home" />
                     <SidebarItem icon={<LuLayoutDashboard size={20} />} text="Dashboard" />
-                    <SidebarItem icon={<CgShutterstock size={20} />} text="Stock" alert />
+                    <SidebarItem icon={<CgShutterstock size={20} />} text="Stock" />
                     <SidebarItem icon={<FaStoreAlt  size={20} />} text="Order" />
                     <hr className="my-3" />
                     <SidebarItem icon={<IoSettingsSharp  size={20} />} text="Settings" />
                 </Sidebar>
             </div>
-            <div className="fill-available">{children}</div>
+            <div className="fill-available max-h-screen">{children}</div>
         </div>
     </>)
 }

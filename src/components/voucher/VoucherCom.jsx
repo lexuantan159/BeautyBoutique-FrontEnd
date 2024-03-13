@@ -34,7 +34,6 @@ const VoucherCom = ({conditionApply, voucherActive, voucherDetail}) => {
         voucherActive({discount: 0});
     }
 
-
     return (
         <div className="w-full mt-4 bg-white rounded-lg shadow-md px-3 pb-3 border-[0.2px] border-gray-300">
             <p className="flex items-center py-3 text-lg">

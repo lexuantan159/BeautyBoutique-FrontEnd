@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react'
-import {MdOutlineAddLocationAlt, MdOutlineLocalShipping, MdOutlinePayments} from "react-icons/md";
+import {MdOutlineAddLocationAlt} from "react-icons/md";
 import {GrAdd} from "react-icons/gr";
 import DropList from "../../components/animation/DropList";
 import ShipDetailItem from "../../components/modal/ShipDetailItem";
@@ -74,20 +74,15 @@ const ShipDetail = () => {
             notify("You need enter method payment!", "error")
             return true;
         }
-        if (!voucher.id) {
-            notify("You need enter voucher!", "error")
-            return true;
-        }
 
         setParamsOrder(prevState => ({
             ...prevState,
             shipDetailId: shipDetail?.id,
             deliveryId: methodShipping?.id,
             paymentId: methodPayment?.id,
-            voucherId: voucher?.id,
+            voucherId: voucher?.id ? voucher?.id : null,
         }))
         console.log(paramsOrder)
-
         return false;
     }
 
@@ -113,7 +108,8 @@ const ShipDetail = () => {
                 })
             } else {
                 console.log(responseCreateOrder)
-                toastUpdateLoadingId("Order failed!", "error", id);
+                setIsLoadingPayment(false)
+                toastUpdateLoadingId(responseCreateOrder?.response?.data || "Create order fail!" , "error", id);
             }
             return;
         }

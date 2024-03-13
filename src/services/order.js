@@ -58,3 +58,23 @@ export const getOrderHistories = async (paramsObject) => {
     }
 };
 
+const APPROVE_ORDER_ENDPOINT = "/order/approve-order"
+
+export const approveOrder = async (paramObject) => {
+    try {
+        return await request.put(APPROVE_ORDER_ENDPOINT,
+            {},
+            {
+                params:
+                paramObject
+                ,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+    } catch (error) {
+        return error
+    }
+};
+

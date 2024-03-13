@@ -15,6 +15,7 @@ const Cart = () => {
         data: cart,
         isLoading,
     } = useQuery(["cart", action], () => cartService.getCart({userId: 1}));
+
     useEffect(() => {
         if (cart?.data?.carts.length > 0) {
             setCartItemIds(cart?.data?.carts.map(item => item.id))

@@ -2,7 +2,44 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import * as productApi from "../../services/product";
 import { FaCheckCircle } from "react-icons/fa";
+import Comment from "../Blogpost/Comment";
+import { Button } from 'flowbite-react';
+
 const Product_Detail = () => {
+  // ScrollToDetail
+const scrollToDetail = () => {
+  const detailSection = document.getElementById('detailSection');
+  if (detailSection) {
+    detailSection.scrollIntoView({ behavior: 'smooth' });
+  }
+};
+// ScrollToShipping
+const scrollToShipping = () => {
+  const shippingSection = document.getElementById('shippingSection');
+  if (shippingSection) {
+    shippingSection.scrollIntoView({ behavior: 'smooth' });
+  }
+};
+// ScrollToreview
+const scrollToReview = () => {
+  const reviewSection = document.getElementById('reviewSection');
+  if (reviewSection) {
+    reviewSection.scrollIntoView({ behavior: 'smooth' });
+  }
+};
+//
+const [quantity, setQuantity] = useState(1);
+
+  const handleIncrease = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const handleDecrease = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
+  //
   const [product, setProduct] = useState("");
   const { id } = useParams();
 
@@ -23,6 +60,9 @@ const Product_Detail = () => {
 
   return (
     <div className="max-w-[1200px] mx-auto">
+      <scrollToShipping />
+      <scrollToReview />
+      <scrollToDetail />
       <div className="flex ">
         {product && product.images && product.images.length > 0 ? (
           <div className="flex">
@@ -56,6 +96,7 @@ const Product_Detail = () => {
               style={{
                 width: "100%",
                 borderTop: "1px solid #dddddd",
+                borderBottom: "1px solid #dddddd",
                 marginRight: "120px",
               }}
             >
@@ -105,10 +146,22 @@ const Product_Detail = () => {
                     ( You saved {(product.actualPrice - product.salePrice).toFixed(2)} USD )
                   </td>
                 </tr>
+                  <td>QTY</td>
+                <td className="pt-[20px] pb-[20px] flex ">
+                  <Button.Group>
+                    <Button onClick={handleDecrease} color="gray" className="text-sm"> - </Button>
+                    <Button color="gray"> {quantity} </Button>
+                    <Button onClick={handleIncrease} color="gray" className="text-sm"> + </Button>
+                  </Button.Group>
+                </td>
               </tbody>
             </table>
           </td>
-          <div className="flex">
+          <div className="w-full flex text-right">
+            <p style={{ paddingTop: "8px" }}>TOTAL PRICE</p>
+            <p style={{ color: "#323232", fontSize: "24px",fontWeight: "bold",}}>&nbsp;&nbsp;&nbsp; {(product.salePrice * quantity).toFixed(2)} USD</p>
+          </div>
+          <div className="flex pt-[20px]">
             <div
               style={{
                 width: "238px",
@@ -159,6 +212,142 @@ const Product_Detail = () => {
           </div>
         </div>
       </div>
+
+      <div className="max-w-[1200px] mx-auto items-center">
+        <div style={{ height: '65px', display: 'flex', paddingTop: '30px'}}>
+      <a onClick={scrollToDetail}>
+        <p style={{ width: '90px', height: '50px', textAlign: 'center', borderTop: '1px solid #ccc', borderRight: '1px solid #ccc', borderLeft: '1px solid #ccc' }}>DETAIL</p> 
+      </a>
+
+      <a onClick={scrollToReview}>
+        <p style={{ width: '90px', textAlign: 'center' }}>REVIEW</p>
+      </a>
+      
+      <a onClick={scrollToShipping}>
+        <p style={{ width: '90px', textAlign: 'center' }}>SHIPPING</p>
+      </a>
+    </div>
+
+        <div id="detailSection">
+           <div style={{ 
+                        width: '1200px',
+                        borderLeft: '1px solid #ccc',
+                        borderRight: '1px solid #ccc',
+                        borderBottom: '1px solid #ccc',
+                        borderTop: '1px solid #ccc',
+                        margin: '0 0 40px',
+                        position: 'relative',
+                        zIndex: 4,
+                        background: '#fff',
+                        boxShadow: '5px 5px 0px 0px #f0f0f0', 
+                      }}>
+              <div style={{
+                          width: '100%',
+                          marginLeft: '32px',
+                          paddingTop: '20px',
+                          fontWeight: 'bold',
+                          fontSize: '16pt',
+                          color: '#000',
+                          fontFamily: '-webkit-pictograph, "Playfair Display", serif',
+                          padding: '0 0 5px' 
+                         }}> Description 
+              </div>
+              <div style={{
+                          width: '100%',
+                          marginLeft: '32px',
+                          paddingRight: '40px',
+                          paddingBottom:'20px'
+                         }} > {product.description}
+
+
+                        
+            
+          </div>
+        </div>
+      </div>
+
+      <div id="shippingSection">
+        <div style={{ height: '55px', display: 'flex', paddingTop: '-20px'}}> 
+          <p style={{ width: '10%', height: '50px', textAlign: 'center', borderTop: '1px solid #ccc', borderRight: '1px solid #ccc', borderLeft: '1px solid #ccc', }} > SHIPPING </p>
+        </div>
+        <div>
+           <div style={{ 
+                        width: '1200px',
+                        marginTop: '-20px',
+                        borderLeft: '1px solid #ccc',
+                        borderRight: '1px solid #ccc',
+                        borderBottom: '1px solid #ccc',
+                        borderTop: '1px solid #ccc',
+                        margin: '-20 0 40px',
+                        position: 'relative',
+                        zIndex: 4,
+                        background: '#fff',
+                        boxShadow: '5px 5px 0px 0px #f0f0f0',  
+                      }}>
+              <div style={{
+                          width: '100%',
+                          marginLeft: '32px',
+                          paddingTop: '20px',
+                          fontWeight: 'bold',
+                          fontSize: '16pt',
+                          color: '#000',
+                          fontFamily: '-webkit-pictograph, "Playfair Display", serif',
+                          padding: '0 0 5px' 
+                         }}> Shipping Information 
+              </div>
+              <div style={{
+                          width: '100%',
+                          marginLeft: '32px',
+                          paddingRight: '40px',
+                          paddingBottom: '20px'
+                         }} >
+                            - StyleKorean is an authorized retailer. <br />
+                            - All parcels from StyleKorean are shipped from Korea. <br />
+                            - This item cannot be shipped to certain countries or regions. <br />
+                            - We are unable to ship to the following address: P.O. Box, APO, FPO, DPO. <br />
+              </div> 
+            </div>
+
+
+        </div>
+      </div>
+
+    <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="" />
+    <div>
+      <div id="reviewSection"> 
+        <div style={{ height: '25px', display: 'flex', paddingTop: '5px'}}> 
+          <p style={{ paddingBottom: '40px', width: '10%', height: '50px', textAlign: 'center', borderTop: '1px solid #ccc', borderRight: '1px solid #ccc', borderLeft: '1px solid #ccc', }} > REVIEW </p>
+        </div>
+        <div>
+           <div style={{ 
+                        width: '1200px',
+                        marginTop: '18px',
+                        borderLeft: '1px solid #ccc',
+                        borderRight: '1px solid #ccc',
+                        borderBottom: '1px solid #ccc',
+                        borderTop: '1px solid #ccc',
+                        margin: '-20 0 40px',
+                        position: 'relative',
+                        zIndex: 4,
+                        background: '#fff',
+                        boxShadow: '5px 5px 0px 0px #f0f0f0',  
+                      }}>
+              <div style={{
+                  width: "full",
+                  margin: '-20 0 40px',
+                  position: 'relative',
+                  zIndex: 4,
+                  background: '#fff',
+                  paddingBottom: '20px'
+
+                }}>
+                  <Comment />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     </div>
   );
 };

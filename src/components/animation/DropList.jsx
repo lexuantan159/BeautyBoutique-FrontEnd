@@ -3,13 +3,12 @@ import {motion} from "framer-motion";
 import {MdOutlineLocalShipping, MdOutlinePayments} from "react-icons/md";
 import {GoChevronRight} from "react-icons/go";
 
-const DropList = ({title, listItem = [], type="shipping", setItem}) => {
+const DropList = ({title, listItem = [], type = "shipping", setItem}) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const [itemDrop, setItemDrop] = useState({});
     const handleClick = () => {
         setIsExpanded(!isExpanded);
     };
-
 
     const container = {
         hidden: {opacity: 0, height: "0px", backgroundColor: "white"},
@@ -46,11 +45,13 @@ const DropList = ({title, listItem = [], type="shipping", setItem}) => {
             >
                 {type === "shipping" ?
                     <motion.p className="flex items-center uppercase">
-                        <MdOutlineLocalShipping size={20} className="mr-2"/> {Object.keys(itemDrop).length === 0 ? title : itemDrop?.name}
+                        <MdOutlineLocalShipping size={20}
+                                                className="mr-2"/> {Object.keys(itemDrop).length === 0 ? title : itemDrop?.name}
                     </motion.p>
-                :
+                    :
                     <motion.p className="flex items-center uppercase">
-                        <MdOutlinePayments size={20} className="mr-2"/> {Object.keys(itemDrop).length === 0 ? title : itemDrop?.name}
+                        <MdOutlinePayments size={20}
+                                           className="mr-2"/> {Object.keys(itemDrop).length === 0 ? title : itemDrop?.name}
                     </motion.p>}
                 <motion.p animate={isExpanded ? itemCross.show : itemCross.hidden}
                 >
@@ -81,5 +82,6 @@ const DropList = ({title, listItem = [], type="shipping", setItem}) => {
         </motion.div>
     </>)
 }
+
 
 export default DropList

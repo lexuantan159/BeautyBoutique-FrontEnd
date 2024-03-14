@@ -268,4 +268,5 @@ const ShipDetail = () => {
         </>
     )
 }
+
 export default ShipDetail

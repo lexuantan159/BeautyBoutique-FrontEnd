@@ -19,6 +19,7 @@ import {
   ContactUs,
   UserInfo,
   Product,
+  ManageProduct,
 } from '../pages/index';
 import { LayoutAdmin, LayoutDefault } from '../layouts/index';
 const router = [
@@ -30,6 +31,11 @@ const router = [
   { path: '/payment-success', component: PaymentSuccess },
   { path: '/admin/voucher', layout: LayoutAdmin, component: ManageVoucher },
   { path: '/admin/blog', layout: LayoutAdmin, component: ManagementBlog },
+  { path: '/admin/order', layout: LayoutAdmin, component: Order },
+  { path: '/admin', component: LayoutAdmin },
+  { path: '/admin/product', layout: LayoutAdmin, component: ManageProduct },
+  { path: '/admin/brand', layout: LayoutAdmin, component: ManageProduct },
+  { path: '/admin/category', layout: LayoutAdmin, component: ManageProduct },
 
   { path: '/product', component: Product },
   { path: '/foundation', component: Foundation },
@@ -51,11 +57,9 @@ const router = [
     layout: LayoutDefault,
     component: PaymentSuccess,
   },
-  { path: '/admin/order', layout: LayoutAdmin, component: Order },
 
   { path: '/order/:orderId', component: OrderDetail },
   { path: '/contact', component: ContactUs },
-  { path: '/admin', component: LayoutAdmin },
   { path: '/user', component: UserInfo },
   { path: '/', component: Home },
   { path: '/blogpost', component: Blog },

@@ -29,7 +29,9 @@ export default function OrderDetail() {
     <div className="px-4">
       <div className="flex">
         <p className="font-bold text-[#5D5D5D]">OrderID: </p>
-        <p className="uppercase font-medium text-[#5D5D5D] ml-2">{orderId}</p>
+        <p className="uppercase font-medium text-[rgb(93,93,93)] ml-2">
+          {orderId}
+        </p>
       </div>
       <div className="flex items-center my-3">
         <p className="font-medium text-[#5D5D5D] ml-4">

@@ -7,6 +7,20 @@ import { TbBuildingWarehouse } from 'react-icons/tb';
 import { BiLogoBlogger } from 'react-icons/bi';
 import { TiTicket } from 'react-icons/ti';
 
+function SubElement() {
+  return (
+    <>
+      <NavLink
+        to=""
+        className="flex gap-2 items-center hover:cursor-pointer hover:bg-blue-200 rounded-md py-4 px-2 ease-in duration-300"
+      >
+        <FaChartLine />
+        <p>Static</p>
+      </NavLink>
+    </>
+  );
+}
+
 export function Admin() {
   return (
     <div className="flex gap-2">
@@ -14,13 +28,6 @@ export function Admin() {
         <div className="flex flex-col h-full">
           <p className="text-[#013CC6] text-xl font-bold text-center">Admin</p>
           <div className="flex flex-col pl-8 font-medium text-slate-500 text-lg my-auto gap-4 ">
-            <NavLink
-              to=""
-              className="flex gap-2 items-center hover:cursor-pointer hover:bg-blue-200 rounded-md py-4 px-2 ease-in duration-300"
-            >
-              <FaChartLine />
-              <p>Static</p>
-            </NavLink>
             <NavLink
               to=""
               className="flex gap-2 items-center hover:cursor-pointer hover:bg-blue-200 rounded-md py-4 px-2 ease-in duration-300"

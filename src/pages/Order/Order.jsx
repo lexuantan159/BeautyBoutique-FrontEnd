@@ -29,7 +29,6 @@ const Order = () => {
             <p className="font-medium text-xs text-gray-300">Total Canceled</p>
           </div>
         </div>
-
         <div className="p-3 border-[0.5px] border-gray-400 rounded-lg text-black bg-white flex items-center mt-5 md:mt-0 mr-5">
           <MdOutlineDeliveryDining className="text-5xl text-red-400 mx-2" />
           <div className="">

@@ -1,8 +1,6 @@
 import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
 import logo from '../../public/img/logo.jpg';
 import { icons } from '../../utils/icons';
-import { Avatar, Dropdown, Navbar } from 'flowbite-react';
 
 //Navigator
 const Navigator = () => {

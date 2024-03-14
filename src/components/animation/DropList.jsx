@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { MdOutlineLocalShipping, MdOutlinePayments } from 'react-icons/md';
 import { GoChevronRight } from 'react-icons/go';
-
 const DropList = ({ title, listItem = [], Icon }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [itemDrop, setItemDrop] = useState({});
@@ -25,16 +23,6 @@ const DropList = ({ title, listItem = [], Icon }) => {
     hidden: { opacity: 1, rotate: 0 },
     show: { opacity: 1, rotate: 90 },
   };
-  const item = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        easing: 'linear',
-      },
-    },
-  };
-
   return (
     <>
       <motion.div

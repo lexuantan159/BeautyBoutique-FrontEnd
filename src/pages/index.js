@@ -6,6 +6,7 @@ export { default as PaymentSuccess } from './Payment/PaymentSuccess';
 export { default as Voucher } from './Vouchers/Voucher';
 export { default as ManageVoucher } from './Dashboard/Voucher/ManageVoucher';
 export { default as ManagementBlog } from './Dashboard/Blogpost/ManagementBlog';
+export { default as ManageProduct } from './Dashboard/Product/ManageProduct';
 
 export { default as Product } from './Product/Produdct';
 export { default as Foundation } from './Product/Foundation';

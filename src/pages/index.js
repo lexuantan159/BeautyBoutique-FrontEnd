@@ -8,18 +8,15 @@ export { default as Voucher } from './Vouchers/Voucher'
 export { default as ManageVoucher } from './Dashboard/Voucher/ManageVoucher'
 export { default as ManagementBlog } from './Dashboard/Blogpost/ManagementBlog'
 
+export { Admin } from './Admin/Admin'
+//export { ProductA } from './Admin/Product'
 
+export { default as Product } from './Product/Product.jsx'
 
-export { default as Category } from './Product/Category';
-export { default as Foundation } from './Product/Foundation';
-export { default as MakeupBase } from './Product/MakeupBase';
-export { default as PowerPact } from './Product/PowerPact';
-export { default as Concealer } from './Product/Concealer';
-export { default as Cushion } from './Product/Cushion';
-export { default as BlusherHighlighter } from './Product/BlusherHighlighter';
-export { default as ProductDetail } from './Product/Product_Detail';
+export { default as ProductDetail } from './Product/Product_Detail.jsx'
 
 
 export { default as Order } from './Order/Order'
 export { default as NotFound } from './NotFound/NotFound'
 
+export { default as AddProduct } from './Dashboard/Product/AddProduct'

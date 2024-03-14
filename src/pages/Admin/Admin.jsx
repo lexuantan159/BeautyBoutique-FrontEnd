@@ -9,8 +9,9 @@ import { TiTicket } from 'react-icons/ti';
 
 export function Admin() {
   return (
-    <div className="flex gap-2">
-      <div className="min-w-72 bg-blue-100 rounded-md p-8">
+     <div className="max-w-[1200px] mx-auto " >
+    <div className="flex gap-2 mt-32">
+      <div className="min-w-72 bg-blue-100 rounded-md p-7">
         <div className="flex flex-col h-full">
           <p className="text-[#013CC6] text-xl font-bold text-center">Admin</p>
           <div className="flex flex-col pl-8 font-medium text-slate-500 text-lg my-auto gap-4 ">
@@ -28,12 +29,12 @@ export function Admin() {
               <FaUser />
               <p>User</p>
             </NavLink>
-            <NavLink
-              to=""
-              className="flex gap-2 items-center hover:cursor-pointer hover:bg-blue-200 rounded-md py-4 px-2 ease-in duration-300"
+          <NavLink
+              to="/admin/product"
+              className="flex gap-2 text-[#FFFFFF] items-center hover:cursor-pointer hover:bg-blue-200 rounded-md py-4 px-2 ease-in duration-300"
             >
               <IoBagHandle />
-              <p>Product</p>
+              <p className="text-[#FFFFFF]">Product</p>
             </NavLink>
             <NavLink
               to=""
@@ -151,6 +152,7 @@ export function Admin() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

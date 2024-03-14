@@ -40,14 +40,14 @@ const ManageVoucher = () => {
 
 
     return (
-        <div data-theme="pastel" className='w-full h-auto bg-white flex items-center justify-center m-4'>
-            <div className='w-80%'>
-                <div className='flex items-center justify-center p-4 m-4'>
-                    <span className='text-[#F6CBD1] text-3xl font-bold'>
-                        Manage vouchers and promotions
-                    </span>
-                </div>
-                <div className=' flex items-center justify-end m-4'>
+        <div className='max-h-screen mx-4 fill-availabl'>
+            <div className='flex items-center justify-center p-4 m-4'>
+                <span className='text-[#F6CBD1] text-3xl font-bold'>
+                    Manage vouchers and promotions
+                </span>
+            </div>
+            <div className='w-full'>
+                <div className='flex items-center justify-end m-4'>
                     <div>
                         <button className="btn btn-outline btn-success" onClick={() => setIsOpenForm({ index: null, isOpen: true })}>Add new vouchers</button>
                     </div>
@@ -55,7 +55,7 @@ const ManageVoucher = () => {
                         isOpenForm.index === null && isOpenForm.isOpen && <CRUVoucher closeModal={setIsOpenForm} isOpenForm={isOpenForm} setChange={setChange} change={change} voucher={null}></CRUVoucher>
                     }
                 </div>
-                <div className="overflow-x-auto shadow-lg">
+                <div className="h-[550px] shadow-lg overflow-y-scroll no-scrollbar border">
                     <Table hoverable>
                         <Table.Head>
                             <Table.HeadCell>Title</Table.HeadCell>

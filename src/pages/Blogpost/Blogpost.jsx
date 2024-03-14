@@ -127,18 +127,15 @@ const Blogpost = () => {
                                                 className='bg-blue-100 font-semibold text-base text-black'>
                                                 <Dropdown.Item onClick={() => openDeleteModal(blogpost.id, blogpost.user.id, blogpost.images)}>Delete Blog</Dropdown.Item>
                                                 <Dropdown.Item
-                                                    onClick={() => {
-                                                        handleOpenModalEdit(blogpost)
-                                                    }}>Edit Blog
-
-
+                                                    onClick={() => { handleOpenModalEdit(blogpost) }}>
+                                                    Edit Blog
                                                 </Dropdown.Item>
                                             </Dropdown>
                                             {editBlogpost && (
                                                 <CreateAndUpdateBlog
                                                     closeModal={() => {
                                                         setIsOpenForm({ index: null, isOpen: false });
-                                                        setEditBlogpost(null); // Đóng modal và xóa thông tin về blogpost được chỉnh sửa
+                                                        setEditBlogpost(null);
                                                     }}
                                                     isOpenForm={isOpenForm}
                                                     setChange={setChange}

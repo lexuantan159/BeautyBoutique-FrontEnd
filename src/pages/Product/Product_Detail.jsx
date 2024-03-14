@@ -41,8 +41,9 @@ const [quantity, setQuantity] = useState(1);
   };
   //
   const [product, setProduct] = useState("");
+  const [change, setChange] = useState(true)
   const { id } = useParams();
-
+const [productId,setProductId] = useState(id)
   useEffect(() => {
     console.log(id);
     try {
@@ -57,6 +58,8 @@ const [quantity, setQuantity] = useState(1);
       console.log(error);
     }
   }, [id]);
+
+  
 
   return (
     <div className="max-w-[1200px] mx-auto">
@@ -175,6 +178,7 @@ const [quantity, setQuantity] = useState(1);
                 cursor: "pointer",
               }}
             >
+              
               ADD TO CART
             </div>
             <div
@@ -341,7 +345,7 @@ const [quantity, setQuantity] = useState(1);
                   paddingBottom: '20px'
 
                 }}>
-                  <Comment />
+                  <Comment commentId={productId} index = {1} setChange={setChange} change={change}/>
               </div>
             </div>
           </div>

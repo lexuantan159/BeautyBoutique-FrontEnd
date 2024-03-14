@@ -51,11 +51,10 @@ const Cart = () => {
                             <p className="hidden md:block text-lg font-medium mt-2 text-red-400">Your cart is empty!</p>
                         </div>
                     }
-
                 </div>
                 <div className="bg-white col-span-12 lg:col-span-4 flex-grow mt-5 lg:mt-0 ">
                     <div className="w-full flex justify-between gap-2">
-                        <Link to="/products" relative={"route"} className="w-full">
+                        <Link to="/product" relative={"route"} className="w-full">
                             <button type="button"
                                 className="w-full text-center bg-white hover:bg-red-500 hover:text-white border-[1px] border-red-400 py-3 px-4 rounded font-bold mr-3 shadow-lg transition-all">
                                 Add Other

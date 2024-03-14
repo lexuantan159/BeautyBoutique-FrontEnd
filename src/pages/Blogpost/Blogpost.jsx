@@ -108,7 +108,7 @@ const Blogpost = () => {
             </div>
             <div className='flex items-center justify-center'>
                 <div className='w-[60%]'>
-                    {blogposts.map((blogpost) => {
+                    {blogposts?.map((blogpost) => {
                         return (
                             <div className='m-4' key={blogpost.id}>
                                 <div class="bg-white rounded shadow-lg max-w-[80%] mx-auto ">

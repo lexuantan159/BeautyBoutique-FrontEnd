@@ -1,4 +1,4 @@
-import MangageListProduct from '../../../components/product/ProductComponent';
+import { MangageListProduct } from '../../../components/product/ProductComponent';
 function ManageProduct() {
   return (
     <>

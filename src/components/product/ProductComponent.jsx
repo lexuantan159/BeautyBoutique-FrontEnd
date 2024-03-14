@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import ModalProduct from '../modal/ModalProduct.jsx';
+import React, { createContext, useContext, useState } from 'react';
 import { BsFillTrash3Fill } from 'react-icons/bs';
 import ModalDelete from '../modal/ModalDelete.jsx';
+import ModalProduct from '../modal/ModalProduct.jsx';
 const testProduct = [
   {
     id: 1,
@@ -116,16 +116,19 @@ const testProduct = [
     discountPercent: 10,
   },
 ];
+
 function ProductInline({ product, setProduct }) {
+  const { setCurrentProduct } = useContext(ManageProductContext);
   function handleDelete(e) {
     e.stopPropagation();
     document.getElementById('modal_delete').showModal();
   }
+
   return (
     <div
       className="grid grid-cols-4 hover:bg-slate-200"
       onClick={() => {
-        setProduct(product);
+        setCurrentProduct(product);
         document.getElementById('my_modal_6').showModal();
       }}
     >
@@ -148,48 +151,49 @@ function ProductInline({ product, setProduct }) {
     </div>
   );
 }
-
-export default function MangageListProduct({ products }) {
+export const ManageProductContext = createContext();
+export function MangageListProduct({ products }) {
   const [currentProduct, setCurrentProduct] = useState({});
   return (
-    <div className="text-slate-500 bg-white">
-      <div className="text-center text-3xl font-semibold mb-4 pt-10">
-        Manage Product
+    <ManageProductContext.Provider
+      value={{ currentProduct, setCurrentProduct }}
+    >
+      <div className="text-slate-500 bg-white">
+        <div className="text-center text-3xl font-semibold mb-4 pt-10">
+          Manage Product
+        </div>
+        <div className="px-32 pb-10">
+          <label className="input input-bordered flex items-center gap-2">
+            <input type="text" className="grow " placeholder="Search" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              className="w-4 h-4 opacity-70"
+            >
+              <path
+                fillRule="evenodd"
+                d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </label>
+        </div>
+        <div className="grid grid-cols-4 mb-4">
+          <div className="mx-auto text-lg font-semibold">Image</div>
+          <div className="mx-auto text-lg font-semibold">Name</div>
+          <div className="mx-auto text-lg font-semibold">Quantity</div>
+          <div className="mx-auto text-lg font-semibold">Delete</div>
+        </div>
+        <div className="flex flex-col gap-2 mb-4">
+          {testProduct.map(product => (
+            <ProductInline product={product} key={product.id} />
+          ))}
+        </div>
+        {/* new ko provide key thi Modal se khong mount lai, provide thi key thay doi modeload lai 2 lan -->contexProvider */}
+        <ModalProduct />
+        <ModalDelete info="product" />
       </div>
-      <div className="px-32 pb-10">
-        <label className="input input-bordered flex items-center gap-2">
-          <input type="text" className="grow " placeholder="Search" />
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 16 16"
-            fill="currentColor"
-            className="w-4 h-4 opacity-70"
-          >
-            <path
-              fillRule="evenodd"
-              d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </label>
-      </div>
-      <div className="grid grid-cols-4 mb-4">
-        <div className="mx-auto text-lg font-semibold">Image</div>
-        <div className="mx-auto text-lg font-semibold">Name</div>
-        <div className="mx-auto text-lg font-semibold">Quantity</div>
-        <div className="mx-auto text-lg font-semibold">Delete</div>
-      </div>
-      <div className="flex flex-col gap-2 mb-4">
-        {testProduct.map(product => (
-          <ProductInline
-            product={product}
-            key={product.id}
-            setProduct={setCurrentProduct}
-          />
-        ))}
-      </div>
-      <ModalProduct product={currentProduct} />
-      <ModalDelete info="product" />
-    </div>
+    </ManageProductContext.Provider>
   );
 }

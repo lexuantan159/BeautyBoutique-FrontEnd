@@ -569,7 +569,7 @@ export default function ProductDetail() {
 
       <div className="flex ">
         <img
-          src={require(`../../images/Face Makeup/${prd.image}`)}
+          src={require(`../../images/FaceMakeup/${prd.image}`)}
           alt=""
           width={405}
           height={405}
@@ -919,9 +919,8 @@ export default function ProductDetail() {
                       paddingBottom: '20px',
                     }}
                   >
-                    - StyleKorean is an authorized retailer. <br />
-                    - All parcels from StyleKorean are shipped from Korea.{' '}
-                    <br />
+                    - StyleKorean is an authorized retailer. <br />- All parcels
+                    from StyleKorean are shipped from Korea. <br />
                     - This item cannot be shipped to certain countries or
                     regions. <br />
                     - We are unable to ship to the following address: P.O. Box,

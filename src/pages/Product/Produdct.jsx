@@ -196,7 +196,7 @@ function ProductItem({ product }) {
         <NavLink to={`${product.id}`}>
           <img
             className="w-full self-center"
-            src={require(`../../images/Face Makeup/${product.image}`)}
+            src={require(`../../images/FaceMakeup/${product.image}`)}
             alt={product.name}
           />
           <div className="flex flex-col justify-center text-center">

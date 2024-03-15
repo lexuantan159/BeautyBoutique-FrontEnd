@@ -1,7 +1,7 @@
 import React from "react";
 import {RiDeleteBinLine} from "react-icons/ri";
 
-const OrderItem = () => {
+const OrderItem = ({infoOrderItem}) => {
 
     return (
         <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle w-[80%] mx-auto">

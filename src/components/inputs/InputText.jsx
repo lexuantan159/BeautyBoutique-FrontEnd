@@ -5,10 +5,8 @@ const InputText = ({title, value, setValue, isUpdate = false}) => {
     const [isFocused, setIsFocused] = useState(false);
     const handleInputChange = (event) => {
         const valueInput = event.target.value;
-        console.log(valueInput)
         setValue(valueInput);
         setIsFocused(valueInput !== "");
-        // setIsFocused(event.target.value !== '');
     };
 
     useEffect(() => {

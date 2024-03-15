@@ -2,11 +2,21 @@ import React, { useEffect, useState } from "react";
 import * as productApi from "../../services/product";
 import { Card } from "flowbite-react";
 import { NavLink } from 'react-router-dom';
+import  * as cartApi from "../../services/cart";
 
 const Product = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [categoryID, setCategoryID] = useState('');
+  const [accessToken, setAccessToken] = useState('abc');
+
+  const handleAddToCart = async(id) => {
+    try {
+      const addtocart = await cartApi.addToCart(accessToken, id )
+    } catch (error) {
+      
+    }
+  }
 
   useEffect(() => {
     try {
@@ -65,30 +75,29 @@ const Product = () => {
             {products.map((item) => {
               return (
                 <>
-                <NavLink to={`${item.id}`}>
-                  <Card
-                    className="max-w-sm"
-                    imgAlt={item.productName}
-                    imgSrc={item.images[0].imageUrl}
-                  >
+                  <Card>
+                    <NavLink to={`${item.id}`}>
+                    <div >
+                      <img src={item.images[0].imageUrl} alt={item.productName} className="" />
+                    </div>
+                
                     <h5 className="text-xl h-[80px] font-semibold tracking-tight text-gray-900 dark:text-white">
                       {item.productName}
                     </h5>
-
+                </NavLink>
                     <div className="flex items-center justify-between">
                       <span className="text-2xl font-bold text-gray-900 dark:text-white ">
                         ${item.salePrice.toFixed(2)}
                       </span>
-                      
                       <button
-                        href="#"
+                        onClick={() => {handleAddToCart(item.id)}}
                         className="rounded-lg bg-cyan-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
                       >
                         Add to cart
                       </button>
                     </div>
                   </Card>
-                  </NavLink>
+                 
                 </>
               );
             })}

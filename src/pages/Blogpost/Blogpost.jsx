@@ -218,7 +218,7 @@ const Blogpost = () => {
                 </div >
                 <dialog id="my_modal_2_1" className="modal">
                     <div className="modal-box w-10/12 max-w-5xl no-scrollbar">
-                        <Comment index={1} commentId={blogCommentId} setChange={setChange} change={change} />
+                        <Comment index={2} commentId={blogCommentId} setChange={setChange} change={change} />
                     </div>
                     <form method="dialog" className="modal-backdrop">
                         <button>close</button>

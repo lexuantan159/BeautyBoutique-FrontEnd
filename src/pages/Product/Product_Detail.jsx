@@ -4,6 +4,7 @@ import * as productApi from "../../services/product";
 import { FaCheckCircle } from "react-icons/fa";
 import Comment from "../Blogpost/Comment";
 import { Button } from 'flowbite-react';
+import * as cartApi from '../../services/cart'
 
 const Product_Detail = () => {
   // ScrollToDetail
@@ -29,6 +30,7 @@ const scrollToReview = () => {
 };
 //
 const [quantity, setQuantity] = useState(1);
+const [accessToken, setAccessToken] = useState('ngoclamotcobengoc');
 
   const handleIncrease = () => {
     setQuantity(quantity + 1);
@@ -59,7 +61,14 @@ const [productId,setProductId] = useState(id)
     }
   }, [id]);
 
-  
+  const handleAddToCart = async() =>{
+    try {
+      const addCart = await cartApi.addToCart(accessToken,productId)
+      console.log(addCart);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <div className="max-w-[1200px] mx-auto">
@@ -162,10 +171,11 @@ const [productId,setProductId] = useState(id)
           </td>
           <div className="w-full flex text-right">
             <p style={{ paddingTop: "8px" }}>TOTAL PRICE</p>
-            <p style={{ color: "#323232", fontSize: "24px",fontWeight: "bold",}}>&nbsp;&nbsp;&nbsp; {(product.salePrice * quantity).toFixed(2)} USD</p>
+            <p style={{ color: "#323232", fontSize: "24px",fontWeight: "bold",}}>&nbsp;&nbsp;&nbsp; {(product.salePrice * quantity).toFixed(2)} USD &nbsp;&nbsp;&nbsp;</p>
+            <p style={{ paddingTop: "8px"}}> ( You saved {((product.actualPrice - product.salePrice) * quantity).toFixed(2)} USD )</p>
           </div>
           <div className="flex pt-[20px]">
-            <div
+            <button
               style={{
                 width: "238px",
                 height: "42.5px",
@@ -175,12 +185,13 @@ const [productId,setProductId] = useState(id)
                 fontSize: "16px",
                 fontWeight: "bold",
                 lineHeight: "42.5px",
-                cursor: "pointer",
+               
               }}
+              onClick={() => {handleAddToCart()}}
             >
               
               ADD TO CART
-            </div>
+            </button>
             <div
               style={{
                 width: "238px",

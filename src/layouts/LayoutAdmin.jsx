@@ -21,13 +21,11 @@ const LayoutAdmin = ({ children }) => {
                     <SidebarItem icon={<FaStoreAlt size={20} />} text="Order" />
                     <SidebarItem icon={<PiTicket size={20} />} text="Voucher" />
                     <SidebarItem icon={<TfiWrite size={20} />} text="Blog" />
-
-
                     <hr className="my-3" />
                     <SidebarItem icon={<IoSettingsSharp size={20} />} text="Settings" />
                 </Sidebar>
             </div>
-            <div className="fill-available">{children}</div>
+            <div className="fill-available max-h-screen">{children}</div>
         </div>
     </>)
 }

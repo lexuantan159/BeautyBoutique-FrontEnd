@@ -2,6 +2,9 @@ import React, { createContext, useContext, useState } from 'react';
 import { BsFillTrash3Fill } from 'react-icons/bs';
 import ModalDelete from '../modal/ModalDelete.jsx';
 import ModalProduct from '../modal/ModalProduct.jsx';
+import { Button } from 'flowbite-react';
+import { IoMdAddCircleOutline } from 'react-icons/io';
+
 const testProduct = [
   {
     id: 1,
@@ -128,8 +131,8 @@ function ProductInline({ product, setProduct }) {
     <div
       className="grid grid-cols-4 hover:bg-slate-200"
       onClick={() => {
-        setCurrentProduct(product);
-        document.getElementById('my_modal_6').showModal();
+        setCurrentProduct(() => product);
+        document.getElementById('modal_product')?.showModal();
       }}
     >
       <div className="mx-auto">
@@ -151,25 +154,25 @@ function ProductInline({ product, setProduct }) {
     </div>
   );
 }
-export const ManageProductContext = createContext();
-export function MangageListProduct({ products }) {
-  const [currentProduct, setCurrentProduct] = useState({});
+export const HeaderPage = ({ info, setCurrentItem, type = 'user' }) => {
   return (
-    <ManageProductContext.Provider
-      value={{ currentProduct, setCurrentProduct }}
-    >
-      <div className="text-slate-500 bg-white">
-        <div className="text-center text-3xl font-semibold mb-4 pt-10">
-          Manage Product
+    <div>
+      <div className="flex justify-between items-end px-4 mb-4">
+        <div className="text-center text-3xl font-semibold mb-4 pt-10 font-roboto ml-4">
+          {info} Manage
         </div>
-        <div className="px-32 pb-10">
-          <label className="input input-bordered flex items-center gap-2">
-            <input type="text" className="grow " placeholder="Search" />
+        <div>
+          <label className="input input-bordered flex items-center gap-2 dark:bg-white">
+            <input
+              type="text"
+              className="grow dark:bg-white"
+              placeholder="Search"
+            />
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
               fill="currentColor"
-              className="w-4 h-4 opacity-70"
+              className="w-4 h-4 opacity-70 dark:bg-white"
             >
               <path
                 fillRule="evenodd"
@@ -179,19 +182,58 @@ export function MangageListProduct({ products }) {
             </svg>
           </label>
         </div>
-        <div className="grid grid-cols-4 mb-4">
-          <div className="mx-auto text-lg font-semibold">Image</div>
-          <div className="mx-auto text-lg font-semibold">Name</div>
-          <div className="mx-auto text-lg font-semibold">Quantity</div>
-          <div className="mx-auto text-lg font-semibold">Delete</div>
+        <div>
+          <Button
+            onClick={() => {
+              setCurrentItem(() => {});
+              document.getElementById(`modal_${type}`)?.showModal();
+            }}
+          >
+            <div className="flex gap-2">
+              <IoMdAddCircleOutline size={20} />
+              <div>Add new {info.toLowerCase()}</div>
+            </div>
+          </Button>
         </div>
-        <div className="flex flex-col gap-2 mb-4">
-          {testProduct.map(product => (
+      </div>
+    </div>
+  );
+};
+export const HeaderInfo = ({ headers }) => {
+  const numHeaders = headers.length;
+  return (
+    <div className={`grid grid-cols-${numHeaders} mb-4`}>
+      {headers.map(header => (
+        <div className="mx-auto text-lg font-semibold" key={header}>
+          {header}
+        </div>
+      ))}
+    </div>
+  );
+};
+export const ListItem = ({ children }) => {
+  return <div className="flex flex-col gap-2 mb-4">{children}</div>;
+};
+export const ManageProductContext = createContext();
+export function MangageListProduct({ products = testProduct }) {
+  const [currentProduct, setCurrentProduct] = useState({});
+  return (
+    <ManageProductContext.Provider
+      value={{ currentProduct, setCurrentProduct }}
+    >
+      <div className="text-slate-500 bg-white">
+        <HeaderPage
+          info="Product"
+          setCurrentItem={setCurrentProduct}
+          type="product"
+        />
+        <HeaderInfo headers={['Image', 'Name', 'Quantity', 'Delete']} />
+        <ListItem>
+          {products.map(product => (
             <ProductInline product={product} key={product.id} />
           ))}
-        </div>
-        {/* new ko provide key thi Modal se khong mount lai, provide thi key thay doi modeload lai 2 lan -->contexProvider */}
-        <ModalProduct />
+        </ListItem>
+        <ModalProduct key={currentProduct?.id || 99} />
         <ModalDelete info="product" />
       </div>
     </ManageProductContext.Provider>

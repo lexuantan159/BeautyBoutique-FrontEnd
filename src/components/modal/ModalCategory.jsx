@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
-import { ManageProductContext } from '../product/ProductComponent.jsx';
+import { BrandContext } from '../product/BrandComponent.jsx';
+import { CategoryContext } from '../product/CategoryComponent.jsx';
 
 const LabelInfo = ({ label, info, description = false }) => {
   const [data, setData] = useState(info);
@@ -28,13 +29,13 @@ const LabelInfo = ({ label, info, description = false }) => {
   );
 };
 
-const ModalProduct = () => {
-  const { currentProduct } = useContext(ManageProductContext);
+const ModalCategory = ({ type }) => {
+  const { current } = useContext(CategoryContext);
 
   return (
     <>
       <dialog
-        id="modal_product"
+        id={`modal_${type}`}
         className="modal modal-bottom sm:modal-middle w-[60%] mx-auto"
       >
         <div className=" dark:bg-white  modal-box relative left-0 right-0 overflow-y-scroll no-scrollbar rounded-lg sm:max-w-full">
@@ -44,7 +45,7 @@ const ModalProduct = () => {
             </button>
           </form>
           <h3 className="font-bold text-xl text-center uppercase">
-            {currentProduct ? 'Product Detail' : 'Add new product'}
+            {current ? `${type} Detail` : `Add new ${type}`}
           </h3>
           {/* this div display image of product and label - input to update product */}
           <div className="flex gap-3 flex-col text-slate-500">
@@ -59,25 +60,9 @@ const ModalProduct = () => {
               </label>
               <input type="file" name="product-image" />
             </div>
-            <LabelInfo label="Product name" info={currentProduct?.name || ''} />
             <LabelInfo
-              label="Product quantity"
-              info={currentProduct?.quantity || ''}
-            />
-            <LabelInfo
-              label="Actual price"
-              info={currentProduct?.quantity || ''}
-            />
-            <LabelInfo
-              label="Sale Price"
-              info={currentProduct?.discountPercent || ''}
-            />
-            <LabelInfo label="Brand" info={currentProduct?.brand || ''} />
-            <LabelInfo label="Category" info={currentProduct?.Category || ''} />
-            <LabelInfo
-              description={true}
-              label="Description"
-              info={currentProduct?.description || ''}
+              label={`${type.charAt(0).toUpperCase() + type.slice(1)} name`}
+              info={current?.name || ''}
             />
           </div>
           <div className="modal-action">
@@ -87,7 +72,7 @@ const ModalProduct = () => {
               </button>
             </form>
             <button className="border-2 border-green-500 btn px-6 py-2 min-h-0 h-auto bg-white   text-slate-700  hover:text-white hover:bg-green-500 hover:border-white">
-              {currentProduct ? 'Update' : 'Create'}
+              {current ? 'Update' : 'Create'}
             </button>
           </div>
         </div>
@@ -96,4 +81,4 @@ const ModalProduct = () => {
   );
 };
 
-export default ModalProduct;
+export default ModalCategory;

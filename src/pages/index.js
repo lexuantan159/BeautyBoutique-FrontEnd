@@ -7,6 +7,9 @@ export { default as Voucher } from './Vouchers/Voucher';
 export { default as ManageVoucher } from './Dashboard/Voucher/ManageVoucher';
 export { default as ManagementBlog } from './Dashboard/Blogpost/ManagementBlog';
 export { default as ManageProduct } from './Dashboard/Product/ManageProduct';
+export { default as ManageCategory } from './Dashboard/Product/ManageCategory.jsx';
+export { default as ManageBrand } from './Dashboard/Product/ManageBrand.jsx';
+export { default as ManageUser } from './Dashboard/User/ManageUser.jsx';
 
 export { default as Product } from './Product/Produdct';
 export { default as Foundation } from './Product/Foundation';

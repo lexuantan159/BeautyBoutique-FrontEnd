@@ -8,6 +8,7 @@ module.exports = {
     extend: {
       fontFamily: {
         'island-moments': ['Island Moments', 'sans-serif'],
+        roboto: ['Roboto Mono', 'sans-serif'],
       },
     },
   },

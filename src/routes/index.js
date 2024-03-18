@@ -20,6 +20,9 @@ import {
   UserInfo,
   Product,
   ManageProduct,
+  ManageUser,
+  ManageCategory,
+  ManageBrand,
 } from '../pages/index';
 import { LayoutAdmin, LayoutDefault } from '../layouts/index';
 const router = [
@@ -34,8 +37,9 @@ const router = [
   { path: '/admin/order', layout: LayoutAdmin, component: Order },
   { path: '/admin', component: LayoutAdmin },
   { path: '/admin/product', layout: LayoutAdmin, component: ManageProduct },
-  { path: '/admin/brand', layout: LayoutAdmin, component: ManageProduct },
-  { path: '/admin/category', layout: LayoutAdmin, component: ManageProduct },
+  { path: '/admin/brand', layout: LayoutAdmin, component: ManageBrand },
+  { path: '/admin/category', layout: LayoutAdmin, component: ManageCategory },
+  { path: '/admin/user', layout: LayoutAdmin, component: ManageUser },
 
   { path: '/product', component: Product },
   { path: '/foundation', component: Foundation },

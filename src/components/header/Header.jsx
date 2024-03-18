@@ -47,7 +47,7 @@ function Header() {
   };
   return (
     <div
-      className={`mb-2 sticky max-w-[1200px] top-0 left-0 right-0 w-full z-50  mx-auto transition-transform transform duration-300 ${
+      className={`sticky max-w-[1200px] top-0 left-0 right-0 w-full z-50  mx-auto transition-transform transform duration-300 ${
         isVisible ? 'translate-y-0' : '-translate-y-full'
       }`}
     >
@@ -113,7 +113,7 @@ function Header() {
 
               <Navbar.Collapse className="text-black">
                 <div className="text-black hover:text-red-500">
-                  <Link to="/">HOME</Link>
+                  <Link to="/home">HOME</Link>
                 </div>
 
                 <div className="text-black hover:text-red-500">
@@ -121,10 +121,10 @@ function Header() {
                 </div>
 
                 <div className="text-black hover:text-red-500">
-                  <Link to="/">ABOUT</Link>
+                  <Link to="/https://www.siliconii.com/">ABOUT</Link>
                 </div>
                 <div className="text-black hover:text-red-500">
-                  <Link to="">CONTACT</Link>
+                  <Link to="/contact">CONTACT</Link>
                 </div>
                 <div className="text-black hover:text-red-500">
                   <Link to="/blogpost">BLOG</Link>
@@ -133,7 +133,7 @@ function Header() {
               {hasUser ? (
                 <div className="flex md:order-2 text-black">
                   <div className="flex items-center justify-center">
-                    <Link to="/">
+                    <Link to="/cart">
                       <div className="w-10 h-10 rounded-full border border-black flex items-center justify-center mr-2 hover:bg-btnprimary hover:text-[#B4E9D6] ">
                         <icons.BsCart4 />
                       </div>

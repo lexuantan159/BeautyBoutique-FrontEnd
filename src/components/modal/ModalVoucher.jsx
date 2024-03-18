@@ -2,16 +2,17 @@ import React, { useContext } from 'react';
 import MethodContext from '../../context/methodProvider';
 import logo from '../../public/img/logo.jpg';
 
-const ModalVoucher = ({ vouchers = [], conditionApply }) => {
+const ModalVoucher = ({ vouchers = [], conditionApply, voucherActive }) => {
   const { notify } = useContext(MethodContext);
 
-  const handleApplyVoucher = () => {
+  const handleApplyVoucher = item => {
     if (conditionApply < 0) {
       notify('Cannot apply voucher as your cart is empty!', 'error');
       return;
     }
+    voucherActive(item);
+    document.getElementById('my_modal_5').close();
   };
-
   return (
     <>
       <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle  ">
@@ -49,7 +50,7 @@ const ModalVoucher = ({ vouchers = [], conditionApply }) => {
                         </p>
                         <p
                           className="text-sm text-red-500 font-semibold hover:underline hover:cursor-pointer "
-                          onClick={() => handleApplyVoucher}
+                          onClick={() => handleApplyVoucher(item?.voucher)}
                         >
                           Apply
                         </p>

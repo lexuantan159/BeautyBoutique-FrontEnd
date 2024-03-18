@@ -14,8 +14,10 @@ export default function Sidebar({children}) {
             <aside className="h-screen">
                 <nav className="h-full flex flex-col bg-white border-r shadow-sm">
                     <div className="p-4 pb-2 flex justify-between items-center">
-                        <img src={logo} className={`overflow-hidden transition-all ${expanded ? "w-32" : "w-0"}`}
-                             alt="sdf"/>
+                        <Link to={"/"} >
+                            <img src={logo} className={`overflow-hidden transition-all ${expanded ? "w-32 ml-10" : "w-0"}`}
+                                 alt="sdf"/>
+                        </Link>
                         <button onClick={() => setExpanded((curr) => !curr)}
                                 className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100">
                             {expanded ? <LuChevronFirst/> : <LuChevronLast/>}
@@ -47,31 +49,50 @@ export default function Sidebar({children}) {
 
 export function SidebarItem({icon, text, alert}) {
     const {expanded} = useContext(SidebarContext)
-    const [active, setActive] = useState(false);
+    const [active, setActive] = useState("");
+
+
     function convertToLowerCase(text) {
-        return text.toLowerCase();
+        // Convert the string to lowercase
+        let lowerCaseText = text.toLowerCase();
+
+        // Split the words in the string
+        let words = lowerCaseText.split(' ');
+
+        // Iterate through each word to check and add a hyphen (-) between two-character words
+        for (let i = 1; i < words.length; i++) {
+            if (words[i - 1].length === 2 && words[i].length === 2) {
+                words[i - 1] += '-';
+            }
+        }
+        // Combine the words back to form a new string
+        let result = words.join(' ');
+
+        return result.replace(/ /g, '-'); // Replace spaces with hyphens
     }
 
     return (
-        <li className={`relative flex items-center py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors group ${active ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800" : "hover:bg-indigo-50 text-gray-600"}`}>
-            {icon}
-            <Link to={`/admin/${convertToLowerCase(text)}`}
-                  onClick={() => setActive(true)}
-                  className={`overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}`} relative={"route"}>
-                {text}
-            </Link>
-            {alert && (
-                <div className={`absolute right-2 w-2 h-2 rounded bg-indigo-400 ${expanded ? "" : "top-2"}`}>
-                </div>
-            )}
-
-            {!expanded && (
-                <div
-                    className={`absolute left-full rounded-md px-2 py-1 ml-6 bg-indigo-100 text-indigo-800 text-sm invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0`}>
-
+        <Link to={`${text === "Home" ? "/" : `/admin/${convertToLowerCase(text)}`} `}
+              relative={"route"}
+              onClick={() => setActive(text)}>
+            <li className={`relative flex items-center py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors group ${active === text ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800" : "hover:bg-indigo-50 text-gray-600"}`}>
+                {icon}
+                <p className={`overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}`}>
                     {text}
-                </div>
-            )}
-        </li>
+                </p>
+                {alert && (
+                    <div className={`absolute right-2 w-2 h-2 rounded bg-indigo-400 ${expanded ? "" : "top-2"}`}>
+                    </div>
+                )}
+
+                {!expanded && (
+                    <div
+                        className={`absolute left-full rounded-md px-2 py-1 ml-6 bg-indigo-100 text-indigo-800 text-sm invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0`}>
+
+                        {text}
+                    </div>
+                )}
+            </li>
+        </Link>
     )
 }

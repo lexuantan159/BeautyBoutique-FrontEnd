@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { MdOutlineLocalShipping, MdOutlinePayments } from 'react-icons/md';
 import { GoChevronRight } from 'react-icons/go';
-const DropList = ({ title, listItem = [], Icon }) => {
+
+const DropList = ({ title, listItem = [], type = 'shipping', setItem }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [itemDrop, setItemDrop] = useState({});
   const handleClick = () => {
@@ -23,6 +25,16 @@ const DropList = ({ title, listItem = [], Icon }) => {
     hidden: { opacity: 1, rotate: 0 },
     show: { opacity: 1, rotate: 90 },
   };
+  const item = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        easing: 'linear',
+      },
+    },
+  };
+
   return (
     <>
       <motion.div
@@ -31,10 +43,17 @@ const DropList = ({ title, listItem = [], Icon }) => {
         className="p-3 mb-3 rounded-lg shadow-lg border-[0.2px] border-gray-300"
       >
         <motion.div className="flex justify-between items-center cursor-pointer">
-          <motion.p className="flex items-center uppercase">
-            <Icon className="mr-2" />{' '}
-            {Object.keys(itemDrop).length === 0 ? title : itemDrop?.name}
-          </motion.p>
+          {type === 'shipping' ? (
+            <motion.p className="flex items-center uppercase">
+              <MdOutlineLocalShipping size={20} className="mr-2" />{' '}
+              {Object.keys(itemDrop).length === 0 ? title : itemDrop?.name}
+            </motion.p>
+          ) : (
+            <motion.p className="flex items-center uppercase">
+              <MdOutlinePayments size={20} className="mr-2" />{' '}
+              {Object.keys(itemDrop).length === 0 ? title : itemDrop?.name}
+            </motion.p>
+          )}
           <motion.p animate={isExpanded ? itemCross.show : itemCross.hidden}>
             <GoChevronRight className="text-xl" />
           </motion.p>
@@ -50,7 +69,10 @@ const DropList = ({ title, listItem = [], Icon }) => {
               <motion.p
                 key={item?.id}
                 variants={item}
-                onClick={() => setItemDrop(item)}
+                onClick={() => {
+                  setItemDrop(item);
+                  setItem(item);
+                }}
                 className={
                   isExpanded
                     ? 'block text-lg rounded hover:bg-gray-200 py-2 px-3 transition-all'

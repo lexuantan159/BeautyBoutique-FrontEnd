@@ -4,6 +4,7 @@ import { Button } from 'flowbite-react';
 import { Spinner } from '@material-tailwind/react';
 import * as commentApi from '../../services/comment';
 import MethodContext from '../../context/methodProvider';
+import * as productApi from '../../services/product';
 
 const Comment = ({ commentId, index, setChange, change }) => {
   const [comments, setComments] = useState([]);
@@ -18,25 +19,42 @@ const Comment = ({ commentId, index, setChange, change }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const commentData = await commentApi.getAllCommentByBlogId(commentId);
-        setComments(commentData.commentList);
+        console.log(commentId);
+        if (index === 1) {
+          const feedback = await productApi.getFeedback(commentId);
+          setComments(feedback.data.feedbackList);
+        } else {
+          const commentData = await commentApi.getAllCommentByBlogId(commentId);
+          setComments(commentData.commentList);
+        }
         //console.log(bloggData);
       } catch (error) {
         console.error('Error fetching blogposts:', error);
       }
     };
     fetchData();
-  }, [change]);
+    console.log(comments);
+  }, [change, commentId]);
 
   const postComment = async () => {
     try {
-      if (newComment.trim() === '') {
-        return;
+      if (index === 1) {
+        if (newComment.trim() === '') {
+          return;
+        }
+        await productApi.addFeedback(newComment, 5, commentId, 1);
+        setLoading(false);
+        setChange(!change);
+        setNewComment('');
+      } else {
+        if (newComment.trim() === '') {
+          return;
+        }
+        await commentApi.createNewComment(newComment, commentId, 1);
+        setLoading(false);
+        setChange(!change);
+        setNewComment('');
       }
-      await commentApi.createNewComment(newComment, commentId, 1);
-      setLoading(false);
-      setChange(!change);
-      setNewComment('');
     } catch (error) {
       setChange(!change);
       setLoading(false);
@@ -44,8 +62,13 @@ const Comment = ({ commentId, index, setChange, change }) => {
   };
   const deleteComment = async cmtid => {
     try {
-      await commentApi.deleteComment(cmtid, 1);
-      setChange(!change);
+      if (index === 1) {
+        await productApi.deleteFeedback(cmtid, 1);
+        setChange(!change);
+      } else {
+        await commentApi.deleteComment(cmtid, 1);
+        setChange(!change);
+      }
       // notify('Bình luận đã được xóa.', 'success');
     } catch (error) {
       //notify('Lỗi khi xóa bình luận:', 'error');
@@ -53,8 +76,13 @@ const Comment = ({ commentId, index, setChange, change }) => {
   };
   const updateComment = async id => {
     try {
-      await commentApi.updateComment(id, updateNewComment, 1);
-      setChange(!change);
+      if (index === 1) {
+        await productApi.updateFeedback(id, updateNewComment, 1);
+        setChange(!change);
+      } else {
+        await commentApi.updateComment(id, updateNewComment, 1);
+        setChange(!change);
+      }
       // notify('Bình luận đã được xóa.', 'success');
     } catch (error) {
       //notify('Lỗi khi xóa bình luận:', 'error');
@@ -79,7 +107,7 @@ const Comment = ({ commentId, index, setChange, change }) => {
               onChange={e => setNewComment(e.target.value)}
               value={newComment}
               className="textarea textarea-accent w-[90%]"
-              placeholder="Viết bình luận của bạn..."
+              placeholder="Write Your Comment..."
               required
             ></textarea>
             <div className="flex items-center justify-center ml-4">

@@ -15,8 +15,8 @@ export default function ContactUs() {
           Any question or remakes? Just write us a message!
         </p>
       </div>
-      <div className="grid grid-cols-3 gap-8 p-8">
-        <div className="bg-[#5fadf7] text-white font-bold text-xl text-center flex gap-3 flex-col rounded-xl py-4">
+      <div className="grid grid-cols-3 gap-8 p-8" >
+        <div className="bg-[#5fadf7] text-white font-bold text-xl text-center flex gap-3 flex-col rounded-xl py-4" style={{padding: '12px 15px 0 0', margin: '0 -20px -50px 180px'}}>
           <p>Contact Infomation</p>
           <p className="font-medium text-sm">
             Say something to start live chat!
@@ -48,7 +48,7 @@ export default function ContactUs() {
             </div>
           </div>
         </div>
-        <form className=" flex flex-col col-span-2 w-3/4">
+        <form className=" flex flex-col col-span-2 w-3/4" style={{padding: '12px 15px 0 0', margin: '0 15px 0 50px'}}>
           <div className="flex flex-col text-slate-500 font-medium gap-2 mt-4">
             <label>Your name</label>
             <input
@@ -95,3 +95,4 @@ export default function ContactUs() {
     </div>
   );
 }
+

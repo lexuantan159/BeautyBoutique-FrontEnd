@@ -11,11 +11,10 @@ export { default as ManageCategory } from './Dashboard/Product/ManageCategory.js
 export { default as ManageBrand } from './Dashboard/Product/ManageBrand.jsx';
 export { default as ManageUser } from './Dashboard/User/ManageUser.jsx';
 
-export { default as Product } from './Product/Produdct';
-export { default as ProductDetail } from './Product/Product_Detail';
+export { default as Product } from './Product/Product.jsx';
+export { default as ProductDetail } from './Product/Product_Detail.jsx';
 
 export { Admin } from './Admin/Admin';
-//export { ProductA } from './Admin/Product'
 
 export { default as Order } from './Order/Order';
 export { default as NotFound } from './NotFound/NotFound';

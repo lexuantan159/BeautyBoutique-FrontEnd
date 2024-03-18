@@ -17,10 +17,15 @@ import {
   ManageUser,
   ManageCategory,
   ManageBrand,
+  AddProduct,
+  Admin,
 } from '../pages/index';
-import { LayoutAdmin, LayoutDefault } from '../layouts/index';
+
+import { LayoutAdmin } from '../layouts/index';
+
 const router = [
   { path: '/', component: Home },
+  { path: '/home', component: Home },
   { path: '/blogpost', component: Blog },
   { path: '/voucher', component: Voucher },
   { path: '/cart', component: Cart },
@@ -36,29 +41,14 @@ const router = [
   { path: '/admin/user', layout: LayoutAdmin, component: ManageUser },
 
   { path: '/product', component: Product },
-  { path: '/foundation/:productId', component: ProductDetail },
-  { path: '/blusher&highlighter/:productId', component: ProductDetail },
-  { path: '/makeupbase/:productId', component: ProductDetail },
-  { path: '/power&pact/:productId', component: ProductDetail },
-  { path: '/concealer/:productId', component: ProductDetail },
-  { path: '/cushion/:productId', component: ProductDetail },
-  { path: '/category/:productId', component: ProductDetail },
+  { path: '/admin', component: Admin },
+  { path: '/product', component: Product },
+  { path: '/product/:id', component: ProductDetail },
 
-  {
-    path: '/payment-success',
-    layout: LayoutDefault,
-    component: PaymentSuccess,
-  },
-
+  { path: '/admin/addproduct', component: AddProduct },
   { path: '/order/:orderId', component: OrderDetail },
   { path: '/contact', component: ContactUs },
   { path: '/user', component: UserInfo },
-  { path: '/', component: Home },
-  { path: '/blogpost', component: Blog },
-  { path: '/voucher', component: Voucher },
-  { path: '/cart', component: Cart },
-  { path: '/ship-detail', component: ShipDetail },
-  { path: '/payment-success', component: PaymentSuccess },
 ];
 
 export { router };

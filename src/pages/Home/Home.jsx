@@ -1,52 +1,27 @@
-import { Carousel } from 'flowbite-react'
-import React from 'react'
-import { Link } from 'react-router-dom';
-
+import { Card, Carousel } from 'flowbite-react'
+import React, { useEffect, useState } from 'react'
+import { Link, NavLink } from 'react-router-dom';
+import * as productApi from '../../services/product'
 const Home = () => {
-    const products = [
-        {
-            id: 1,
-            title: 'Shoes!',
-            description: 'If a dog chews shoes whose shoes does he choose?',
-            imageUrl: 'https://tecdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp'
-        },
-        {
-            id: 2,
-            title: 'Shoes!',
-            description: 'If a dog chews shoes whose shoes does he choose?',
-            imageUrl: 'https://tecdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp'
-        },
-        {
-            id: 3,
-            title: 'Shoes!',
-            description: 'If a dog chews shoes whose shoes does he choose?',
-            imageUrl: 'https://tecdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp'
-        },
-        {
-            id: 4,
-            title: 'Shoes!',
-            description: 'If a dog chews shoes whose shoes does he choose?',
-            imageUrl: 'https://tecdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp'
-        },
-        {
-            id: 5,
-            title: 'Shoes!',
-            description: 'If a dog chews shoes whose shoes does he choose?',
-            imageUrl: 'https://tecdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp'
-        },
-        {
-            id: 6,
-            title: 'Shoes!',
-            description: 'If a dog chews shoes whose shoes does he choose?',
-            imageUrl: 'https://tecdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp'
-        },
+    const [products, setProducts] = useState([])
+    useEffect(() => {
+        try {
+            const fetchData = async () => {
+                const getProduct = await productApi.getProduct();
+                setProducts(getProduct.data);
+            };
+            fetchData();
+            // console.log(products);
+        } catch (error) {
+            console.log(error);
+        }
+    }, []);
 
-    ];
     return (
         <div className='w-full bg-[#F5F6F6]'>
             <Link to='/voucher'>
                 <div className='flex items-center justify-center'>
-                    <div className='w-[80%] mt-36 flex items-center justify-center'>
+                    <div className='w-[80%] mt-4 flex items-center justify-center'>
                         <div className='w-full '>
                             <div className="sm:h-64 md:h-[500px] xl:h-h-[500px] h-56 rounded-lg ">
                                 <Carousel>
@@ -65,15 +40,6 @@ const Home = () => {
 
             <div className='font-bold text-3xl mt-6 flex items-center justify-center'>
                 <span className='text-black'>
-                    VOU
-                </span>
-                <span className='text-red-400'>
-                    CHER
-                </span>
-            </div>
-
-            <div className='font-bold text-3xl mt-6 flex items-center justify-center'>
-                <span className='text-black'>
                     TOP
                 </span>
                 <span className='text-red-400 ml-4'>
@@ -83,27 +49,46 @@ const Home = () => {
             <div className='m-4 '>
                 <div class="flex items-center justify-center">
                     <div class="grid xl:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 gap-4">
-                        {products.map((product) => (
-                            <div key={product.id} className="card w-64 bg-base-100 shadow-xl m-2">
-                                <figure>
-                                    <img
-                                        alt="gallery"
-                                        className="block h-full w-full rounded-lg object-cover object-center"
-                                        src={product.imageUrl}
-                                    />
-                                </figure>
-                                <div className="card-body">
-                                    <h2 className="card-title">{product.title}</h2>
-                                    <p>{product.description}</p>
-                                    <div className="card-actions justify-end">
-                                        <button className="btn btn-primary">Buy Now</button>
-                                    </div>
-                                </div>
+                        {products?.slice(0, 9).map((item) => (
+                            <div key={item.id} className="card w-64 bg-base-100 shadow-xl m-2">
+                                <NavLink to={`${item.id}`}>
+                                    <Card
+                                        className="max-w-sm"
+                                        imgAlt={item.productName}
+                                        imgSrc={item.images[0].imageUrl}
+                                    >
+                                        <h5 className="text-xl h-[80px] font-semibold tracking-tight text-gray-900 dark:text-white">
+                                            {item.productName}
+                                        </h5>
+
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-2xl font-bold text-gray-900 dark:text-white ">
+                                                ${item.salePrice.toFixed(2)}
+                                            </span>
+
+                                            <button
+                                                href="#"
+                                                className="rounded-lg bg-cyan-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"
+                                            >
+                                                Add to cart
+                                            </button>
+                                        </div>
+                                    </Card>
+                                </NavLink>
                             </div>
                         ))}
                     </div>
                 </div>
             </div>
+            <div className='font-bold text-3xl mt-6 flex items-center justify-center'>
+                <span className='text-black'>
+                    VOU
+                </span>
+                <span className='text-red-400'>
+                    CHER
+                </span>
+            </div>
+
 
             <div className='font-bold text-3xl mt-6 flex items-center justify-center'>
                 <span className='text-black'>

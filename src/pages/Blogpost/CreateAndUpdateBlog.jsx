@@ -157,7 +157,7 @@ const CreateBlog = ({ closeModal, isOpenForm, setChange, change, blogpost }) => 
                             onChange={(e) => setTitle(e.target.value)}
                             placeholder="Input Title"
                             value={title}
-                            className="input input-bordered input-primary w-[70%]" />
+                            className="input input-bordered input-primary w-[70%] focus:outline-none" />
                     </div>
                     <div className='w-full m-4'>
                         <span className='text-black font-semibold text-xl'>Do you have any questions or concerns about products or beauty care?</span>
@@ -165,7 +165,7 @@ const CreateBlog = ({ closeModal, isOpenForm, setChange, change, blogpost }) => 
                             onChange={(e) => setContent(e.target.value)}
                             placeholder="Input Content"
                             value={content}
-                            className="textarea textarea-primary textarea-lg w-[95%] mt-2" ></textarea>
+                            className="textarea textarea-primary textarea-lg w-[95%] mt-2 focus:outline-none" ></textarea>
                     </div>
                     <div className='w-full m-4'>
                         <span className='text-black font-semibold text-xl'>Please upload at least 1 image and at most 6 images .</span>

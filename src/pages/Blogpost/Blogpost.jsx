@@ -84,7 +84,7 @@ const Blogpost = () => {
     };
 
     return (
-        <div className='w-full bg-[#F1F0F1]'>
+        <div className='w-full min-h-[250px] my-5'>
             <div className='pt-4 flex items-center justify-center'>
                 <div className='w-[60%] h-20 border border-solid flex items-center justify-center shadow-md rounded-xl bg-white'>
                     <div className="avatar online mr-4">
@@ -97,7 +97,7 @@ const Blogpost = () => {
 
                         type="text"
                         placeholder="What are you thinking ? "
-                        className="input input-bordered input-warning w-full max-w-2xl" />
+                        className="input input-bordered input-warning w-full max-w-2xl focus:outline-none" />
                     {
                         isOpenForm.index === null && isOpenForm.isOpen && <CreateAndUpdateBlog closeModal={setIsOpenForm} isOpenForm={isOpenForm} setChange={setChange} change={change} blogpost={null}></CreateAndUpdateBlog>
                     }

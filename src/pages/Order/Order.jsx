@@ -1,4 +1,3 @@
-
 import React, {useContext, useState} from "react";
 import OrderItem from "../../components/modal/OrderItem";
 import {GiTakeMyMoney} from "react-icons/gi";
@@ -12,30 +11,57 @@ const Order = () => {
 
     const {notify, formatNumber} = useContext(MethodContext)
     const [paramObject, setParamObject] = useState({})
+    const [orderItem, setOrderItem] = useState({})
+    const [status, setStatus] = useState(null)
+    const statusMapping = {
+        "Đang Giao Hàng": 5,
+        "Đã Giao Hàng": 3
+    };
     const queryClient = useQueryClient();
     const {
-        data: orders,
-        isLoading,
+        data: orders
     } = useQuery(["orders", paramObject], () => orderService.getOrderHistories(paramObject));
 
     const handleApprove = async ({orderId, isAccept}) => {
-        console.log({orderId, isAccept})
-        const response = await orderService.approveOrder({userId: 1, orderId, isAccept})
-        console.log(response)
-        return response
+        return await orderService.approveOrder({userId: 1, orderId, isAccept})
+    }
+
+
+    const handleChangeStatus = async ({statusId, orderItemId}) => {
+        return await orderService.changeStatus({userId: 1, statusId, orderItemId: orderItemId})
     }
 
     const {mutate} = useMutation({
         mutationFn: (body) => {
-            console.log(body)
             return handleApprove(body)
         },
-        onSuccess: () => {
-            notify("Accept order successfully!", "success");
-            queryClient.invalidateQueries({queryKey: ["orders", paramObject]});
+        onSuccess: (data) => {
+            if (data?.status !== 200) {
+                notify("Approve order fail!", "error");
+            } else {
+                notify("Approve order successfully!", "success");
+                queryClient.invalidateQueries({queryKey: ["orders", paramObject]});
+            }
         },
         onError: (err) => {
-            notify("Reject order fail!", "error");
+            notify("Approve order fail!", "error");
+        }
+    });
+
+    const {mutate: mutateChangeStatus} = useMutation({
+        mutationFn: (body) => {
+            return handleChangeStatus(body)
+        },
+        onSuccess: (data, variables, context) => {
+            if (data?.status !== 200) {
+                notify("Change order status fail!", "error");
+            } else {
+                notify("Change order status successfully!", "success");
+                queryClient.invalidateQueries({queryKey: ["orders", paramObject]});
+            }
+        },
+        onError: (err) => {
+            notify("Change order status fail!", "error");
         }
     });
 
@@ -101,13 +127,37 @@ const Order = () => {
                         orders.data?.orderHistories?.map((order, index) => {
                             return (
                                 <tr key={order?.id}
-                                    className="w-full grid grid-cols-12 items-center py-1 hover:cursor-pointer border-b-2 border-gray-300"
-                                    onClick={() => document.getElementById('my_modal_5').showModal()}>
+                                    className={`w-full grid grid-cols-12 items-center py-1 hover:cursor-pointer border-b-2 border-gray-300`}
+                                    onClick={() => {
+                                        setOrderItem(order)
+                                        document.getElementById('my_modal_5').showModal()
+                                    }}>
                                     <td className="truncate px-2 text-center font-medium text-sm col-span-2  md:col-span-1">{order?.id}</td>
                                     <td className="truncate px-2 text-center font-medium text-sm hidden md:block md:col-span-2">{order?.delivery?.deliveryMethod}</td>
                                     <td className="truncate px-2 text-center font-medium text-sm col-span-3  md:col-span-3">{formatNumber(order?.totalPrice)}$
                                     </td>
-                                    <td className="truncate px-2 text-center font-medium text-sm col-span-3 md:col-span-3">{order?.orderStatus?.statusName}
+                                    <td className="truncate px-2 text-center font-medium text-sm col-span-3 md:col-span-3"
+                                        onClick={(e) => {
+                                            e.stopPropagation()
+                                        }}
+                                    >
+                                        <select
+                                            onChange={async (e) => {
+                                                const selectedStatus = e.target.value;
+                                                const statusId = statusMapping[selectedStatus];
+                                                await mutateChangeStatus({statusId, orderItemId: order?.id})
+                                            }}
+                                            value={status || order?.orderStatus?.statusName}
+                                            className="select select-accent w-full max-w-xs border-none focus:outline-none py-1">
+                                            <option disabled
+                                                    selected>{status || order?.orderStatus?.statusName}</option>
+                                            {
+                                                order?.orderStatus?.id === 2 && <>
+                                                    <option value="Đang Giao Hàng">Đang Giao Hàng</option>
+                                                    <option value="Đã Giao Hàng">Đã Giao Hàng</option>
+                                                </>
+                                            }
+                                        </select>
                                     </td>
                                     <td className="px-2 text-center font-medium text-sm col-span-4 md:col-span-3 sm:flex sm:justify-around sm:items-center py-1 ">
                                         {
@@ -143,7 +193,7 @@ const Order = () => {
                     }
                     </tbody>
                 </table>
-                <OrderItem/>
+                <OrderItem infoOrderItem={orderItem}/>
             </div>
         </div>)
 }

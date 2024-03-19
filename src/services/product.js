@@ -99,10 +99,92 @@ const getProductById = async(id) =>{
         };
     }
 }
+
+const addFeedback = async (content,rating, productId, userId) =>{
+    try {
+        const feedback = await request.post('/product/feedback/create-feedback',
+        {
+            content: content,
+            rating: rating,
+            productId: productId,
+            userId: userId
+        },
+        {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+                }
+        }
+        );
+        return{
+            statusCode: feedback.status,
+            data: feedback.data
+        }
+    } catch (error) {
+        const statusCode = error.status || (error.response && error.response.status) || 500;
+        return {
+            error,
+            statusCode,
+        };
+    }
+}
+
+const getFeedback = async(id) =>{
+    try {
+        const feedback = await request.get(`/product/feedback/get-feedback-product?productId=${id}`,{
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        return{
+            data : feedback.data,
+            statusCode : feedback.status
+        }
+    } catch (error) {
+        const statusCode = error.status || (error.response && error.response.status) || 500;
+        return {
+            error,
+            statusCode,
+        };
+    }
+}
+const deleteFeedback = async (id, userId) => {
+    try {
+        const response = await request.deleteRe(`/product/feedback/delete-feedback?id=${id}&userId=${userId}`);
+        return response.status
+    } catch (error) {
+        console.error("Error deleting blog:", error);
+    }
+};
+const updateFeedback = async (id, feedback ,userId) => {
+
+    console.log(feedback);
+    try {
+        const response = await request.put(`/product/feedback/update-feedback?id=${id}&userId=${userId}`, {
+            content: feedback,
+        },
+        {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
+        return response.data;
+    } catch (error) {
+        const statusCode = error.status || (error.response && error.response.status) || 500;
+        return {
+            error,
+            statusCode,
+        };
+    }
+}
+
 export {
     addProduct,
     getProduct,
     getProductByCategory,
     getCategory,
-    getProductById
+    getProductById,
+    addFeedback,
+    getFeedback,
+    deleteFeedback,
+    updateFeedback
 };

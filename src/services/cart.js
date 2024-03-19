@@ -44,3 +44,19 @@ export const deleteCartItem = async (param) => {
         return error
     }
 };
+
+export const addToCart = async(accessToken,productId) => {
+try {
+    return await request.post(`cart/add-to-cart?userId=1&productId=${productId}`,{
+        // params:{
+        //     userId : 1,
+        //     productId : productId,
+        // },
+        headers: {
+                "Content-Type": "Application/json"
+            }
+    })
+} catch (error) {
+     return error
+}
+}

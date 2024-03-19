@@ -4,7 +4,7 @@ import MethodContext from '../../context/methodProvider';
 import * as voucherApi from '../../services/voucher'
 
 const Voucher = () => {
-    const { formatDateTime } = useContext(MethodContext)
+    const { notify } = useContext(MethodContext)
     const [vouchers, setVouchers] = useState([]);
     const [voucherView, setVoucherView] = useState({})
     useEffect(() => {
@@ -12,7 +12,6 @@ const Voucher = () => {
             try {
                 const vouchersData = await voucherApi.getAllVoucher();
                 setVouchers(vouchersData.voucherList);
-                console.log(vouchersData);
             } catch (error) {
                 console.error('Error fetching blogposts:', error);
             }
@@ -22,13 +21,16 @@ const Voucher = () => {
 
     const handleSaveVoucherForUser = async (userId, voucherId) => {
         const saveVou = await voucherApi.saveVoucher(userId, voucherId)
-        console.log(saveVou);
+        if (saveVou.statusCode === 201) {
+            notify(saveVou.message, "success")
+        }
+        else notify(saveVou.message)
     }
 
     return (
 
-        <div className='w-full h-auto pt-32 bg-[#F5F6F6] '>
-            {vouchers.map((voucher) => {
+        <div className='w-full h-auto bg-[#F5F6F6] '>
+            {vouchers?.map((voucher) => {
                 return (
                     <div className='flex items-center justify-center p-4  '>
                         <div className='w-[50%] h-52 bg-[#F8EFEA] rounded-xl shadow-lg border '>
@@ -36,10 +38,10 @@ const Voucher = () => {
                                 <div className='w-1/4 flex items-center justify-center'>
                                     <div className="avatar relative">
                                         <div className="md:w-40 sm:w-24 rounded-full ">
-                                            <img src={logo} />
+                                            <img src={logo} alt='name' />
                                         </div>
                                         <div className='bg-white md:h-16 md:w-16 sm:h-8 sm:w-8 rounded-full absolute top-[-20px] right-0 '>
-                                            <span className='block p-2 sm:text-sm md:text-base'>UP TO {voucher.discount * 100} %</span>
+                                            <span className='block p-2 sm:text-sm md:text-base'>UP TO {voucher?.discount * 100} %</span>
                                         </div>
                                     </div>
                                 </div>
@@ -49,7 +51,7 @@ const Voucher = () => {
 
                                         <div className='text-center'>
                                             <span className='font-serif mr-2'>Discount :</span>
-                                            <span className='font-island-moments font-semibold text-2xl'>{voucher.discount * 100} %</span>
+                                            <span className='font-island-moments font-semibold text-2xl'>{voucher?.discount * 100} %</span>
 
                                         </div>
                                         <div className='text-center'>
@@ -57,10 +59,10 @@ const Voucher = () => {
                                         </div>
                                         <div className=' grid grid-cols-2 gap-4'>
                                             <div className='text-center'>
-                                                <span className='font-serif'>Start Day : {voucher.startDate}</span>
+                                                <span className='font-serif'>Start Day : {voucher?.startDate}</span>
                                             </div>
                                             <div className='text-center'>
-                                                <span className='font-serif'>End Day : {voucher.endDate}</span>
+                                                <span className='font-serif'>End Day : {voucher?.endDate}</span>
                                             </div>
                                         </div>
 
@@ -68,7 +70,7 @@ const Voucher = () => {
                                 </div>
                                 <div className='w-1/4 h-full flex items-center justify-center'>
                                     <div>
-                                        {voucher && (voucher.quantity - voucher.numUsedVoucher > 0 ? (
+                                        {voucher && (voucher?.quantity - voucher?.numUsedVoucher > 0 ? (
                                             <button className="btn btn-accent mb-6" onClick={() => handleSaveVoucherForUser(1, voucher.id)}>
                                                 Save Voucher
                                             </button>

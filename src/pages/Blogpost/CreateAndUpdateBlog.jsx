@@ -6,7 +6,7 @@ import MethodContext from '../../context/methodProvider';
 
 
 const CreateBlog = ({ closeModal, isOpenForm, setChange, change, blogpost }) => {
-    const { uploadFile, deleteAImage } = useContext(MethodContext)
+    const { uploadFile, deleteAImage, notify } = useContext(MethodContext)
     const [imageUploads, setImageUpload] = useState(Array(6).fill(null));
     const [imagesDisplay, setImagesDisplay] = useState(Array(6).fill(null));
     const [images, setImages] = useState([])
@@ -88,7 +88,7 @@ const CreateBlog = ({ closeModal, isOpenForm, setChange, change, blogpost }) => 
             const imagesFb = await uploadFile(validImages);
             return imagesFb
         } else {
-            console.log("Không có hình ảnh nào để upload");
+            notify("There are no images to upload");
         }
     }
 
@@ -99,10 +99,12 @@ const CreateBlog = ({ closeModal, isOpenForm, setChange, change, blogpost }) => 
             if (createBlog.statusCode === 201) {
                 setChange(!change)
                 closeModal({ index: null, isOpen: false })
-                // notify("tạo bài viết thành công", 'success')
+                notify("Created a successful post", 'success')
+            } else {
+                notify("Post creation failed")
             }
-            // } else {
-            //     notify("tạo bài viết không thành công")
+        } else {
+            notify("Post creation failed")
         }
     }
 
@@ -115,20 +117,23 @@ const CreateBlog = ({ closeModal, isOpenForm, setChange, change, blogpost }) => 
                 if (createBlog.statusCode === 201) {
                     setChange(!change)
                     closeModal({ index: null, isOpen: false })
-                    // notify("tạo bài viết thành công", 'success')
+                    notify("Update successful post", 'success')
+
+                } else {
+                    notify("Update failed post")
                 }
-                // } else {
-                //     notify("tạo bài viết không thành công")
+            } else {
+                notify("Update failed post")
+
             }
         } else {
             const updateBlog = await blogApi.updateBlogPost(id, title, content, [], [], 1);
             if (updateBlog.statusCode === 201) {
                 setChange(!change)
                 closeModal({ index: null, isOpen: false })
-                // notify("tạo bài viết thành công", 'success')
+                notify("Update successful post", 'success')
+
             }
-            // } else {
-            //     notify("tạo bài viết không thành công")
         }
     }
     const handleSubmit = async () => {

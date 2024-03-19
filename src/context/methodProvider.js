@@ -22,7 +22,7 @@ export const MethodProvider = ({ children }) => {
         const formattedDateTime = `${month}-${day}-${year} ${hours}:${minutes}`;
         return formattedDateTime;
     }
-    const convertDate = (inputDate)  =>{
+    const convertDate = (inputDate) => {
         var outputDate = null;
         var inputDateObject = new Date(inputDate);
 
@@ -86,7 +86,18 @@ export const MethodProvider = ({ children }) => {
     };
     const notify = (message, type) => {
         const toastType = type === 'success' ? toast.success : toast.error;
-        return toastType(message);
+        return toastType(message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            style: {
+                zIndex: 9999
+            }
+        });
     };
 
     const toastLoadingId = (message) => {
@@ -136,7 +147,7 @@ export const MethodProvider = ({ children }) => {
     }
 
     return (
-        <MethodContext.Provider value={{ formatDateTime, formatNumber,convertDate, uploadFile, notify, toastLoadingId, toastUpdateLoadingId, deleteImage, deleteAImage }}>
+        <MethodContext.Provider value={{ formatDateTime, formatNumber, convertDate, uploadFile, notify, toastLoadingId, toastUpdateLoadingId, deleteImage, deleteAImage }}>
             {children}
         </MethodContext.Provider>
     );

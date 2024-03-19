@@ -209,7 +209,7 @@ const Blogpost = () => {
                         );
                     })}
                 </div >
-                <dialog id="my_modal_2_1" className="modal">
+                <dialog id="my_modal_2_1" className="modal z-50">
                     <div className="modal-box w-10/12 max-w-5xl no-scrollbar">
                         <Comment index={2} commentId={blogCommentId} setChange={setChange} change={change} />
                     </div>

@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react';
 import { MangageListProduct } from '../../../components/product/ProductComponent';
+
 function ManageProduct() {
   return (
     <>

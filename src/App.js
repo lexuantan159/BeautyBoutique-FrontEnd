@@ -3,7 +3,6 @@ import { router } from './routes/index';
 import { Layout } from './layouts/index';
 import { Fragment } from 'react';
 import { NotFound } from './pages/index';
-import { QueryClient, QueryClientProvider } from 'react-query';
 
 function App() {
   return (
@@ -11,7 +10,6 @@ function App() {
     <Routes>
       {router.map((route, index) => {
         const Page = route.component;
-
         let LayoutDynamic = Layout;
         if (route.layout) LayoutDynamic = route.layout;
         else if (route.layout === null) LayoutDynamic = Fragment;

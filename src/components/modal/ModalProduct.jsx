@@ -1,11 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from 'react';
 import { ManageProductContext } from '../product/ProductComponent.jsx';
 import * as request from '../../services/product.js';
 import Spinner from '../../pages/Dashboard/Product/Spinner.jsx';
 
-const LabelInfo = ({ label, info, description = false }) => {
-  const [data, setData] = useState(info);
-
+const LabelInfo = ({ label, info, description = false, field = label }) => {
+  const { dispatch } = useContext(ModalContext);
   const style =
     'dark:bg-white ring-1 ring-slate-400 rounded-lg py-1 px-2 focus:outline-none';
   return (
@@ -17,29 +22,69 @@ const LabelInfo = ({ label, info, description = false }) => {
         <input
           className={style}
           type="text"
-          value={data}
-          onChange={e => setData(e.target.value)}
-          key={info}
+          value={info}
+          onChange={e => dispatch({ type: field, name: e.target.value })}
         />
       ) : (
         <textarea
           className={style}
-          value={data}
-          onChange={e => setData(e.target.value)}
+          value={info}
+          onChange={e => dispatch({ type: field, name: e.target.value })}
         ></textarea>
       )}
     </div>
   );
 };
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
+// make useReducer to handler product object that contains many properties
+const initialProduct = {
+  productName: 'test product',
+  actualPrice: 100,
+  salePrice: 100,
+  description: 'sample product need to be delete',
+  categoryId: 1,
+  brandId: 1,
+  quantity: 10,
+  imageIds: 10,
+  imageUrls: 10,
+};
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'productName':
+      return { ...state, productName: action.name };
+    case 'actualPrice':
+      return { ...state, actualPrice: action.name };
+    case 'salePrice':
+      return { ...state, salePrice: action.name };
+    case 'description':
+      return { ...state, description: action.name };
+    case 'categoryId':
+      return { ...state, categoryId: action.name };
+    case 'brandId':
+      return { ...state, brandId: action.name };
+    case 'quantity':
+      return { ...state, quantity: action.name };
+    case 'imageIds':
+      return { ...state, imageIds: action.name };
+    case 'imageUrls':
+      return { ...state, imageUrls: action.name };
+    default:
+      return state;
+  }
+};
+const ModalContext = createContext();
 const ModalProduct = () => {
   const { currentProduct, create, setCreate } =
     useContext(ManageProductContext);
   const [product, setProduct] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
+  const [state, dispatch] = useReducer(reducer, initialProduct);
+  const handleSummit = () => {
+    console.log(state);
+  };
   useEffect(() => {
     async function fetchData() {
       setIsLoading(() => true);
@@ -56,7 +101,7 @@ const ModalProduct = () => {
   }, [currentProduct, create]);
   console.log(product, create);
   return (
-    <>
+    <ModalContext.Provider value={{ dispatch }}>
       <dialog
         id="modal_product"
         className="modal modal-bottom sm:modal-middle w-[60%] mx-auto"
@@ -87,33 +132,43 @@ const ModalProduct = () => {
                   <label className="font-semibold" htmlFor="product-image">
                     Change image
                   </label>
-                  <input type="file" name="product-image" />
+                  <input
+                    type="file"
+                    name="product-image"
+                    onChange={e => console.log(e.target?.files?.[0])}
+                  />
                 </div>
                 <LabelInfo
                   label="Product name"
-                  info={product?.productName || ''}
+                  info={product?.productName}
+                  field={'actualPrice'}
                 />
-                <LabelInfo
-                  label="Product quantity"
-                  info={product?.quantity || ''}
-                />
+                <LabelInfo label="Product quantity" info={product?.quantity} />
                 <LabelInfo
                   label="Actual price"
-                  info={product?.actualPrice || ''}
+                  info={product?.actualPrice}
+                  field={'actualPrice'}
                 />
-                <LabelInfo label="Sale Price" info={product?.salePrice || ''} />
+                <LabelInfo
+                  label="Sale Price"
+                  info={product?.salePrice}
+                  field={'actualPrice'}
+                />
                 <LabelInfo
                   label="Brand"
-                  info={product?.brand?.brandName || ''}
+                  info={product?.brand?.brandName}
+                  field={'actualPrice'}
                 />
                 <LabelInfo
                   label="Category"
-                  info={product?.category?.categoryName || ''}
+                  info={product?.category?.categoryName}
+                  field={'actualPrice'}
                 />
                 <LabelInfo
                   description={true}
                   label="Description"
-                  info={product?.description || ''}
+                  info={product?.description}
+                  field={'actualPrice'}
                 />
               </div>
             </div>
@@ -124,13 +179,16 @@ const ModalProduct = () => {
                 Close
               </button>
             </form>
-            <button className="border-2 border-green-500 btn px-6 py-2 min-h-0 h-auto bg-white   text-slate-700  hover:text-white hover:bg-green-500 hover:border-white">
+            <button
+              className="border-2 border-green-500 btn px-6 py-2 min-h-0 h-auto bg-white   text-slate-700  hover:text-white hover:bg-green-500 hover:border-white"
+              onClick={handleSummit}
+            >
               {product ? 'Update' : 'Create'}
             </button>
           </div>
         </div>
       </dialog>
-    </>
+    </ModalContext.Provider>
   );
 };
 

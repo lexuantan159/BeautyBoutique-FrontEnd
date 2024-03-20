@@ -7,7 +7,7 @@ import { Button } from 'flowbite-react';
 import { IoMdAddCircleOutline } from 'react-icons/io';
 import Spinner from '../../pages/Dashboard/Product/Spinner.jsx';
 
-function ProductInline({ product, setProduct }) {
+function ProductInline({ product }) {
   const { setCurrentProduct } = useContext(ManageProductContext);
   const [isLoading, setIsloading] = useState(true);
   function handleDelete(e) {

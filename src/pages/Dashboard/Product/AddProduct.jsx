@@ -1,33 +1,33 @@
-import React, { useContext, useState } from "react";
-import MethodContext from "../../../context/methodProvider";
-import * as productApi from "../../../services/product";
+import React, { useContext, useState } from 'react';
+import MethodContext from '../../../context/methodProvider';
+import * as productApi from '../../../services/product';
 
 const AddProduct = () => {
-  const [productName, setProductName] = useState("");
-  const [actualPrice, setActualPrice] = useState("");
-  const [salePrice, setSalePrice] = useState("");
-  const [description, setDescription] = useState("");
-  const [categoryId, setCategoryId] = useState("");
-  const [quantity, setQuantity] = useState("");
+  const [productName, setProductName] = useState('');
+  const [actualPrice, setActualPrice] = useState('');
+  const [salePrice, setSalePrice] = useState('');
+  const [description, setDescription] = useState('');
+  const [categoryId, setCategoryId] = useState('');
+  const [quantity, setQuantity] = useState('');
   const { uploadFile, deleteAImage } = useContext(MethodContext);
 
   const [imageUploads, setImageUpload] = useState([]);
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     for (let i = 0; i < e.target.files.length; i++) {
       const newImage = e.target.files[i];
-      newImage["id"] = Math.random();
-      setImageUpload((prevState) => [...prevState, newImage]);
+      newImage['id'] = Math.random();
+      setImageUpload(prevState => [...prevState, newImage]);
     }
   };
 
   const updateImageToFirebase = async () => {
-    const validImages = imageUploads.filter((image) => image !== null);
+    const validImages = imageUploads.filter(image => image !== null);
     if (validImages.length > 0) {
       const imagesFb = await uploadFile(validImages);
       return imagesFb;
     } else {
-      console.log("Không có hình ảnh nào để upload");
+      console.log('Không có hình ảnh nào để upload');
     }
   };
   const handleSubmit = async () => {
@@ -45,9 +45,9 @@ const AddProduct = () => {
         1
       );
       if (createBlog.statusCode === 201) {
-        alert("tạo sản phẩm  mới thành công");
-         window.location.reload();
-      } else alert("tạo sản phẩm không thành công");
+        alert('tạo sản phẩm  mới thành công');
+        window.location.reload();
+      } else alert('tạo sản phẩm không thành công');
     }
   };
 
@@ -62,7 +62,7 @@ const AddProduct = () => {
                 type="text"
                 placeholder="Type here"
                 className="input input-bordered input-accent w-full max-w-xs"
-                onChange={(e) => setProductName(e.target.value)}
+                onChange={e => setProductName(e.target.value)}
               />
             </div>
             <div className="my-4">
@@ -71,7 +71,7 @@ const AddProduct = () => {
                 type="text"
                 placeholder="Type here"
                 className="input input-bordered input-accent w-full max-w-xs"
-                onChange={(e) => setActualPrice(e.target.value)}
+                onChange={e => setActualPrice(e.target.value)}
               />
             </div>
             <div className="my-4">
@@ -80,18 +80,19 @@ const AddProduct = () => {
                 type="text"
                 placeholder="Type here"
                 className="input input-bordered input-accent w-full max-w-xs"
-                onChange={(e) => setSalePrice(e.target.value)}
+                onChange={e => setSalePrice(e.target.value)}
               />
             </div>
           </div>
           <div>
             <div className="my-4">
               <span className="block my-2">Description</span>
-              <textarea className="textarea textarea-accent w-full" type="text"
+              <textarea
+                className="textarea textarea-accent w-full"
+                type="text"
                 placeholder="Type here"
-                 onChange={(e) => setDescription(e.target.value)}
-                 ></textarea>
-             
+                onChange={e => setDescription(e.target.value)}
+              ></textarea>
             </div>
             <div className="my-4">
               <span className="block my-2">Category ID</span>
@@ -99,7 +100,7 @@ const AddProduct = () => {
                 type="text"
                 placeholder="Type here"
                 className="input input-bordered input-accent w-full max-w-xs"
-                onChange={(e) => setCategoryId(e.target.value)}
+                onChange={e => setCategoryId(e.target.value)}
               />
             </div>
             <div className="my-4">
@@ -108,7 +109,7 @@ const AddProduct = () => {
                 type="text"
                 placeholder="Type here"
                 className="input input-bordered input-accent w-full max-w-xs"
-                onChange={(e) => setQuantity(e.target.value)}
+                onChange={e => setQuantity(e.target.value)}
               />
             </div>
           </div>
@@ -128,7 +129,9 @@ const AddProduct = () => {
         </label>
       </div>
       <div className=" mt-4 flex items-center justify-center">
-        <button className="btn btn-outline btn-success" onClick={handleSubmit}>Submit</button>
+        <button className="btn btn-outline btn-success" onClick={handleSubmit}>
+          Submit
+        </button>
       </div>
     </div>
   );

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import * as loginApi from "../../services/login";
+import { useNavigate } from "react-router-dom";
 function Login() {
   const [username, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
@@ -14,6 +16,7 @@ function Login() {
         sessionStorage.setItem("token", token);
         const getUser = await loginApi.getUser(token);
         console.log(getUser);
+        navigate("/product");
       } else {
         // Xử lý lỗi nếu có
         const errorData = response.data;

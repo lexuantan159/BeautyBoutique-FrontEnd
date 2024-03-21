@@ -46,8 +46,8 @@ function Header() {
     navigate('/');
   };
   return (
-    <div className={`sticky max-w-[1200px] top-0 left-0 right-0 w-full z-50  mx-auto transition-transform transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
-      <div className="w-full flex justify-between p-2 bg-white text-black bg-opacity-50">
+    <div className={`sticky max-w-[1230px] px-[30px] top-0 left-0 right-0 w-full z-50  mx-auto transition-transform transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
+      <div className="w-full flex justify-between p-2 text-black bg-transparent ">
         <div className="flex justify-center items-center font-sans text-xs">
           <ul className="flex justify-center items-center">
             <li className="flex justify-center items-center mr-4 ">

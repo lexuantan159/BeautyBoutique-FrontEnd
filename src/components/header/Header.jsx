@@ -47,7 +47,7 @@ function Header() {
         setUser(() => localUser);
       }}
     >
-      <div className="w-full flex justify-between p-2 bg-white text-black bg-opacity-50">
+      <div className="w-full flex justify-between p-2 bg-white dark:bg-white text-black bg-opacity-50">
         <div className="flex justify-center items-center font-sans text-xs">
           <ul className="flex justify-center items-center">
             <li className="flex justify-center items-center mr-4 ">
@@ -92,10 +92,10 @@ function Header() {
           </ul>
         </div>
       </div>
-      <div className="w-full ">
-        <div className="bg-white rounded-lg  flex items-center justify-center">
+      <div className="w-full dark:bg-white ">
+        <div className="bg-white  rounded-lg  flex items-center justify-center">
           <div className="w-full border border-black rounded-lg">
-            <Navbar className="w-full z-50 bg-opacity-10 rounded-lg dark:bg-white">
+            <Navbar className="w-full z-50 bg-opacity-10 rounded-lg">
               <Navbar.Brand>
                 <div className="avatar">
                   <div className="w-14 rounded-full">
@@ -109,7 +109,7 @@ function Header() {
 
               <Navbar.Collapse className="text-black">
                 <div className="text-black hover:text-red-500">
-                  <Link to="/home">HOME</Link>
+                  <Link to="/">HOME</Link>
                 </div>
 
                 <div className="text-black hover:text-red-500">
@@ -142,7 +142,7 @@ function Header() {
                       <Avatar
                         alt="User settings"
                         img={`${
-                          user
+                          userImage
                             ? userImage
                             : 'https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png'
                         }`}

@@ -36,17 +36,14 @@ const ManageVoucher = () => {
   };
 
   return (
-    <div
-      data-theme="pastel"
-      className="w-full h-auto bg-white flex items-center justify-center m-4"
-    >
-      <div className="w-80%">
-        <div className="flex items-center justify-center p-4 m-4">
-          <span className="text-[#F6CBD1] text-3xl font-bold">
-            Manage vouchers and promotions
-          </span>
-        </div>
-        <div className=" flex items-center justify-end m-4">
+    <div className="max-h-screen mx-4 fill-availabl">
+      <div className="flex items-center justify-center p-4 m-4">
+        <span className="text-[#F6CBD1] text-3xl font-bold">
+          Manage vouchers and promotions
+        </span>
+      </div>
+      <div className="w-full">
+        <div className="flex items-center justify-end m-4">
           <div>
             <button
               className="btn btn-outline btn-success"
@@ -65,7 +62,7 @@ const ManageVoucher = () => {
             ></CRUVoucher>
           )}
         </div>
-        <div className="overflow-x-auto shadow-lg">
+        <div className="h-[550px] shadow-lg overflow-y-scroll no-scrollbar border">
           <Table hoverable>
             <Table.Head>
               <Table.HeadCell>Title</Table.HeadCell>
@@ -88,7 +85,7 @@ const ManageVoucher = () => {
                 return (
                   <Table.Row className="bg-white ">
                     <Table.Cell className="whitespace-nowrap font-medium text-gray-900 ">
-                      {voucher.title}
+                      {voucher?.title}
                     </Table.Cell>
                     <Table.Cell> {voucher.quantity}</Table.Cell>
                     <Table.Cell> {voucher.numUsedVoucher}</Table.Cell>

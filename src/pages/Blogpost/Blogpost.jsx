@@ -9,7 +9,7 @@ import { Modal, Dropdown, Button } from 'flowbite-react';
 
 const Blogpost = () => {
   const [openModal, setOpenModal] = useState(false);
-  const { formatDateTime, deleteImage } = useContext(MethodContext);
+  const { formatDateTime, deleteImage, notify } = useContext(MethodContext);
   const [isOpenForm, setIsOpenForm] = useState({ index: null, isOpen: false });
   const [blogposts, setBlogposts] = useState([]);
   const [change, setChange] = useState(true);
@@ -21,9 +21,7 @@ const Blogpost = () => {
     const fetchData = async () => {
       try {
         const bloggData = await blogApi.getAllBlogPost();
-        setBlogposts(bloggData.blogList);
-
-        console.log(bloggData);
+        setBlogposts(bloggData?.blogList);
       } catch (error) {
         console.error('Error fetching blogposts:', error);
       }
@@ -35,9 +33,9 @@ const Blogpost = () => {
     try {
       const deleteBlog = await blogApi.deleteBlog(id, userId);
       if (deleteBlog === 200) {
-        console.log('Delete successfully');
+        notify('Delete blog succesfuly', 'success');
       } else {
-        console.log('Delete failed');
+        notify('Delete failed');
       }
     } catch (error) {}
   };
@@ -48,11 +46,11 @@ const Blogpost = () => {
     setChange(!change);
   };
   useEffect(() => {
-    if (deleteItem.isDelete) {
-      handleDelete(deleteItem.id, deleteItem.userId, deleteItem.imageIds);
+    if (deleteItem?.isDelete) {
+      handleDelete(deleteItem?.id, deleteItem?.userId, deleteItem?.imageIds);
       setDeleteItem({ isDelete: false });
     }
-  }, [deleteItem.isDelete]);
+  }, [deleteItem?.isDelete]);
 
   const openDeleteModal = (id, userId, imageIds) => {
     setDeleteItem(preDeleteItem => ({
@@ -86,8 +84,8 @@ const Blogpost = () => {
   };
 
   return (
-    <div className="w-full bg-[#F1F0F1]">
-      <div className="pt-32 flex items-center justify-center">
+    <div className="w-full min-h-[250px] my-5">
+      <div className="pt-4 flex items-center justify-center">
         <div className="w-[60%] h-20 border border-solid flex items-center justify-center shadow-md rounded-xl bg-white">
           <div className="avatar online mr-4">
             <div className="w-16 rounded-full">
@@ -101,7 +99,7 @@ const Blogpost = () => {
             onClick={() => setIsOpenForm({ index: null, isOpen: true })}
             type="text"
             placeholder="What are you thinking ? "
-            className="input input-bordered input-warning w-full max-w-2xl"
+            className="input input-bordered input-warning w-full max-w-2xl focus:outline-none"
           />
           {isOpenForm.index === null && isOpenForm.isOpen && (
             <CreateAndUpdateBlog
@@ -118,21 +116,21 @@ const Blogpost = () => {
         <div className="w-[60%]">
           {blogposts?.map(blogpost => {
             return (
-              <div className="m-4" key={blogpost.id}>
+              <div className="m-4" key={blogpost?.id}>
                 <div class="bg-white rounded shadow-lg max-w-[80%] mx-auto ">
                   <header class="p-4 flex justify-between">
                     <div className="w-1/2">
                       <img
-                        src={blogpost.user.imageURL}
+                        src={blogpost?.user?.imageURL}
                         alt=""
                         className="float-left rounded-full w-10 h-10 m-1 mr-3"
                       />
                       <div>
                         <h3 theme="pastel" class="text-lg font-bold">
-                          {blogpost.user.userName}
+                          {blogpost?.user?.userName}
                         </h3>
                         <p class="text-sm text-gray-600">
-                          {formatDateTime(blogpost.createDate)}
+                          {formatDateTime(blogpost?.createDate)}
                         </p>
                       </div>
                     </div>
@@ -150,9 +148,9 @@ const Blogpost = () => {
                         <Dropdown.Item
                           onClick={() =>
                             openDeleteModal(
-                              blogpost.id,
-                              blogpost.user.id,
-                              blogpost.images
+                              blogpost?.id,
+                              blogpost?.user?.id,
+                              blogpost?.images
                             )
                           }
                         >
@@ -170,7 +168,7 @@ const Blogpost = () => {
                         <CreateAndUpdateBlog
                           closeModal={() => {
                             setIsOpenForm({ index: null, isOpen: false });
-                            setEditBlogpost(null); // Đóng modal và xóa thông tin về blogpost được chỉnh sửa
+                            setEditBlogpost(null);
                           }}
                           isOpenForm={isOpenForm}
                           setChange={setChange}
@@ -183,22 +181,22 @@ const Blogpost = () => {
                   <section>
                     <div className="flex items-center justify-center">
                       <span className="text-lg w-[75%] font-semibold text-center max-sm:text-base">
-                        {blogpost.title}
+                        {blogpost?.title}
                       </span>
                     </div>
                     <div className="w-full">
-                      <ImageBlog imageUrls={blogpost.images} />
+                      <ImageBlog imageUrls={blogpost?.images} />
                     </div>
                     <div className="flex items-center justify-center">
                       <div className="w-[90%] shadow-lg rounded-sm flex items-center justify-center">
                         <div className="collapse rounded-lg bg-gray-100">
                           <input type="checkbox" />
                           <div className="collapse-title text-base font-medium truncate">
-                            {blogpost.content}
+                            {blogpost?.content}
                           </div>
                           <div className="collapse-content">
                             <p style={{ whiteSpace: 'pre-line' }}>
-                              {blogpost.content}
+                              {blogpost?.content}
                             </p>
                           </div>
                         </div>
@@ -220,14 +218,14 @@ const Blogpost = () => {
                               <icons.FcLikePlaceholder />
                             )}
                           </span>
-                          <span>{blogpost.likeCount} Like</span>
+                          <span>{blogpost?.likeCount} Like</span>
                         </span>
                       </div>
                       <div className="flex items-center justify-center">
                         <div
                           className="py-2 px-6 rounded-md cursor-pointer hover:bg-blue-300 font-semibold flex items-center justify-center"
                           onClick={() => {
-                            handleModalComment(blogpost.id);
+                            handleModalComment(blogpost?.id);
                           }}
                         >
                           <span className="mr-2 ">
@@ -251,10 +249,10 @@ const Blogpost = () => {
             );
           })}
         </div>
-        <dialog id="my_modal_2_1" className="modal">
+        <dialog id="my_modal_2_1" className="modal z-50">
           <div className="modal-box w-10/12 max-w-5xl no-scrollbar">
             <Comment
-              index={1}
+              index={2}
               commentId={blogCommentId}
               setChange={setChange}
               change={change}

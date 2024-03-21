@@ -1,57 +1,30 @@
-import { Carousel } from 'flowbite-react';
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { Card, Carousel } from 'flowbite-react';
+import React, { useEffect, useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import * as productApi from '../../services/product';
+import { MdOutlineAdd } from 'react-icons/md';
+import ProductItem from '../../components/products/ProductItem';
 
 const Home = () => {
-  const products = [
-    {
-      id: 1,
-      title: 'Shoes!',
-      description: 'If a dog chews shoes whose shoes does he choose?',
-      imageUrl:
-        'https://tecdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp',
-    },
-    {
-      id: 2,
-      title: 'Shoes!',
-      description: 'If a dog chews shoes whose shoes does he choose?',
-      imageUrl:
-        'https://tecdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp',
-    },
-    {
-      id: 3,
-      title: 'Shoes!',
-      description: 'If a dog chews shoes whose shoes does he choose?',
-      imageUrl:
-        'https://tecdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp',
-    },
-    {
-      id: 4,
-      title: 'Shoes!',
-      description: 'If a dog chews shoes whose shoes does he choose?',
-      imageUrl:
-        'https://tecdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp',
-    },
-    {
-      id: 5,
-      title: 'Shoes!',
-      description: 'If a dog chews shoes whose shoes does he choose?',
-      imageUrl:
-        'https://tecdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp',
-    },
-    {
-      id: 6,
-      title: 'Shoes!',
-      description: 'If a dog chews shoes whose shoes does he choose?',
-      imageUrl:
-        'https://tecdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp',
-    },
-  ];
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    try {
+      const fetchData = async () => {
+        const getProduct = await productApi.getProduct();
+        setProducts(getProduct.data);
+      };
+      fetchData();
+      // console.log(products);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
   return (
-    <div className="w-full bg-[#F5F6F6]">
+    <div className="max-w-[1230px] px-[30px] mx-auto">
       <Link to="/voucher">
-        <div className="flex items-center justify-center">
-          <div className="w-[80%] mt-36 flex items-center justify-center">
+        <div className="w-full flex items-center justify-center">
+          <div className="w-full mt-4 flex items-center justify-center">
             <div className="w-full ">
               <div className="sm:h-64 md:h-[500px] xl:h-h-[500px] h-56 rounded-lg ">
                 <Carousel>
@@ -93,40 +66,19 @@ const Home = () => {
       </Link>
 
       <div className="font-bold text-3xl mt-6 flex items-center justify-center">
-        <span className="text-black">VOU</span>
-        <span className="text-red-400">CHER</span>
-      </div>
-
-      <div className="font-bold text-3xl mt-6 flex items-center justify-center">
         <span className="text-black">TOP</span>
         <span className="text-red-400 ml-4">PRODUCT</span>
       </div>
-      <div className="m-4 ">
-        <div className="flex items-center justify-center">
-          <div className="grid xl:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 gap-4">
-            {products.map(product => (
-              <div
-                key={product.id}
-                className="card w-64 bg-base-100 shadow-xl m-2"
-              >
-                <figure>
-                  <img
-                    alt="gallery"
-                    className="block h-full w-full rounded-lg object-cover object-center"
-                    src={product.imageUrl}
-                  />
-                </figure>
-                <div className="card-body">
-                  <h2 className="card-title">{product.title}</h2>
-                  <p>{product.description}</p>
-                  <div className="card-actions justify-end">
-                    <button className="btn btn-primary">Buy Now</button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+      <div className="max-w-[1230px] px-[30px] my-4 mx-auto ">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {products?.slice(0, 8).map(item => {
+            return <ProductItem key={item?.id} infoProduct={item} />;
+          })}
         </div>
+      </div>
+      <div className="font-bold text-3xl mt-6 flex items-center justify-center">
+        <span className="text-black">VOU</span>
+        <span className="text-red-400">CHER</span>
       </div>
 
       <div className="font-bold text-3xl mt-6 flex items-center justify-center">
@@ -140,17 +92,17 @@ const Home = () => {
               <div className="w-full shrink-0 grow-0 basis-auto px-3 md:w-10/12">
                 <div
                   className="relative mb-6 overflow-hidden rounded-lg bg-cover bg-no-repeat shadow-lg dark:shadow-black/20"
-                  data-te-ripple-init
+                  data-te-ripple-init=""
                   data-te-ripple-color="light"
                 >
                   <img
                     src="https://firebasestorage.googleapis.com/v0/b/beautyboutique-7ebb3.appspot.com/o/Banner%2Fa.jpg?alt=media&token=31d23c23-b858-4a4a-8a6c-14d740a70557"
+                    alt={''}
                     className="w-full"
-                    alt="banner"
                   />
                 </div>
               </div>
-              <div className="w-full shrink-0 grow-0 basis-auto px-3 md:w-8/12 xl:w-6/12">
+              <div className="w-full shrink-0 grow-0 basis-auto px-3 md:w-8/12 xl:w-6/12 mt-5">
                 <h5 className="mb-3 text-lg font-bold">
                   The Ultimate Guide to Facial Skincare: Tips for Healthy,
                   Glowing Skin
@@ -171,7 +123,9 @@ const Home = () => {
                   cleanser suited to your skin type to maintain a clean and
                   refreshed complexion.
                 </p>
-                <button className="btn btn-success">READMORE</button>
+                <button className="btn btn-success bg-red-400 text-white uppercase border-none hover:bg-red-400">
+                  READMORE
+                </button>
               </div>
             </div>
           </section>

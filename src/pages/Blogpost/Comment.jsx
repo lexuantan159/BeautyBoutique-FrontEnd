@@ -11,15 +11,13 @@ const Comment = ({ commentId, index, setChange, change }) => {
   const [loading, setLoading] = useState(false);
   const [newComment, setNewComment] = useState('');
   const [updateNewComment, setUpdateNewComment] = useState('');
-  const { formatDateTime } = useContext(MethodContext);
-
+  const { formatDateTime, notify } = useContext(MethodContext);
   const [isEdit, setIsEdit] = useState(false);
   const [idEdit, setIdEdit] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log(commentId);
         if (index === 1) {
           const feedback = await productApi.getFeedback(commentId);
           setComments(feedback.data.feedbackList);
@@ -27,31 +25,33 @@ const Comment = ({ commentId, index, setChange, change }) => {
           const commentData = await commentApi.getAllCommentByBlogId(commentId);
           setComments(commentData.commentList);
         }
-        //console.log(bloggData);
       } catch (error) {
         console.error('Error fetching blogposts:', error);
       }
     };
     fetchData();
-    console.log(comments);
   }, [change, commentId]);
 
   const postComment = async () => {
     try {
       if (index === 1) {
         if (newComment.trim() === '') {
+          notify('You must write a review');
           return;
         }
         await productApi.addFeedback(newComment, 5, commentId, 1);
+        notify('Comments have been posted', 'success');
         setLoading(false);
         setChange(!change);
         setNewComment('');
       } else {
         if (newComment.trim() === '') {
+          notify('You must write a review');
           return;
         }
         await commentApi.createNewComment(newComment, commentId, 1);
         setLoading(false);
+        notify('Comments have been posted', 'success');
         setChange(!change);
         setNewComment('');
       }
@@ -69,9 +69,9 @@ const Comment = ({ commentId, index, setChange, change }) => {
         await commentApi.deleteComment(cmtid, 1);
         setChange(!change);
       }
-      // notify('Bình luận đã được xóa.', 'success');
+      notify('Comment has been deleted.', 'success');
     } catch (error) {
-      //notify('Lỗi khi xóa bình luận:', 'error');
+      notify('Error deleting comment.');
     }
   };
   const updateComment = async id => {
@@ -83,9 +83,9 @@ const Comment = ({ commentId, index, setChange, change }) => {
         await commentApi.updateComment(id, updateNewComment, 1);
         setChange(!change);
       }
-      // notify('Bình luận đã được xóa.', 'success');
+      notify('Comment edited successfully', 'success');
     } catch (error) {
-      //notify('Lỗi khi xóa bình luận:', 'error');
+      notify('Editing comments failed');
     }
   };
 
@@ -96,7 +96,10 @@ const Comment = ({ commentId, index, setChange, change }) => {
           <div className="avatar-group -space-x-6 rtl:space-x-reverse w-[10%]">
             <div className="avatar">
               <div className="w-12">
-                <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                <img
+                  src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                  alt="name"
+                />
               </div>
             </div>
           </div>

@@ -78,3 +78,24 @@ export const approveOrder = async (paramObject) => {
     }
 };
 
+
+const CHANGE_STATUS_ENDPOINT = "/order/change-status"
+
+export const changeStatus = async (paramObject) => {
+    try {
+        return await request.put(CHANGE_STATUS_ENDPOINT,
+            {},
+            {
+                params:
+                paramObject
+                ,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+    } catch (error) {
+        return error
+    }
+};
+

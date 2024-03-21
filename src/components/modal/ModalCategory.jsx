@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { CategoryContext } from '../product/CategoryComponent.jsx';
 import * as request from '../../services/product.js';
+import { delay } from './ModalProduct.jsx';
 
 const LabelInfo = ({ label, info, description = false }) => {
   const [data, setData] = useState(info);
@@ -30,25 +31,33 @@ const LabelInfo = ({ label, info, description = false }) => {
 };
 
 const ModalCategory = ({ type }) => {
-  const { current } = useContext(CategoryContext);
+  const { current, create, setCreate } = useContext(CategoryContext);
   const [category, setCategory] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     async function fetchData() {
       setIsLoading(() => true);
-      const { data } = await request.getCategoryById(current.id);
+      if (!create && current) {
+        const { data } = await request.getCategoryById(current?.id);
+        setCategory(() => data);
+      } else {
+        await delay(10);
+        setCategory(() => {});
+      }
       setIsLoading(() => false);
-      setCategory(() => data);
     }
     fetchData();
-  }, [current]);
+  }, [current, create]);
+  console.log(current, create);
 
   return (
     <>
       <dialog
         id={`modal_${type}`}
         className="modal modal-bottom sm:modal-middle w-[60%] mx-auto"
-        onClose={() => {}}
+        onClose={() => {
+          setCreate(() => false);
+        }}
       >
         <div className=" dark:bg-white  modal-box relative left-0 right-0 overflow-y-scroll no-scrollbar rounded-lg sm:max-w-full">
           <form method="dialog">

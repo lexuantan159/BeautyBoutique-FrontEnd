@@ -5,17 +5,15 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import ModalCategory from '../modal/ModalCategory.jsx';
 import * as request from '../../services/product.js';
 
-const testCategories = [
-  { id: 1, name: 'Cleaner' },
-  { id: 2, name: 'Lipstick' },
-  { id: 3, name: 'Powder' },
-  { id: 4, name: 'Highlighter' },
-  { id: 5, name: 'Perfume' },
-];
 const CategoryInline = ({ category }) => {
   const { setCurrent } = useContext(CategoryContext);
   const keysArray = Object.keys(category);
   const count = keysArray.length + 1;
+  function handleDelete(e) {
+    e.stopPropagation();
+    document.getElementById('modal_delete').showModal();
+  }
+
   const handleClick = () => {
     setCurrent(() => category);
     document.getElementById('modal_category')?.showModal();
@@ -30,10 +28,7 @@ const CategoryInline = ({ category }) => {
       <div
         id="delete"
         className="flex justify-center items-center w-full text-slate-400 hover:text-red-500 font-medium text-xl ease-in duration-200 hover:scale-110"
-        onClick={e => {
-          e.stopPropagation();
-          document.getElementById('modal_delete')?.showModal();
-        }}
+        onClick={handleDelete}
       >
         <BsFillTrash3Fill />
       </div>
@@ -62,8 +57,9 @@ function ManageListCategory() {
       <div className="text-slate-500 bg-white">
         <HeaderPage
           info="Category"
-          setCurrentItem={setCurrent}
           type="category"
+          setCurrent={setCurrent}
+          setCreate={setCreate}
         />
         <HeaderInfo headers={['No', 'Category', 'Delete']} />
         <ListItem>

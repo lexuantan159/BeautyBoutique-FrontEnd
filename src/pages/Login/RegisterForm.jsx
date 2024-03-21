@@ -25,9 +25,10 @@ function RegisterForm() {
       }
       const dataForm = { username, email, password, retype_password: password };
       try {
-        const data = await request.register({ dataForm });
+        const data = await request.register(dataForm);
         alert('Register Success');
-        navigate('/login');
+        console.log(dataForm);
+        // navigate('/login');
       } catch (e) {
         console.log(e);
       }

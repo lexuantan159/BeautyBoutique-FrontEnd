@@ -18,30 +18,19 @@ const LayoutAdmin = ({ children }) => {
         <div className="flex">
           <Sidebar>
             <SidebarItem icon={<IoIosHome size={20} />} text="Home" />
-            <Accordion className="max-w-[240px] border-0 d  ">
-              <Accordion.Panel>
-                <Accordion.Title className="dark:bg-white dark:text-slate-600 dark:hover:bg-slate-200 focus:ring-0">
-                  Manage Product
-                </Accordion.Title>
-                <Accordion.Content className="dark:bg-white dark:text-black">
-                  <SidebarItem icon={<LuPackage size={20} />} text="Product" />
-                  <SidebarItem icon={<TbBrandTidal size={20} />} text="Brand" />
-                  <SidebarItem
-                    icon={<MdOutlineCategory size={20} />}
-                    text="Category"
-                  />
-                </Accordion.Content>
-              </Accordion.Panel>
-            </Accordion>
+            <SidebarItem icon={<LuPackage size={20} />} text="Product" />
+            <SidebarItem icon={<TbBrandTidal size={20} />} text="Brand" />
+            <SidebarItem
+              icon={<MdOutlineCategory size={20} />}
+              text="Category"
+            />
             <SidebarItem
               icon={<LuLayoutDashboard size={20} />}
               text="Dashboard"
             />
-            <SidebarItem icon={<CgShutterstock size={20} />} text="" alert />
             <SidebarItem icon={<FaStoreAlt size={20} />} text="Order" />
             <SidebarItem icon={<PiTicket size={20} />} text="Voucher" />
             <SidebarItem icon={<TfiWrite size={20} />} text="Blog" />
-
             <hr className="my-3" />
             <SidebarItem icon={<IoSettingsSharp size={20} />} text="Settings" />
           </Sidebar>

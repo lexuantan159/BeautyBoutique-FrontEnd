@@ -10,7 +10,7 @@ import * as request from '../../services/product.js';
 import Spinner from '../../pages/Dashboard/Product/Spinner.jsx';
 
 const LabelInfo = ({ label, info, description = false, field = label }) => {
-  const { dispatch } = useContext(ModalContext);
+  const { dispatch, state } = useContext(ModalContext);
   const style =
     'dark:bg-white ring-1 ring-slate-400 rounded-lg py-1 px-2 focus:outline-none';
   return (
@@ -22,7 +22,7 @@ const LabelInfo = ({ label, info, description = false, field = label }) => {
         <input
           className={style}
           type="text"
-          value={info}
+          value={state?.[info]}
           onChange={e => dispatch({ type: field, name: e.target.value })}
         />
       ) : (
@@ -35,7 +35,7 @@ const LabelInfo = ({ label, info, description = false, field = label }) => {
     </div>
   );
 };
-function delay(ms) {
+export function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
@@ -77,8 +77,7 @@ const reducer = (state, action) => {
 };
 const ModalContext = createContext();
 const ModalProduct = () => {
-  const { currentProduct, create, setCreate } =
-    useContext(ManageProductContext);
+  const { current, create, setCreate } = useContext(ManageProductContext);
   const [product, setProduct] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [state, dispatch] = useReducer(reducer, initialProduct);
@@ -88,8 +87,8 @@ const ModalProduct = () => {
   useEffect(() => {
     async function fetchData() {
       setIsLoading(() => true);
-      if (!create && currentProduct) {
-        const { data } = await request.getProductById(currentProduct?.id);
+      if (!create && current) {
+        const { data } = await request.getProductById(current?.id);
         setProduct(() => data);
       } else {
         await delay(10);
@@ -98,10 +97,10 @@ const ModalProduct = () => {
       setIsLoading(() => false);
     }
     fetchData();
-  }, [currentProduct, create]);
+  }, [current, create]);
   console.log(product, create);
   return (
-    <ModalContext.Provider value={{ dispatch }}>
+    <ModalContext.Provider value={{ dispatch, state }}>
       <dialog
         id="modal_product"
         className="modal modal-bottom sm:modal-middle w-[60%] mx-auto"

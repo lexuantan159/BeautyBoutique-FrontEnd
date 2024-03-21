@@ -14,8 +14,9 @@ export const login = async (username, password) => {
 };
 export const register = async data => {
   try {
-    console.log(...data);
-    const response = await request.post(REGISTER, { ...data });
+    // const { username, email, password, retype_password } = data;
+    // console.log(data);
+    const response = await request.post(REGISTER, data);
     return response; // Trả về đối tượng User từ backend
   } catch (error) {
     return error;

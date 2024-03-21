@@ -8,20 +8,21 @@ import { IoMdAddCircleOutline } from 'react-icons/io';
 import Spinner from '../../pages/Dashboard/Product/Spinner.jsx';
 
 function ProductInline({ product }) {
-  const { setCurrentProduct } = useContext(ManageProductContext);
+  const { setCurrent } = useContext(ManageProductContext);
   const [isLoading, setIsloading] = useState(true);
   function handleDelete(e) {
     e.stopPropagation();
     document.getElementById('modal_delete').showModal();
   }
+  const handleClick = () => {
+    setCurrent(() => product);
+    document.getElementById('modal_product')?.showModal();
+  };
 
   return (
     <div
       className="grid grid-cols-4 hover:bg-slate-200 py-2"
-      onClick={() => {
-        setCurrentProduct(() => product);
-        document.getElementById('modal_product')?.showModal();
-      }}
+      onClick={handleClick}
     >
       <div className="mx-auto flex items-center">
         {isLoading && <Spinner />}
@@ -44,8 +45,21 @@ function ProductInline({ product }) {
     </div>
   );
 }
-export const HeaderPage = ({ info, type = 'user' }) => {
-  const { setCreate, setCurrentProduct } = useContext(ManageProductContext);
+export const HeaderPage = ({
+  info,
+  type = 'user',
+  setCurrent = () => {
+    console.log('Not implemented yet');
+  },
+  setCreate = () => {
+    console.log('Not implemented yet');
+  },
+}) => {
+  function openFormAdd() {
+    setCreate(() => true);
+    setCurrent(() => {});
+    document.getElementById(`modal_${type}`)?.showModal();
+  }
   return (
     <div>
       <div className="flex justify-between items-end px-4 mb-4">
@@ -74,13 +88,7 @@ export const HeaderPage = ({ info, type = 'user' }) => {
           </label>
         </div>
         <div>
-          <Button
-            onClick={() => {
-              setCreate(() => true);
-              setCurrentProduct(() => {});
-              document.getElementById(`modal_${type}`)?.showModal();
-            }}
-          >
+          <Button onClick={openFormAdd}>
             <div className="flex gap-2">
               <IoMdAddCircleOutline size={20} />
               <div>Add new {info.toLowerCase()}</div>
@@ -108,7 +116,7 @@ export const ListItem = ({ children }) => {
 };
 export const ManageProductContext = createContext();
 export function MangageListProduct() {
-  const [currentProduct, setCurrentProduct] = useState({});
+  const [current, setCurrent] = useState({});
   const [products, setProducts] = useState([]);
   const [create, setCreate] = useState(false);
   useEffect(() => {
@@ -122,10 +130,15 @@ export function MangageListProduct() {
   }, []);
   return (
     <ManageProductContext.Provider
-      value={{ currentProduct, setCurrentProduct, create, setCreate }}
+      value={{ current, setCurrent, create, setCreate }}
     >
       <div className="text-slate-500 bg-white">
-        <HeaderPage info="Product" type="product" />
+        <HeaderPage
+          info="Product"
+          type="product"
+          setCurrent={setCurrent}
+          setCreate={setCreate}
+        />
         <HeaderInfo headers={['Image', 'Name', 'Quantity', 'Delete']} />
         <ListItem>
           {products?.map(product => (

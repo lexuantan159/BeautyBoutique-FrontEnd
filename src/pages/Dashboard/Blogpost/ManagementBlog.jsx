@@ -69,7 +69,7 @@ const ManagementBlog = () => {
     return (
         <div className='h-screen m-4 fill-availabl'>
             <div className='flex items-center justify-center p-4 m-4'>
-                <span className='text-[#F6CBD1] text-3xl font-bold '>
+                <span className='text-center font-bold text-3xl bg-gradient-to-r from-red-400 to-red-800 text-transparent bg-clip-text '>
                     Manage BLog Post
                 </span>
             </div>

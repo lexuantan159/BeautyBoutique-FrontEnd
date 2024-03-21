@@ -4,7 +4,7 @@ import MethodContext from '../../../context/methodProvider';
 
 const CRUVoucher = ({ closeModal, isOpenForm, setChange, change, voucher }) => {
 
-    const { convertDate } = useContext(MethodContext)
+    const { convertDate, notify } = useContext(MethodContext)
     const [id, setId] = useState(null);
     const [title, setTitle] = useState(null);
     const [content, setContent] = useState(null);
@@ -40,7 +40,12 @@ const CRUVoucher = ({ closeModal, isOpenForm, setChange, change, voucher }) => {
     const addNewVoucher = async () => {
         try {
             const newVoucher = await voucherApi.createNewVouccher(title, content, quantity, numUsedVoucher, discount, maximDiscount, minimumOrder, convertDate(startDate), convertDate(endDate))
-            console.log(newVoucher);
+            if (newVoucher?.status === 201) {
+                notify(newVoucher.data, "success")
+            }
+            else {
+                notify(newVoucher.error.response.data)
+            }
         } catch (error) {
             console.error('Error fetching voucher:', error);
         }
@@ -48,8 +53,8 @@ const CRUVoucher = ({ closeModal, isOpenForm, setChange, change, voucher }) => {
     const updateVoucher = async () => {
         try {
             const updateVoucher = await voucherApi.updateVouccher(id, title, content, quantity, numUsedVoucher, discount, maximDiscount, minimumOrder, convertDate(startDate), convertDate(endDate))
-            if (updateVoucher === 200) console.log("Update succesfully");
-            else console.log("Update failed");
+            if (updateVoucher === 200) notify("Update succesfully", "success");
+            else notify("Update failed");
         } catch (error) {
             console.error('Error fetching voucher:', error);
         }
@@ -75,7 +80,6 @@ const CRUVoucher = ({ closeModal, isOpenForm, setChange, change, voucher }) => {
         <div>
             <dialog id="my_modal_4" className="modal">
                 <div className="modal-box w-6/12 max-w-5xl">
-
                     <h1 className='text-[#e78592] text-3xl font-bold text-center mb-4'>
                         Create New Voucher
                     </h1>

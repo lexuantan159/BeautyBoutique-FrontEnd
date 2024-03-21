@@ -1,46 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import logo from '../../public/img/logo.jpg';
 import { icons } from '../../utils/icons';
 import { Avatar, Dropdown, Navbar } from 'flowbite-react';
+import { getUser } from '../../services/login';
 
 function Header() {
   const navigate = useNavigate();
   const [hasUser, setHasUser] = useState(true);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
-
-  // useEffect(() => {
-  //     if (Object.keys(auth).length === 0) {
-  //         setHasUser(false);
-  //     } else {
-  //         setHasUser(true);
-  //     }
-  // }, [auth]);
+  const [user, setUser] = useState({});
+  const [userImage, setUserImage] = useState(null);
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.pageYOffset;
       const isScrolledDown = currentScrollPos > prevScrollPos;
-
       setPrevScrollPos(currentScrollPos);
-
       if (isScrolledDown && isVisible) {
         setIsVisible(false);
       } else if (!isScrolledDown && !isVisible) {
         setIsVisible(true);
       }
     };
-
     window.addEventListener('scroll', handleScroll);
-
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [isVisible, prevScrollPos]);
 
   const handleLogOut = () => {
-    //setAuth({});
     localStorage.removeItem('auth');
     setHasUser(false);
     navigate('/');
@@ -50,6 +40,12 @@ function Header() {
       className={`sticky max-w-[1200px] top-0 left-0 right-0 w-full z-50  mx-auto transition-transform transform duration-300 ${
         isVisible ? 'translate-y-0' : '-translate-y-full'
       }`}
+      onLoad={async () => {
+        const data = await getUser();
+        // get user from local storage to display
+        const localUser = JSON.parse(localStorage.getItem('user'));
+        setUser(() => localUser);
+      }}
     >
       <div className="w-full flex justify-between p-2 bg-white text-black bg-opacity-50">
         <div className="flex justify-center items-center font-sans text-xs">
@@ -145,17 +141,21 @@ function Header() {
                     label={
                       <Avatar
                         alt="User settings"
-                        img="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                        img={`${
+                          user
+                            ? userImage
+                            : 'https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png'
+                        }`}
                         rounded
                       />
                     }
                   >
                     <Dropdown.Header>
                       <span className="flex items-center justify-center text-xl m-2 ">
-                        Thiên Quang
+                        {user?.username ?? 'guest user'}
                       </span>
                       <span className="block truncate text-sm font-medium">
-                        Lieuthienquang@gmail.com
+                        {user?.email ?? 'this user not have email yet'}
                       </span>
                     </Dropdown.Header>
                     {/* {auth.role === "admin" && ( */}
@@ -179,14 +179,14 @@ function Header() {
                   <div className="flex justify-center items-center">
                     <ul className="flex justify-center items-center ">
                       <li>
-                        <Link to="/">
+                        <Link to="/login">
                           <button className="btn btn-outline btn-success">
                             LOGIN
                           </button>
                         </Link>
                       </li>
                       <li>
-                        <Link to="/">
+                        <Link to="/register">
                           <button className="btn btn-info ml-4">
                             REGISTER
                           </button>

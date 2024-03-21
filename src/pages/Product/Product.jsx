@@ -20,7 +20,6 @@ const Product = () => {
         }
       };
       fetchData();
-      console.log(products);
     } catch (error) {
       console.log(error);
     }
@@ -33,7 +32,6 @@ const Product = () => {
         setCategories(getCategory.data);
       };
       fetchDataCategory();
-      console.log(categories);
     } catch (error) {
       console.log(error);
     }

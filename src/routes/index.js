@@ -20,6 +20,7 @@ import {
   AddProduct,
   Admin,
   LoginForm,
+  RegisterForm,
 } from '../pages/index';
 
 import { LayoutAdmin, LayoutDefault } from '../layouts/index';
@@ -50,7 +51,8 @@ const router = [
   { path: '/order/:orderId', component: OrderDetail },
   { path: '/contact', component: ContactUs },
   { path: '/user', component: UserInfo },
-  { path: '/login', LayoutDefault, component: LoginForm },
+  { path: '/login', layout: LayoutDefault, component: LoginForm },
+  { path: '/register', layout: LayoutDefault, component: RegisterForm },
 ];
 
 export { router };

@@ -24,3 +24,4 @@ export { default as OrderDetail } from './Order/OrderDetail';
 export { default as UserInfo } from './User/UserInfo';
 export { default as ContactUs } from './ContactUs/ContactUs';
 export { default as LoginForm } from './Login/LoginForm';
+export { default as RegisterForm } from './Login/RegisterForm.jsx';

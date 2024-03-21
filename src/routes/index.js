@@ -19,9 +19,10 @@ import {
   ManageBrand,
   AddProduct,
   Admin,
+  LoginForm,
 } from '../pages/index';
 
-import { LayoutAdmin } from '../layouts/index';
+import { LayoutAdmin, LayoutDefault } from '../layouts/index';
 
 const router = [
   { path: '/', component: Home },
@@ -49,6 +50,7 @@ const router = [
   { path: '/order/:orderId', component: OrderDetail },
   { path: '/contact', component: ContactUs },
   { path: '/user', component: UserInfo },
+  { path: '/login', LayoutDefault, component: LoginForm },
 ];
 
 export { router };

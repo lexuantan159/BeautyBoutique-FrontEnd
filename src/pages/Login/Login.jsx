@@ -13,7 +13,7 @@ function Login() {
       if (response.status === 200) {
         const token = response.data.token;
         console.log(token);
-        sessionStorage.setItem("token", token);
+        localStorage.setItem("token", token);
         const getUser = await loginApi.getUser(token);
         console.log(getUser);
         navigate("/product");

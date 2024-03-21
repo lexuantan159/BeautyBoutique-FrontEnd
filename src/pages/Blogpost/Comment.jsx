@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
-import { FiSend } from "react-icons/fi";
-import { Button } from "flowbite-react";
-import { Spinner } from "@material-tailwind/react";
-import * as commentApi from "../../services/comment";
-import MethodContext from "../../context/methodProvider";
-import * as productApi from "../../services/product";
+import React, { useContext, useEffect, useState } from 'react';
+import { FiSend } from 'react-icons/fi';
+import { Button } from 'flowbite-react';
+import { Spinner } from '@material-tailwind/react';
+import * as commentApi from '../../services/comment';
+import MethodContext from '../../context/methodProvider';
+import * as productApi from '../../services/product';
 
 const Comment = ({ commentId, index, setChange, change }) => {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [newComment, setNewComment] = useState("");
-  const [updateNewComment, setUpdateNewComment] = useState("");
+  const [newComment, setNewComment] = useState('');
+  const [updateNewComment, setUpdateNewComment] = useState('');
   const { formatDateTime } = useContext(MethodContext);
 
   const [isEdit, setIsEdit] = useState(false);
@@ -29,7 +29,7 @@ const Comment = ({ commentId, index, setChange, change }) => {
         }
         //console.log(bloggData);
       } catch (error) {
-        console.error("Error fetching blogposts:", error);
+        console.error('Error fetching blogposts:', error);
       }
     };
     fetchData();
@@ -39,34 +39,33 @@ const Comment = ({ commentId, index, setChange, change }) => {
   const postComment = async () => {
     try {
       if (index === 1) {
-        if (newComment.trim() === "") {
+        if (newComment.trim() === '') {
           return;
         }
-        await productApi.addFeedback(newComment,5, commentId, 1);
+        await productApi.addFeedback(newComment, 5, commentId, 1);
         setLoading(false);
         setChange(!change);
-        setNewComment("");
+        setNewComment('');
       } else {
-        if (newComment.trim() === "") {
+        if (newComment.trim() === '') {
           return;
         }
         await commentApi.createNewComment(newComment, commentId, 1);
         setLoading(false);
         setChange(!change);
-        setNewComment("");
+        setNewComment('');
       }
     } catch (error) {
       setChange(!change);
       setLoading(false);
     }
   };
-  const deleteComment = async (cmtid) => {
+  const deleteComment = async cmtid => {
     try {
-      if(index === 1){
-        await productApi.deleteFeedback(cmtid,1)
-        setChange(!change)
-      }else{
-
+      if (index === 1) {
+        await productApi.deleteFeedback(cmtid, 1);
+        setChange(!change);
+      } else {
         await commentApi.deleteComment(cmtid, 1);
         setChange(!change);
       }
@@ -75,13 +74,12 @@ const Comment = ({ commentId, index, setChange, change }) => {
       //notify('Lỗi khi xóa bình luận:', 'error');
     }
   };
-  const updateComment = async (id) => {
+  const updateComment = async id => {
     try {
-      if(index === 1){
+      if (index === 1) {
         await productApi.updateFeedback(id, updateNewComment, 1);
         setChange(!change);
-      }else{
-
+      } else {
         await commentApi.updateComment(id, updateNewComment, 1);
         setChange(!change);
       }
@@ -106,7 +104,7 @@ const Comment = ({ commentId, index, setChange, change }) => {
             <textarea
               id="comment"
               rows="1"
-              onChange={(e) => setNewComment(e.target.value)}
+              onChange={e => setNewComment(e.target.value)}
               value={newComment}
               className="textarea textarea-accent w-[90%]"
               placeholder="Write Your Comment..."
@@ -130,7 +128,7 @@ const Comment = ({ commentId, index, setChange, change }) => {
           </div>
         </div>
         {comments && comments.length > 0 ? (
-          comments.map((comment) => (
+          comments.map(comment => (
             <div key={comment.id} className="flex items-start justify-center">
               <div className="w-4/5 flex items-start justify-center">
                 <div className="w-[90%] border bg-gray-100 p-1 rounded-xl my-2">
@@ -155,7 +153,7 @@ const Comment = ({ commentId, index, setChange, change }) => {
                         type="text"
                         placeholder={comment.content}
                         value={updateNewComment}
-                        onChange={(e) => setUpdateNewComment(e.target.value)}
+                        onChange={e => setUpdateNewComment(e.target.value)}
                         className="input input-bordered input-accent w-full max-w-xl"
                       />
                     ) : (
@@ -170,7 +168,7 @@ const Comment = ({ commentId, index, setChange, change }) => {
                           onClick={() => {
                             updateComment(comment.id);
                             setIdEdit(false);
-                            setUpdateNewComment("");
+                            setUpdateNewComment('');
                           }}
                         >
                           Save
@@ -180,7 +178,7 @@ const Comment = ({ commentId, index, setChange, change }) => {
                           className="text-xs mx-2 link link-error"
                           onClick={() => {
                             setIdEdit(false);
-                            setUpdateNewComment("");
+                            setUpdateNewComment('');
                           }}
                         >
                           Cance

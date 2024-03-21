@@ -1,6 +1,6 @@
 import * as request from "../utils/request";
 const LOGIN = "auth/login";
-const GET_USER = "users/getuser";
+const GET_USER = "/users/getuser";
 
 export const login = async (username, password) => {
   const response = await request.post(LOGIN, {
@@ -9,7 +9,8 @@ export const login = async (username, password) => {
   });
   return response; // Trả về đối tượng User từ backend
 };
-export const getUser = async (accesstoken) => {
+export const getUser = async () => {
+  const accesstoken = localStorage.getItem("token");
   console.log(accesstoken);
   const userResponse = await request.get(GET_USER, {
     headers: {

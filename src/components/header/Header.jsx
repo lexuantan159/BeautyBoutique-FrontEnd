@@ -92,10 +92,10 @@ function Header() {
           </ul>
         </div>
       </div>
-      <div className="w-full dark:bg-white ">
+      <div className="w-full  ">
         <div className="bg-white  rounded-lg  flex items-center justify-center">
           <div className="w-full border border-black rounded-lg">
-            <Navbar className="w-full z-50 bg-opacity-10 rounded-lg">
+            <Navbar className="w-full z-50 bg-opacity-10 rounded-lg dark:bg-white">
               <Navbar.Brand>
                 <div className="avatar">
                   <div className="w-14 rounded-full">

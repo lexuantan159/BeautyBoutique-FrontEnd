@@ -12,7 +12,6 @@ import VoucherCom from "../../components/voucher/VoucherCom";
 import MethodContext from "../../context/methodProvider";
 
 const ShipDetail = () => {
-
     const [action, setAction] = useState(false)
     const [shipDetail, setShipDetail] = useState({id: 1})
     const [methodShipping, setMethodShipping] = useState({id: 0})
@@ -20,17 +19,18 @@ const ShipDetail = () => {
     const [totalPrice, setTotalPrice] = useState(0)
     const [voucher, setVoucher] = useState({discount: 0})
     const [isLoadingPayment, setIsLoadingPayment] = useState(false);
-    const [paramsOrder, setParamsOrder] = useState({userId: 1});
-    const [paramsPayment, setParamsPayment] = useState({userId: 1});
+    const [paramsOrder, setParamsOrder] = useState({});
+    const [paramsPayment, setParamsPayment] = useState({});
     const {notify, formatNumber, toastLoadingId, toastUpdateLoadingId} = useContext(MethodContext)
     const navigate = useNavigate();
+    const accessToken = localStorage.getItem('token');
     const {
         data: shipDetails,
         isLoading,
-    } = useQuery(["shipDetails"], () => shipDetailService.getShipDetails({userId: 1}));
+    } = useQuery(["shipDetails"], () => shipDetailService.getShipDetails(accessToken));
     const {
         data: cartData,
-    } = useQuery(["cart", action], () => cartService.getCart({userId: 1}));
+    } = useQuery(["cart", action], () => cartService.getCart(accessToken, {}));
 
 
     useEffect(() => {
@@ -47,9 +47,14 @@ const ShipDetail = () => {
     const [cartItem, setCartItem] = useState([])
 
     useEffect(() => {
+        if (!accessToken || accessToken === 'undefined') {
+            navigate('/login');
+        }
+        console.log(cartItemIds)
         const cartItemIdArray = cartItemIds.split(',').map(Number);
         setCartItem(cartItemIdArray)
     }, [])
+
 
     useEffect(() => {
         setParamsOrder(prevState => ({
@@ -96,7 +101,7 @@ const ShipDetail = () => {
         setIsLoadingPayment(true);
         // if payment not by zalopay
         if (methodPayment?.id === 1) {
-            const responseCreateOrder = await orderServices.createOrder(paramsOrder, cartItem);
+            const responseCreateOrder = await orderServices.createOrder(accessToken,paramsOrder, cartItem);
             if (responseCreateOrder.status === 201) {
                 setIsLoadingPayment(false)
                 navigate('/payment-success', {
@@ -109,13 +114,13 @@ const ShipDetail = () => {
             } else {
                 console.log(responseCreateOrder)
                 setIsLoadingPayment(false)
-                toastUpdateLoadingId(responseCreateOrder?.response?.data || "Create order fail!" , "error", id);
+                toastUpdateLoadingId(responseCreateOrder?.response?.data || "Create order fail!", "error", id);
             }
             return;
         }
 
         let paymentSuccessful = false;
-        const responseCreatePayment = await orderServices.createPayment(paramsPayment, cartItem)
+        const responseCreatePayment = await orderServices.createPayment(accessToken, paramsPayment, cartItem)
         console.log(responseCreatePayment)
         if (responseCreatePayment?.status === 201) {
             console.log(responseCreatePayment)
@@ -143,7 +148,7 @@ const ShipDetail = () => {
                     })
                     return;
                 }
-                const responseCreateOrder = await orderServices.createOrder(paramsOrder, cartItem);
+                const responseCreateOrder = await orderServices.createOrder(accessToken,paramsOrder, cartItem);
                 console.log(responseCreateOrder)
                 if (responseCreateOrder.status === 201) {
                     paymentSuccessful = true;

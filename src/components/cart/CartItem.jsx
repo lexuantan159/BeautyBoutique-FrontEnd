@@ -15,10 +15,10 @@ const CartItem = ({item, actionChange, action, noneBorder = false}) => {
     const {notify} = useContext(MethodContext)
     const [quantity, setQuantity] = useState(item?.quantity || 0)
     const [cartItem, setCartItem] = useState({price: item?.product?.salePrice, totalPrice: item?.totalPrice})
-
+    const accessToken = localStorage.getItem('token');
     const handleDeleteItem = async () => {
         let params = {userId: 1, cartItemId: item.id,}
-        const responseDeleteItem = await cartService.deleteCartItem(params)
+        const responseDeleteItem = await cartService.deleteCartItem(accessToken ,params)
         responseDeleteItem?.status === 200 && actionChange(!action)
         responseDeleteItem?.status === 200 && notify("Delete cart item successfully!", "success");
     }
@@ -60,7 +60,7 @@ const CartItem = ({item, actionChange, action, noneBorder = false}) => {
         } else {
             params = {...params, quantity: newQuantity}
         }
-        const responseIncreaseItem = await cartService.updateCartItem(params);
+        const responseIncreaseItem = await cartService.updateCartItem(accessToken, params);
         responseIncreaseItem?.status === 200 && actionChange(!action)
     }
 

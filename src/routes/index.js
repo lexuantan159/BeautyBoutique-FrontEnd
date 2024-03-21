@@ -1,11 +1,12 @@
 import {
     Blog, ManageVoucher, Voucher, Home, Cart, ShipDetail, PaymentSuccess,
     Order, ManagementBlog, AddProduct, ProductDetail,
-    Product
+    Product, EditProfile, OrderHistories
 } from '../pages/index';
 import {
     LayoutAdmin,
-    LayoutDefault
+    LayoutDefault,
+    LayoutUser
 } from '../layouts/index';
 import {Admin} from '../pages';
 
@@ -14,7 +15,7 @@ const router = [
     { path: '/blogpost', component: Blog },
     { path: '/voucher', component: Voucher },
     { path: '/cart', component: Cart },
-    { path: '/ship-detail', component: ShipDetail },
+    { path: '/ship-detail/:cartItemIds', component: ShipDetail },
     { path: '/payment-success', component: PaymentSuccess },
     { path: '/admin/voucher', layout: LayoutAdmin, component: ManageVoucher },
     { path: '/admin/blog', layout: LayoutAdmin, component: ManagementBlog },
@@ -24,7 +25,8 @@ const router = [
     { path: '/payment-success', layout: LayoutDefault, component: PaymentSuccess },
     { path: '/admin/order', layout: LayoutAdmin, component: Order },
     { path: '/admin/addproduct', component: AddProduct },
-
+    { path: '/profile', layout: LayoutUser, component: EditProfile },
+    { path: '/profile/order-histories', layout: LayoutUser, component:OrderHistories },
 ];
 
 export { router }

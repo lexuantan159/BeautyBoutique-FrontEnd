@@ -13,6 +13,7 @@ const Order = () => {
     const [paramObject, setParamObject] = useState({})
     const [orderItem, setOrderItem] = useState({})
     const [status, setStatus] = useState(null)
+    const accessToken = localStorage.getItem('token');
     const statusMapping = {
         "Đang Giao Hàng": 5,
         "Đã Giao Hàng": 3
@@ -20,15 +21,15 @@ const Order = () => {
     const queryClient = useQueryClient();
     const {
         data: orders
-    } = useQuery(["orders", paramObject], () => orderService.getOrderHistories(paramObject));
+    } = useQuery(["orders", paramObject], () => orderService.getOrderHistories(accessToken));
 
     const handleApprove = async ({orderId, isAccept}) => {
-        return await orderService.approveOrder({userId: 1, orderId, isAccept})
+        return await orderService.approveOrder(accessToken, {orderId, isAccept})
     }
 
 
     const handleChangeStatus = async ({statusId, orderItemId}) => {
-        return await orderService.changeStatus({userId: 1, statusId, orderItemId: orderItemId})
+        return await orderService.changeStatus(accessToken, {statusId, orderItemId: orderItemId})
     }
 
     const {mutate} = useMutation({
@@ -107,6 +108,7 @@ const Order = () => {
                     </div>
                 </div>
             </div>
+
             <div className="mt-5 rounded-lg max-h-[450px]">
                 <table className="w-full shadow-lg rounded-lg bg-white">
                     <thead className="">

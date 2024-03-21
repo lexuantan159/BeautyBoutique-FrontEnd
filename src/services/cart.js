@@ -37,7 +37,7 @@ export const updateCartItem = async (accessToken,param) => {
 const DELETE_CART = "cart/delete-cart"
 export const deleteCartItem = async (accessToken,param) => {
     try {
-        return await request.deleteRe(DELETE_CART,  {
+        return await request.deleteRe(DELETE_CART, {
             params: param,
             headers: {
                 "Authorization": `Bearer ${accessToken}`,
@@ -49,18 +49,15 @@ export const deleteCartItem = async (accessToken,param) => {
     }
 };
 
-export const addToCart = async(accessToken,productId) => {
-try {
-    return await request.post(`cart/add-to-cart?userId=1&productId=${productId}`,{
-        // params:{
-        //     userId : 1,
-        //     productId : productId,
-        // },
-        headers: {
+export const addToCart = async (accessToken, params) => {
+    try {
+        return await request.post(`cart/add-to-cart`, {}, {
+            params: params,
+            headers: {
                 "Content-Type": "Application/json"
             }
-    })
-} catch (error) {
-     return error
-}
+        })
+    } catch (error) {
+        return error
+    }
 }

@@ -101,7 +101,7 @@ const ShipDetail = () => {
         setIsLoadingPayment(true);
         // if payment not by zalopay
         if (methodPayment?.id === 1) {
-            const responseCreateOrder = await orderServices.createOrder(accessToken,paramsOrder, cartItem);
+            const responseCreateOrder = await orderServices.createOrder(accessToken, paramsOrder, cartItem);
             if (responseCreateOrder.status === 201) {
                 setIsLoadingPayment(false)
                 navigate('/payment-success', {
@@ -148,7 +148,7 @@ const ShipDetail = () => {
                     })
                     return;
                 }
-                const responseCreateOrder = await orderServices.createOrder(accessToken,paramsOrder, cartItem);
+                const responseCreateOrder = await orderServices.createOrder(accessToken, paramsOrder, cartItem);
                 console.log(responseCreateOrder)
                 if (responseCreateOrder.status === 201) {
                     paymentSuccessful = true;

@@ -1,48 +1,32 @@
-import React, {useContext, useState, useEffect} from 'react'
-import {RiDeleteBinLine} from "react-icons/ri";
-import * as cartService from "../../services/cart"
-import MethodContext from "../../context/methodProvider";
+import React, {useContext, useState, useEffect} from 'react';
+import {RiDeleteBinLine} from 'react-icons/ri';
+import * as cartService from '../../services/cart';
+import MethodContext from '../../context/methodProvider';
 import {debounce} from 'lodash';
-import {Link} from "react-router-dom";
+import {Link} from 'react-router-dom';
 
 const CartItem = ({item, actionChange, action, noneBorder = false}) => {
     const type = {
         INCREASE: 'increase',
         DECREASE: 'decrease',
         INPUT: 'input',
-    }
+    };
 
-    const {notify} = useContext(MethodContext)
-    const [quantity, setQuantity] = useState(item?.quantity || 0)
-    const [cartItem, setCartItem] = useState({price: item?.product?.salePrice, totalPrice: item?.totalPrice})
+    const {notify} = useContext(MethodContext);
+    const [quantity, setQuantity] = useState(item?.quantity || 0);
+    const [cartItem, setCartItem] = useState({
+        price: item?.product?.salePrice,
+        totalPrice: item?.totalPrice,
+    });
     const accessToken = localStorage.getItem('token');
+
+
     const handleDeleteItem = async () => {
         let params = {userId: 1, cartItemId: item.id,}
-        const responseDeleteItem = await cartService.deleteCartItem(accessToken ,params)
+        const responseDeleteItem = await cartService.deleteCartItem(accessToken, params)
         responseDeleteItem?.status === 200 && actionChange(!action)
         responseDeleteItem?.status === 200 && notify("Delete cart item successfully!", "success");
     }
-
-    const updateQuantity = debounce((newQuantity) => {
-        handleUpdateItem(type.INPUT, newQuantity)
-    }, 1000);
-
-    const handleChangeQuantity = (event) => {
-        const input = event.target.value;
-        // check number
-        if (/^\d*$/.test(input)) {
-            const newQuantity = parseInt(input);
-            if (newQuantity >= 0 && !isNaN(newQuantity)) {
-                setQuantity(newQuantity);
-                setCartItem(prevState => ({...prevState, totalPrice: prevState.price * newQuantity}));
-                updateQuantity(newQuantity);
-            } else {
-                notify("Quantity must be a positive number!", "error");
-            }
-        } else {
-            notify("Please enter a valid number!", "error");
-        }
-    };
 
     const handleUpdateItem = async (typeAction, newQuantity) => {
         let params = {userId: 1, cartItemId: item.id,}
@@ -63,6 +47,31 @@ const CartItem = ({item, actionChange, action, noneBorder = false}) => {
         const responseIncreaseItem = await cartService.updateCartItem(accessToken, params);
         responseIncreaseItem?.status === 200 && actionChange(!action)
     }
+
+
+    const updateQuantity = debounce((newQuantity) => {
+                handleUpdateItem(type.INPUT, newQuantity)
+            }, 1000
+        )
+    ;
+
+    const handleChangeQuantity = (event) => {
+        const input = event.target.value;
+        // check number
+        if (/^\d*$/.test(input)) {
+            const newQuantity = parseInt(input);
+            if (newQuantity >= 0 && !isNaN(newQuantity)) {
+                setQuantity(newQuantity);
+                setCartItem(prevState => ({...prevState, totalPrice: prevState.price * newQuantity}));
+                updateQuantity(newQuantity);
+            } else {
+                notify("Quantity must be a positive number!", "error");
+            }
+        } else {
+            notify("Please enter a valid number!", "error");
+        }
+    };
+
 
     return (
         <>
@@ -114,7 +123,8 @@ const CartItem = ({item, actionChange, action, noneBorder = false}) => {
                     </form>
                 </div>
             </div>
-        </>)
-}
+        </>
+    );
+};
 
 export default CartItem;

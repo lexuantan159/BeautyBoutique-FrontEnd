@@ -60,8 +60,10 @@ const saveVoucher = async (userId, voucherId) => {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-        console.log(saveVouUser.data);
-        return saveVouUser.data
+        return {
+            message: saveVouUser.data,
+            statusCode: saveVouUser.status
+        }
 
     } catch (error) {
         const statusCode = error.status || (error.response && error.response.status) || 500;

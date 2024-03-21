@@ -67,13 +67,13 @@ const ManagementBlog = () => {
         setIsOpenForm({ index: blogpost.id, isOpen: true });
     };
     return (
-        <div data-theme="pastel" className='w-full h-auto bg-white flex items-center justify-center m-4'>
-            <div className='w-[95%]'>
-                <div className='flex items-center justify-center p-4 m-4'>
-                    <span className='text-[#F6CBD1] text-3xl font-bold '>
-                        Manage BLog Post
-                    </span>
-                </div>
+        <div className='h-screen m-4 fill-availabl'>
+            <div className='flex items-center justify-center p-4 m-4'>
+                <span className='text-[#F6CBD1] text-3xl font-bold '>
+                    Manage BLog Post
+                </span>
+            </div>
+            <div>
                 <div className=' flex items-center justify-end m-4'>
                     <div>
                         <button className="btn btn-outline btn-success"
@@ -83,7 +83,7 @@ const ManagementBlog = () => {
                         isOpenForm.index === null && isOpenForm.isOpen && <CreateAndUpdateBlog closeModal={setIsOpenForm} isOpenForm={isOpenForm} setChange={setChange} change={change} blogpost={null}></CreateAndUpdateBlog>
                     }
                 </div>
-                <div className="overflow-x-auto shadow-lg">
+                <div className="h-[550px] shadow-lg overflow-y-scroll no-scrollbar border">
                     <Table hoverable>
                         <Table.Head>
                             <Table.HeadCell>Title</Table.HeadCell>

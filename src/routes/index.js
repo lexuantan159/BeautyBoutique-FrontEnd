@@ -38,7 +38,7 @@ const router = {
     { path: '/contact', component: ContactUs },
     { path: '/login', layout: LayoutDefault, component: LoginForm },
     { path: '/register', layout: LayoutDefault, component: RegisterForm },
-    { path: '/aboutus', layout: LayoutDefault, component: AboutUs },
+    { path: '/aboutus', component: AboutUs },
   ],
 
   // cac route duoi day can phai dc protect

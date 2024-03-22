@@ -121,7 +121,7 @@ function Header() {
                 </div>
 
                 <div className="text-black hover:text-red-500">
-                  <Link to="/https://www.siliconii.com/">ABOUT</Link>
+                  <Link to="/aboutus">ABOUT</Link>
                 </div>
                 <div className="text-black hover:text-red-500">
                   <Link to="/contact">CONTACT</Link>
@@ -154,6 +154,7 @@ function Header() {
                       />
                     }
                   >
+                  
                     <Dropdown.Header>
                       <span className="flex items-center justify-center text-xl m-2 ">
                         {user?.username ?? 'Anonymous User'}

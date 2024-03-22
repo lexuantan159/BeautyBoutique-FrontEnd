@@ -57,17 +57,21 @@ export const MethodProvider = ({ children }) => {
     };
     const deleteImage = async (imageIds) => {
         try {
-            const deletePromises = imageIds.map(async (imageId) => {
-                const imageRef = ref(storage, `/Blog-post/${imageId.id}`);
-                await deleteObject(imageRef);
-                // console.log(`Image ${imageId.id} deleted successfully.`);
-                return imageId.id;
-            });
+            if (imageIds.length > 0) {
 
-            const deletedImageIds = await Promise.all(deletePromises);
-            console.log("Deleted Image IDs:", deletedImageIds);
-
-            return deletedImageIds;
+                const deletePromises = imageIds?.map(async (imageId) => {
+                    const imageRef = ref(storage, `/Blog-post/${imageId.id}`);
+                    await deleteObject(imageRef);
+                    // console.log(`Image ${imageId.id} deleted successfully.`);
+                    return imageId.id;
+                });
+                const deletedImageIds = await Promise.all(deletePromises);
+                console.log("Deleted Image IDs:", deletedImageIds);
+                return deletedImageIds;
+            }
+            else {
+                console.log('Không có hình ảnh để xóa');
+            }
         } catch (error) {
             console.error("Error deleting images: ", error);
             throw error;

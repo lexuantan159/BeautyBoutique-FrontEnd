@@ -14,6 +14,8 @@ const Comment = ({ commentId, index, setChange, change }) => {
   const { formatDateTime, notify } = useContext(MethodContext);
   const [isEdit, setIsEdit] = useState(false);
   const [idEdit, setIdEdit] = useState(false);
+  const Token = localStorage.getItem('Token');
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,7 +41,7 @@ const Comment = ({ commentId, index, setChange, change }) => {
           notify("You must write a review")
           return;
         }
-        await productApi.addFeedback(newComment, 5, commentId, 1);
+        await productApi.addFeedback(newComment, 5, commentId, Token);
         notify("Comments have been posted", "success")
         setLoading(false);
         setChange(!change);
@@ -49,7 +51,7 @@ const Comment = ({ commentId, index, setChange, change }) => {
           notify("You must write a review")
           return;
         }
-        await commentApi.createNewComment(newComment, commentId, 1);
+        await commentApi.createNewComment(newComment, commentId, Token);
         setLoading(false);
         notify("Comments have been posted", "success")
         setChange(!change);
@@ -63,11 +65,11 @@ const Comment = ({ commentId, index, setChange, change }) => {
   const deleteComment = async (cmtid) => {
     try {
       if (index === 1) {
-        await productApi.deleteFeedback(cmtid, 1)
+        await productApi.deleteFeedback(cmtid, Token)
         setChange(!change)
       } else {
 
-        await commentApi.deleteComment(cmtid, 1);
+        await commentApi.deleteComment(cmtid, Token);
         setChange(!change);
       }
       notify('Comment has been deleted.', 'success');
@@ -78,11 +80,11 @@ const Comment = ({ commentId, index, setChange, change }) => {
   const updateComment = async (id) => {
     try {
       if (index === 1) {
-        await productApi.updateFeedback(id, updateNewComment, 1);
+        await productApi.updateFeedback(id, updateNewComment, Token);
         setChange(!change);
       } else {
 
-        await commentApi.updateComment(id, updateNewComment, 1);
+        await commentApi.updateComment(id, updateNewComment, Token);
         setChange(!change);
       }
       notify('Comment edited successfully', 'success');
@@ -130,45 +132,45 @@ const Comment = ({ commentId, index, setChange, change }) => {
           </div>
         </div>
         {comments && comments.length > 0 ? (
-          comments.map((comment) => (
-            <div key={comment.id} className="flex items-start justify-center">
+          comments?.map((comment) => (
+            <div key={comment?.id} className="flex items-start justify-center">
               <div className="w-4/5 flex items-start justify-center">
                 <div className="w-[90%] border bg-gray-100 p-1 rounded-xl my-2">
                   <div className=" avatar-group">
                     <div className="avatar">
                       <div className="w-10">
-                        <img src={comment.user.imageURL} alt="Avatar" />
+                        <img src={comment?.user?.imageURL} alt="Avatar" />
                       </div>
                     </div>
                     <div className="ml-2">
                       <h1 className="text-base font-semibold">
-                        {comment.user.userName}
+                        {comment?.user?.fullName}
                       </h1>
                       <h1 className="text-sm">
-                        {formatDateTime(comment.createdAt)}
+                        {formatDateTime(comment?.createdAt)}
                       </h1>
                     </div>
                   </div>
                   <div className="px-2">
-                    {isEdit && idEdit === comment.id ? (
+                    {isEdit && idEdit === comment?.id ? (
                       <input
                         type="text"
-                        placeholder={comment.content}
+                        placeholder={comment?.content}
                         value={updateNewComment}
                         onChange={(e) => setUpdateNewComment(e.target.value)}
-                        className="input input-bordered input-accent w-full max-w-xl"
+                        className="input input-bordered input-accent w-full max-w-xl focus:outline-none"
                       />
                     ) : (
-                      <h2>{comment.content}</h2>
+                      <h2>{comment?.content}</h2>
                     )}
                   </div>
                   <div className="flex items-end justify-end">
-                    {isEdit && idEdit === comment.id ? (
+                    {isEdit && idEdit === comment?.id ? (
                       <>
                         <button
                           className="text-xs mx-2 link link-accent"
                           onClick={() => {
-                            updateComment(comment.id);
+                            updateComment(comment?.id);
                             setIdEdit(false);
                             setUpdateNewComment("");
                           }}
@@ -191,7 +193,7 @@ const Comment = ({ commentId, index, setChange, change }) => {
                         <button
                           className="text-xs mx-2 link link-accent"
                           onClick={() => {
-                            setIdEdit(comment.id);
+                            setIdEdit(comment?.id);
                             setIsEdit(true);
                           }}
                         >
@@ -200,7 +202,7 @@ const Comment = ({ commentId, index, setChange, change }) => {
 
                         <button
                           className="text-xs mx-2 link link-error"
-                          onClick={() => deleteComment(comment.id)}
+                          onClick={() => deleteComment(comment?.id)}
                         >
                           Delete
                         </button>

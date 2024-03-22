@@ -8,12 +8,15 @@ import { MdOutlineDeliveryDining } from "react-icons/md";
 import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 import { MdAddTask } from "react-icons/md";
 
+
 const ManageVoucher = () => {
     const [vouchers, setVouchers] = useState([]);
     const [isOpenForm, setIsOpenForm] = useState({ index: null, isOpen: false });
     const [change, setChange] = useState(true)
     const [openModal, setOpenModal] = useState(false);
     const [voucherExpires, setVoucherExpires] = useState([]);
+    const Token = localStorage.getItem('Token');
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,7 +32,7 @@ const ManageVoucher = () => {
 
     const deleteVoucher = async (id) => {
         try {
-            const deleteVou = await voucherApi.deleteVoucher(id)
+            const deleteVou = await voucherApi.deleteVoucher(id, Token)
             if (deleteVou === 200) {
                 console.log("Delete successfully");
             }
@@ -57,7 +60,7 @@ const ManageVoucher = () => {
                         className="p-3 border-[0.5px] border-gray-400 rounded-lg text-black bg-white flex items-center mt-5 md:mt-0 ">
                         <LiaFileInvoiceDollarSolid className="text-5xl text-red-400 mx-2" />
                         <div className="">
-                            <p className="text-xl font-bold">{vouchers.length}</p>
+                            <p className="text-xl font-bold">{vouchers?.length}</p>
                             <p className="font-medium text-xs text-gray-300">Total voucher</p>
                         </div>
                     </div>
@@ -117,13 +120,13 @@ const ManageVoucher = () => {
                                         <Table.Cell className="whitespace-nowrap font-medium text-gray-900 ">
                                             {voucher?.title}
                                         </Table.Cell>
-                                        <Table.Cell> {voucher.quantity}</Table.Cell>
-                                        <Table.Cell> {voucher.numUsedVoucher}</Table.Cell>
-                                        <Table.Cell> {voucher.discount * 100} %</Table.Cell>
-                                        <Table.Cell> {voucher.maximDiscount} $</Table.Cell>
-                                        <Table.Cell> {voucher.minimumOrder} $</Table.Cell>
-                                        <Table.Cell> {voucher.startDate}</Table.Cell>
-                                        <Table.Cell> {voucher.endDate}</Table.Cell>
+                                        <Table.Cell> {voucher?.quantity}</Table.Cell>
+                                        <Table.Cell> {voucher?.numUsedVoucher}</Table.Cell>
+                                        <Table.Cell> {voucher?.discount * 100} %</Table.Cell>
+                                        <Table.Cell> {voucher?.maximDiscount} $</Table.Cell>
+                                        <Table.Cell> {voucher?.minimumOrder} $</Table.Cell>
+                                        <Table.Cell> {voucher?.startDate}</Table.Cell>
+                                        <Table.Cell> {voucher?.endDate}</Table.Cell>
                                         <Table.Cell>
                                             <button className="btn btn-outline btn-warning" onClick={() => setIsOpenForm({ index: voucher.id, isOpen: true })}>Edit</button>
                                             {
@@ -142,7 +145,7 @@ const ManageVoucher = () => {
                                                         </h3>
                                                         <div className="flex justify-center gap-4">
                                                             <Button color="failure" onClick={() => {
-                                                                handleDelete(voucher.id)
+                                                                handleDelete(voucher?.id)
                                                                 setOpenModal(false)
                                                             }}>
                                                                 {"Yes, I'm sure"}

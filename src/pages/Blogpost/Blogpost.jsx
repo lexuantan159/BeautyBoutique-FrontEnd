@@ -18,6 +18,8 @@ const Blogpost = () => {
     const [deleteItem, setDeleteItem] = useState({ isDelete: false })
     const [blogCommentId, setBlogCommentId] = useState('')
     const [editBlogpost, setEditBlogpost] = useState(null);
+    const Token = localStorage.getItem('Token');
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,11 +31,12 @@ const Blogpost = () => {
             }
         };
         fetchData();
+        console.log(blogposts);
     }, [change]);
 
-    const deleteBlogPost = async (id, userId) => {
+    const deleteBlogPost = async (id) => {
         try {
-            const deleteBlog = await blogApi.deleteBlog(id, userId)
+            const deleteBlog = await blogApi.deleteBlog(id, Token)
             if (deleteBlog === 200) {
                 notify("Delete blog succesfuly", "success")
             }
@@ -45,9 +48,9 @@ const Blogpost = () => {
         }
     }
 
-    const handleDelete = async (id, userId, imageIds) => {
+    const handleDelete = async (id, imageIds) => {
         await deleteImage(imageIds)
-        await deleteBlogPost(id, userId)
+        await deleteBlogPost(id, Token)
         setChange(!change)
     }
     useEffect(() => {
@@ -114,7 +117,7 @@ const Blogpost = () => {
                                         <div className='w-1/2'>
                                             <img src={blogpost?.user?.imageURL} alt='' className="float-left rounded-full w-10 h-10 m-1 mr-3" />
                                             <div>
-                                                <h3 theme='pastel' class="text-lg font-bold">{blogpost?.user?.userName}</h3>
+                                                <h3 theme='pastel' class="text-lg font-bold">{blogpost?.user?.fullName}</h3>
                                                 <p class="text-sm text-gray-600">{formatDateTime(blogpost?.createDate)}</p>
                                             </div>
                                         </div>

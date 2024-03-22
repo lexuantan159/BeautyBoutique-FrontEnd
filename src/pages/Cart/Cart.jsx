@@ -11,10 +11,11 @@ const Cart = () => {
     const navigate = useNavigate();
     const {notify, formatNumber} = useContext(MethodContext)
     const [cartItemIds, setCartItemIds] = useState([])
+    const accessToken = localStorage.getItem('token');
     const {
         data: cart,
         isLoading,
-    } = useQuery(["cart", action], () => cartService.getCart({userId: 1}));
+    } = useQuery(["cart", action], () => cartService.getCart(accessToken, {}));
 
     useEffect(() => {
         if (cart?.data?.carts.length > 0) {
@@ -22,26 +23,34 @@ const Cart = () => {
         }
     }, [cart])
 
+    useEffect(() => {
+        if (!accessToken || accessToken === 'undefined') {
+            navigate('/login');
+        }
+    }, [])
+
     const handlePayment = () => {
+        console.log(cartItemIds)
         if (cart?.data?.totalPrice <= 0) {
             notify("Cannot payment with no products!", "error");
             return;
         }
-        navigate(`/ship-detail/${cartItemIds.join(',')}`);
-    }
+        cartItemIds.length === 1 ? navigate(`/ship-detail/${cartItemIds[0]}`) : navigate(`/ship-detail/${cartItemIds.join(',')}`);
 
+    }
 
     return (
         <>
-            <div className="max-w-[1200px] grid grid-cols-12 gap-5 mt-40 mx-10 lg:px-2 lg:mx-auto">
+            <div className="max-w-[1200px] grid grid-cols-12 gap-5 mt-10 mx-10 lg:px-2 lg:mx-auto">
                 <h1 className="col-span-12 font-semibold text-xl">My Cart <span
                     className="font-normal">{cart?.data?.quantity <= 1 ? `( ${cart?.data?.quantity === 0 ? 0 : cart?.data?.quantity} product )` : `( ${cart?.data?.quantity} products )`}</span>
                 </h1>
                 <div
-                    className="bg-white col-span-12 lg:col-span-8 rounded-lg shadow-lg max-h-[430px] overflow-y-scroll no-scrollbar border-[0.2px] border-gray-300">
+                    className="bg-white col-span-12 lg:col-span-8 rounded-lg shadow-lg max-h-[430px] overflow-y-scroll no-scrollbar border-[0.2px] border-gray-300 pt-3">
                     {isLoading ? <span
-                        className="loading loading-dots loading-lg text-xl "></span> : (cart.status === 200 && cart?.data?.carts.length > 0) ? cart?.data?.carts.map((item) => {
-                            return (<CartItem key={item?.id} item={item} actionChange={setAction} action={action}/>)
+                        className="loading loading-dots loading-lg text-xl "></span> : (cart.status === 200 && cart?.data?.carts.length > 0) ? cart?.data?.carts.map((item, index) => {
+                            return (<CartItem key={item?.id} item={item} actionChange={setAction} action={action}
+                                              noneBorder={cart?.data?.carts.length - 1 === index}/>)
                         })
                         : <div className="h-full flex flex-col justify-center items-center py-10">
                             <img className="w-10 h-10 md:w-30 md:h-30 "
@@ -69,7 +78,7 @@ const Cart = () => {
                     </div>
 
                     <div className="w-full mt-4 bg-white rounded-lg shadow-md px-3 mb-2 border-[0.2px] border-gray-300">
-                        <div className="mx-3 mb-3 flex justify-between items-center border-b-[1px] border-gray-300">
+                        <div className="mx-3 flex justify-between items-center">
                             <p className="py-2 ">Price </p>
                             <p className="py-2 ">{formatNumber(cart?.data?.totalPrice)}$ </p>
                         </div>

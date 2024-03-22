@@ -1,4 +1,3 @@
-
 import * as request from '../utils/request'
 
 const getAllVoucher = async () => {
@@ -51,8 +50,7 @@ const createNewVouccher = async (title, content, quantity, numUsedVoucher, disco
 const saveVoucher = async (userId, voucherId) => {
     try {
         const saveVouUser = await request.post('/voucher/save-voucher-for-user',
-            {
-            },
+            {},
             {
                 params: {
                     userId: userId,
@@ -62,8 +60,10 @@ const saveVoucher = async (userId, voucherId) => {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
-        console.log(saveVouUser.data);
-        return saveVouUser.data
+        return {
+            message: saveVouUser.data,
+            statusCode: saveVouUser.status
+        }
 
     } catch (error) {
         const statusCode = error.status || (error.response && error.response.status) || 500;
@@ -110,26 +110,29 @@ const deleteVoucher = async (id) => {
 };
 
 
-export {
-    getAllVoucher,
-    createNewVouccher,
-    updateVouccher,
-    deleteVoucher,
-    saveVoucher
-
-}
-
 const GET_VOUCHER = "voucher/get-voucher"
 
-export const getVoucher = async (param) => {
+const getVoucherByToken = async (accessToken) => {
+    console.log(accessToken)
     try {
         return await request.get(GET_VOUCHER, {
-            params: param,
             headers: {
+                "Authorization": `Bearer ${accessToken}`,
                 "Content-Type": "Application/json",
-            }
+            },
         });
     } catch (error) {
         return error
     }
 };
+
+
+export {
+    getAllVoucher,
+    createNewVouccher,
+    updateVouccher,
+    deleteVoucher,
+    saveVoucher,
+    getVoucherByToken
+}
+

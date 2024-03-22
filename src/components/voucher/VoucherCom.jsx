@@ -21,11 +21,12 @@ const VoucherCom = ({conditionApply, voucherActive, voucherDetail}) => {
         vertical: true,
         arrows: false,
     };
-
+    const accessToken = localStorage.getItem('token');
     const {
         data: voucher,
         isLoading
-    } = useQuery(["voucher"], () => voucherService.getVoucher({userId: 1}));
+    } = useQuery(["voucher"], () => voucherService.getVoucherByToken(accessToken));
+
 
     if (isLoading)
         return <span className="loading loading-dots loading-lg text-3xl flex justify-center items-center"></span>

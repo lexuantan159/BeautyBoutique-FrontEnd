@@ -14,7 +14,8 @@ const ShipDetailItem = ({shipDetails = [], itemShip, setItemShip}) => {
     const [phoneNumber, setPhoneNumber] = useState("")
     const [address, setAddress] = useState("")
     const [created, setCreated] = useState(false)
-    const [deletedItem , setDeletedItem] = useState({})
+    const [deletedItem, setDeletedItem] = useState({})
+    const accessToken = localStorage.getItem('token');
 
     useEffect(() => {
         if (fullName === "" && phoneNumber === "" && address === "") {
@@ -25,10 +26,10 @@ const ShipDetailItem = ({shipDetails = [], itemShip, setItemShip}) => {
 
     const handleSubmit = async (body) => {
         if (updated?.isUpdate) {
-            return await shipDetailService.updateShipDetail({userId: 1, shipDetailId: updated?.infoItem?.id}, body);
+            return await shipDetailService.updateShipDetail(accessToken, {shipDetailId: updated?.infoItem?.id}, body);
         } else {
             setCreated(true)
-            return await shipDetailService.createShipDetail({userId: 1}, body);
+            return await shipDetailService.createShipDetail(accessToken, body);
         }
     }
 

@@ -1,7 +1,7 @@
 import {
     Blog, ManageVoucher, Voucher, Home, Cart, ShipDetail, PaymentSuccess,
     Order, ManagementBlog, AddProduct, ProductDetail,
-    Product
+    Product, AboutUs
 } from '../pages/index';
 import {
     LayoutAdmin,
@@ -24,6 +24,7 @@ const router = [
     { path: '/payment-success', layout: LayoutDefault, component: PaymentSuccess },
     { path: '/admin/order', layout: LayoutAdmin, component: Order },
     { path: '/admin/addproduct', component: AddProduct },
+    { path: '/aboutus', component: AboutUs },
 
 ];
 

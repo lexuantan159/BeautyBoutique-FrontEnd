@@ -20,3 +20,4 @@ export { default as Order } from './Order/Order'
 export { default as NotFound } from './NotFound/NotFound'
 
 export { default as AddProduct } from './Dashboard/Product/AddProduct'
+export { default as AboutUs} from './AboutUs/AboutUs'

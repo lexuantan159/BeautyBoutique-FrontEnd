@@ -103,3 +103,21 @@ export const changeStatus = async (accessToken, paramObject) => {
     }
 };
 
+const CANCEL_ORDER_ENDPOINT = "order/cancel-order"
+export const cancelOrder = async (accessToken, paramObject) => {
+    console.log({accessToken, paramObject})
+    try {
+        return await request.deleteRe(CANCEL_ORDER_ENDPOINT,
+            {
+                params: paramObject ,
+                headers: {
+                    "Authorization": `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+    } catch (error) {
+        return error
+    }
+};
+

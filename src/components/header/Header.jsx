@@ -15,7 +15,7 @@ function Header() {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        if(token) {
+        if (token) {
             setHasUser(true);
         }
         const handleScroll = () => {
@@ -122,7 +122,6 @@ function Header() {
                                 <div className="text-black hover:text-red-500 transition-all">
                                     <Link to="/product">PRODUCT</Link>
                                 </div>
-
                                 <div className="text-black hover:text-red-500 transition-all">
                                     <Link to="/https://www.siliconii.com/">ABOUT</Link>
                                 </div>
@@ -208,6 +207,7 @@ function Header() {
                     </div>
                 </div>
             </div>
+
         </div>
     );
 }

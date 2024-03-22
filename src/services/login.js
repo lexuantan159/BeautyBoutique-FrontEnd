@@ -1,6 +1,6 @@
 import * as request from '../utils/request';
 const LOGIN = 'auth/login';
-const GET_USER = '/users/getuser';
+const GET_USER = '/users/getUser';
 const REGISTER = '/auth/register';
 
 export const login = async (username, password) => {

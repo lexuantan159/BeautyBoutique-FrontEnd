@@ -31,7 +31,7 @@ function Header() {
   }, [isVisible, prevScrollPos]);
 
   const handleLogOut = () => {
-    localStorage.removeItem('auth');
+    localStorage.clear();
     setHasUser(false);
     navigate('/');
   };
@@ -41,10 +41,14 @@ function Header() {
         isVisible ? 'translate-y-0' : '-translate-y-full'
       }`}
       onLoad={async () => {
-        const data = await getUser();
-        // get user from local storage to display
-        const localUser = JSON.parse(localStorage.getItem('user'));
-        setUser(() => localUser);
+        try {
+          const data = await getUser();
+          // get user from local storage to display
+          const localUser = JSON.parse(localStorage.getItem('user'));
+          setUser(() => localUser);
+        } catch (e) {
+          localStorage.clear();
+        }
       }}
     >
       <div className="w-full flex justify-between p-2 bg-white dark:bg-white text-black bg-opacity-50">
@@ -158,20 +162,19 @@ function Header() {
                         {user?.email ?? 'this user not have email yet'}
                       </span>
                     </Dropdown.Header>
-                    {/* {auth.role === "admin" && ( */}
-                    <Link to="/">
-                      <Dropdown.Item>DASHBOARD</Dropdown.Item>
-                    </Link>
-                    {/* )} */}
+                    {user?.roleName === 'ADMIN' && (
+                      <Link to="/dashboard">
+                        <Dropdown.Item>DASHBOARD</Dropdown.Item>
+                      </Link>
+                    )}
 
-                    <Link to="/">
+                    <Link to="/profile">
                       <Dropdown.Item>PROFILE</Dropdown.Item>
                     </Link>
                     <Dropdown.Divider />
                     <Link to="/" onClick={handleLogOut}>
                       <Dropdown.Item>LOGOUT</Dropdown.Item>
                     </Link>
-                    {}
                   </Dropdown>
                 </div>
               ) : (

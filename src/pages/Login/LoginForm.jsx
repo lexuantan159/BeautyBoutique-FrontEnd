@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as request from '../../services/login.js';
-
+import bgLogin from '../../public/img/bg_login.jpg';
 function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -9,21 +9,24 @@ function LoginForm() {
   async function handleSubmit(e) {
     try {
       e.preventDefault();
-      const data = await request.login(username, password);
-      alert(
-        'Login successful',
-        setTimeout(() => {
-          navigate('/');
-        }, 300)
-      );
+      await request.login(username, password);
+      alert('Login successful');
+      const user = await request.getUser();
+
+      if (user.roleName === 'ADMIN') navigate('/admin');
+      else navigate('/');
     } catch (err) {
       alert(err.message);
-    } finally {
     }
   }
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-12 px-4 bg-gray-100">
-      <div className="bg-white shadow-md rounded-lg px-8 pb-8 w-full max-w-md">
+    <div className="max-w-screen h-screen ">
+      <img
+        src={bgLogin}
+        alt="...."
+        className="relative object-cover h-full w-full"
+      />
+      <div className="bg-white opacity-90 shadow-md rounded-lg px-8 pb-8 w-full max-w-md absolute top-[20%] right-[8%] ">
         <h1 className="text-2xl font-bold text-center py-4 text-gray-500">
           Sign in
         </h1>

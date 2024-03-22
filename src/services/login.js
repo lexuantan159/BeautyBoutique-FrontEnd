@@ -8,7 +8,6 @@ export const login = async (username, password) => {
     username: username,
     password: password,
   });
-  console.log(response);
   localStorage.setItem('token', response.data.token);
   return response; // Trả về đối tượng User từ backend
 };
@@ -19,7 +18,7 @@ export const register = async data => {
     const response = await request.post(REGISTER, data);
     return response; // Trả về đối tượng User từ backend
   } catch (error) {
-    return error;
+    throw error;
   }
 };
 export const getUser = async () => {
@@ -27,7 +26,7 @@ export const getUser = async () => {
 
   if (!accesstoken) {
     localStorage.removeItem('user');
-    return;
+    throw new Error('User not found');
   }
   try {
     const userResponse = await request.get(GET_USER, {
@@ -38,6 +37,6 @@ export const getUser = async () => {
     localStorage.setItem('user', JSON.stringify(userResponse.data));
     return userResponse.data; // Trả về đối tượng User từ backend
   } catch (e) {
-    return e;
+    throw new Error(e.message);
   }
 };

@@ -26,7 +26,7 @@ export const getUser = async () => {
 
   if (!accesstoken) {
     localStorage.removeItem('user');
-    return;
+    throw new Error('User not found');
   }
   try {
     const userResponse = await request.get(GET_USER, {
@@ -37,6 +37,6 @@ export const getUser = async () => {
     localStorage.setItem('user', JSON.stringify(userResponse.data));
     return userResponse.data; // Trả về đối tượng User từ backend
   } catch (e) {
-    return e;
+    throw new Error(e.message);
   }
 };

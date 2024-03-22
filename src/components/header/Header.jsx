@@ -156,7 +156,7 @@ function Header() {
                   >
                     <Dropdown.Header>
                       <span className="flex items-center justify-center text-xl m-2 ">
-                        {user?.username ?? 'guest user'}
+                        {user?.username ?? 'Anonymous User'}
                       </span>
                       <span className="block truncate text-sm font-medium">
                         {user?.email ?? 'this user not have email yet'}

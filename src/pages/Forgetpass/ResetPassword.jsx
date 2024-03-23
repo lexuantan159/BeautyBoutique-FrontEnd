@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import * as request from '../../services/login.js';
 import bgLogin from '../../public/img/bg_login.jpg';
 import { Button } from 'flowbite-react';
+import { toast } from 'react-toastify';
 
 function ResetPassword() {
   const [username, setUsername] = useState('');
@@ -15,7 +16,7 @@ function ResetPassword() {
     e.preventDefault();
     const response = await request.otp(username);
     setShowAdditionalInput(true);
-    alert(`Một liên kết đặt lại mật khẩu đã được gửi đến ${username}`);
+    toast.success(`Một liên kết đặt lại mật khẩu đã được gửi đến ${username}`);
     setA(response.data); // Cập nhật giá trị của a
     console.log('gia tri a:', response.data); // Log giá trị phản hồi vào console
   }
@@ -27,9 +28,9 @@ function ResetPassword() {
     console.log('gia tri b:', b);
     if (a && a.toString() === b && b.toString()) {
       await request.reset(username);
-      alert('Đã gửi mật khẩu mới đến email của bạn');
+      toast.success('Đã gửi mật khẩu mới đến email của bạn');
     } else {
-      alert('OTP không đúng');
+      toast.error('OTP không đúng');
     }
   }
 

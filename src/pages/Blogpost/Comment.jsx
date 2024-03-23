@@ -1,21 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
-import { FiSend } from "react-icons/fi";
-import { Button } from "flowbite-react";
-import { Spinner } from "@material-tailwind/react";
-import * as commentApi from "../../services/comment";
-import MethodContext from "../../context/methodProvider";
-import * as productApi from "../../services/product";
+import React, { useContext, useEffect, useState } from 'react';
+import { FiSend } from 'react-icons/fi';
+import { Button } from 'flowbite-react';
+import { Spinner } from '@material-tailwind/react';
+import * as commentApi from '../../services/comment';
+import MethodContext from '../../context/methodProvider';
+import * as productApi from '../../services/product';
 
 const Comment = ({ commentId, index, setChange, change }) => {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [newComment, setNewComment] = useState("");
-  const [updateNewComment, setUpdateNewComment] = useState("");
+  const [newComment, setNewComment] = useState('');
+  const [updateNewComment, setUpdateNewComment] = useState('');
   const { formatDateTime, notify } = useContext(MethodContext);
   const [isEdit, setIsEdit] = useState(false);
   const [idEdit, setIdEdit] = useState(false);
-  const Token = localStorage.getItem('Token');
-
+  const Token = localStorage.getItem('token');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,7 +27,7 @@ const Comment = ({ commentId, index, setChange, change }) => {
           setComments(commentData.commentList);
         }
       } catch (error) {
-        console.error("Error fetching blogposts:", error);
+        console.error('Error fetching blogposts:', error);
       }
     };
     fetchData();
@@ -36,27 +35,30 @@ const Comment = ({ commentId, index, setChange, change }) => {
 
   const postComment = async () => {
     try {
-      if (index === 1) {
-        if (newComment.trim() === "") {
-          notify("You must write a review")
-          return;
-        }
-        await productApi.addFeedback(newComment, 5, commentId, Token);
-        notify("Comments have been posted", "success")
-        setLoading(false);
-        setChange(!change);
-        setNewComment("");
-      } else {
-        if (newComment.trim() === "") {
-          notify("You must write a review")
-          return;
-        }
-        await commentApi.createNewComment(newComment, commentId, Token);
-        setLoading(false);
-        notify("Comments have been posted", "success")
-        setChange(!change);
-        setNewComment("");
+      if (newComment.trim() === '') {
+        notify('You must write a review');
+        return;
       }
+      if (index === 1) {
+        const addFeedback = await productApi.addFeedback(newComment, 5, commentId, Token);
+        if (addFeedback.statusCode === 201) {
+          notify(addFeedback.data, "success")
+        }
+        else {
+          notify("Cannot add feedback to product")
+        }
+      } else {
+        const addComment = await commentApi.createNewComment(newComment, commentId, Token);
+        if (addComment.statusCode === 201) {
+          notify(addComment.data, "success")
+        }
+        else {
+          notify("Cannot add comment to blog")
+        }
+      }
+      setLoading(false);
+      setChange(!change);
+      setNewComment('');
     } catch (error) {
       setChange(!change);
       setLoading(false);
@@ -65,29 +67,41 @@ const Comment = ({ commentId, index, setChange, change }) => {
   const deleteComment = async (cmtid) => {
     try {
       if (index === 1) {
-        await productApi.deleteFeedback(cmtid, Token)
-        setChange(!change)
+        const deleteFeedback = await productApi.deleteFeedback(cmtid, Token)
+        if (deleteFeedback === 200) {
+          notify("Delete Feedback Successfully", "success")
+        } else {
+          notify("Delete Feedback failed")
+        }
       } else {
-
-        await commentApi.deleteComment(cmtid, Token);
+        const delComment = await commentApi.deleteComment(cmtid, Token);
+        if (delComment === 200) {
+          notify("Delete comment Successfully", "success")
+        } else {
+          notify("Delete comment failed")
+        }
         setChange(!change);
       }
-      notify('Comment has been deleted.', 'success');
+
+      setChange(!change)
     } catch (error) {
       notify('Error deleting comment.');
     }
   };
-  const updateComment = async (id) => {
+  const updateComment = async id => {
     try {
-      if (index === 1) {
-        await productApi.updateFeedback(id, updateNewComment, Token);
-        setChange(!change);
-      } else {
-
-        await commentApi.updateComment(id, updateNewComment, Token);
-        setChange(!change);
+      if (updateNewComment === '') {
+        notify("Cannot be left blank")
+        return
       }
-      notify('Comment edited successfully', 'success');
+      if (index === 1) {
+        const updateFeedback = await productApi.updateFeedback(id, updateNewComment, Token);
+        notify(updateFeedback, "success")
+      } else {
+        const updatecomment = await commentApi.updateComment(id, updateNewComment, Token);
+        notify(updatecomment, "success")
+      }
+      setChange(!change);
     } catch (error) {
       notify('Editing comments failed');
     }
@@ -100,7 +114,10 @@ const Comment = ({ commentId, index, setChange, change }) => {
           <div className="avatar-group -space-x-6 rtl:space-x-reverse w-[10%]">
             <div className="avatar">
               <div className="w-12">
-                <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" alt="name" />
+                <img
+                  src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                  alt="name"
+                />
               </div>
             </div>
           </div>
@@ -108,7 +125,7 @@ const Comment = ({ commentId, index, setChange, change }) => {
             <textarea
               id="comment"
               rows="1"
-              onChange={(e) => setNewComment(e.target.value)}
+              onChange={e => setNewComment(e.target.value)}
               value={newComment}
               className="textarea textarea-accent w-[90%]"
               placeholder="Write Your Comment..."
@@ -172,7 +189,7 @@ const Comment = ({ commentId, index, setChange, change }) => {
                           onClick={() => {
                             updateComment(comment?.id);
                             setIdEdit(false);
-                            setUpdateNewComment("");
+                            setUpdateNewComment('');
                           }}
                         >
                           Save
@@ -182,7 +199,7 @@ const Comment = ({ commentId, index, setChange, change }) => {
                           className="text-xs mx-2 link link-error"
                           onClick={() => {
                             setIdEdit(false);
-                            setUpdateNewComment("");
+                            setUpdateNewComment('');
                           }}
                         >
                           Cance

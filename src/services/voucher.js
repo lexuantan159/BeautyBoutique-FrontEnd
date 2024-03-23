@@ -1,4 +1,3 @@
-
 import * as request from '../utils/request'
 
 const getAllVoucher = async () => {
@@ -17,7 +16,7 @@ const getAllVoucher = async () => {
         };
     }
 };
-const createNewVouccher = async (title, content, quantity, numUsedVoucher, discount, maximDiscount, minimumOrder, startDate, endDate) => {
+const createNewVouccher = async (Token, title, content, quantity, numUsedVoucher, discount, maximDiscount, minimumOrder, startDate, endDate) => {
     try {
         return await request.post('/voucher/create-voucher',
             {
@@ -33,6 +32,7 @@ const createNewVouccher = async (title, content, quantity, numUsedVoucher, disco
             },
             {
                 headers: {
+                    "Authorization": `Bearer ${Token}`,
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
@@ -72,8 +72,9 @@ const saveVoucher = async (accessToken, voucherId) => {
         };
     }
 }
-const updateVouccher = async (id, title, content, quantity, numUsedVoucher, discount, maximDiscount, minimumOrder, startDate, endDate) => {
+const updateVouccher = async (Token, id, title, content, quantity, numUsedVoucher, discount, maximDiscount, minimumOrder, startDate, endDate) => {
     try {
+        console.log(Token);
         return await request.put(`/voucher/update-voucher?id=${id}`,
             {
                 title: title,
@@ -88,6 +89,7 @@ const updateVouccher = async (id, title, content, quantity, numUsedVoucher, disc
             },
             {
                 headers: {
+                    "Authorization": `Bearer ${Token}`,
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
@@ -116,26 +118,29 @@ const deleteVoucher = async (id, accessToken) => {
 };
 
 
-export {
-    getAllVoucher,
-    createNewVouccher,
-    updateVouccher,
-    deleteVoucher,
-    saveVoucher
-
-}
-
 const GET_VOUCHER = "voucher/get-voucher"
 
-export const getVoucher = async (param) => {
+const getVoucherByToken = async (accessToken) => {
+    console.log(accessToken)
     try {
         return await request.get(GET_VOUCHER, {
-            params: param,
             headers: {
+                "Authorization": `Bearer ${accessToken}`,
                 "Content-Type": "Application/json",
-            }
+            },
         });
     } catch (error) {
         return error
     }
 };
+
+
+export {
+    getAllVoucher,
+    createNewVouccher,
+    updateVouccher,
+    deleteVoucher,
+    saveVoucher,
+    getVoucherByToken
+}
+

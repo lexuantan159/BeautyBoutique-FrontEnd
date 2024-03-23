@@ -7,7 +7,7 @@ import MethodContext from '../../context/methodProvider';
 
 const CreateBlog = ({ closeModal, isOpenForm, setChange, change, blogpost }) => {
     const { uploadFile, deleteAImage, notify } = useContext(MethodContext)
-    const Token = localStorage.getItem('Token');
+    const Token = localStorage.getItem('token');
     const [imageUploads, setImageUpload] = useState(Array(6).fill(null));
     const [imagesDisplay, setImagesDisplay] = useState(Array(6).fill(null));
     const [images, setImages] = useState([])
@@ -17,7 +17,6 @@ const CreateBlog = ({ closeModal, isOpenForm, setChange, change, blogpost }) => 
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        console.log(Token);
         if (isOpenForm.isOpen) {
             document.getElementById('my_modal_2').showModal();
         }
@@ -34,8 +33,6 @@ const CreateBlog = ({ closeModal, isOpenForm, setChange, change, blogpost }) => 
                 setImagesDisplay(Array(6).fill(null));
             }
         }
-
-
     }, [])
 
     const handleFileChange = (index, e) => {
@@ -43,6 +40,7 @@ const CreateBlog = ({ closeModal, isOpenForm, setChange, change, blogpost }) => 
         const newImages = [];
         const uploadedImages = [...imageUploads];
         const displayedImages = [...imagesDisplay];
+
         for (let i = 0; i < files.length; i++) {
             if (uploadedImages.filter(image => image !== null).length < 6) {
                 const newImage = files[i];

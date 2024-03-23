@@ -1,6 +1,6 @@
-import { Modal, Table, Button } from 'flowbite-react'
-import React, { useEffect, useState } from 'react'
-import * as voucherApi from '../../../services/voucher'
+import { Modal, Table, Button } from 'flowbite-react';
+import React, { useEffect, useState } from 'react';
+import * as voucherApi from '../../../services/voucher';
 import CRUVoucher from './CRUVoucher';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import { RiPassExpiredFill } from "react-icons/ri";
@@ -15,7 +15,7 @@ const ManageVoucher = () => {
     const [change, setChange] = useState(true)
     const [openModal, setOpenModal] = useState(false);
     const [voucherExpires, setVoucherExpires] = useState([]);
-    const Token = localStorage.getItem('Token');
+    const Token = localStorage.getItem('token');
 
 
     useEffect(() => {
@@ -172,4 +172,4 @@ const ManageVoucher = () => {
     )
 }
 
-export default ManageVoucher
+export default ManageVoucher;

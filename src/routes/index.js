@@ -22,6 +22,7 @@ import {
   ManageBrand,
   LoginForm,
   RegisterForm,
+  AboutUs
 } from '../pages/index';
 import { LayoutAdmin, LayoutDefault, LayoutUser } from '../layouts/index';
 import { Admin } from '../pages';
@@ -37,6 +38,7 @@ const router = {
     { path: '/contact', component: ContactUs },
     { path: '/login', layout: LayoutDefault, component: LoginForm },
     { path: '/register', layout: LayoutDefault, component: RegisterForm },
+    { path: '/aboutus', component: AboutUs },
   ],
 
   // cac route duoi day can phai dc protect

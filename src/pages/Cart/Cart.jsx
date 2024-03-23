@@ -11,10 +11,11 @@ const Cart = () => {
     const navigate = useNavigate();
     const {notify, formatNumber} = useContext(MethodContext)
     const [cartItemIds, setCartItemIds] = useState([])
+    const accessToken = localStorage.getItem('token');
     const {
         data: cart,
         isLoading,
-    } = useQuery(["cart", action], () => cartService.getCart({userId: 1}));
+    } = useQuery(["cart", action], () => cartService.getCart(accessToken, {}));
 
     useEffect(() => {
         if (cart?.data?.carts.length > 0) {
@@ -22,12 +23,20 @@ const Cart = () => {
         }
     }, [cart])
 
+    useEffect(() => {
+        if (!accessToken || accessToken === 'undefined') {
+            navigate('/login');
+        }
+    }, [])
+
     const handlePayment = () => {
+        console.log(cartItemIds)
         if (cart?.data?.totalPrice <= 0) {
             notify("Cannot payment with no products!", "error");
             return;
         }
-        navigate(`/ship-detail/${cartItemIds.join(',')}`);
+        cartItemIds.length === 1 ? navigate(`/ship-detail/${cartItemIds[0]}`) : navigate(`/ship-detail/${cartItemIds.join(',')}`);
+
     }
 
     return (
@@ -39,8 +48,9 @@ const Cart = () => {
                 <div
                     className="bg-white col-span-12 lg:col-span-8 rounded-lg shadow-lg max-h-[430px] overflow-y-scroll no-scrollbar border-[0.2px] border-gray-300 pt-3">
                     {isLoading ? <span
-                        className="loading loading-dots loading-lg text-xl "></span> : (cart.status === 200 && cart?.data?.carts.length > 0) ? cart?.data?.carts.map((item , index) => {
-                            return (<CartItem key={item?.id} item={item} actionChange={setAction} action={action} noneBorder={cart?.data?.carts.length -1 === index} />)
+                        className="loading loading-dots loading-lg text-xl "></span> : (cart.status === 200 && cart?.data?.carts.length > 0) ? cart?.data?.carts.map((item, index) => {
+                            return (<CartItem key={item?.id} item={item} actionChange={setAction} action={action}
+                                              noneBorder={cart?.data?.carts.length - 1 === index}/>)
                         })
                         : <div className="h-full flex flex-col justify-center items-center py-10">
                             <img className="w-10 h-10 md:w-30 md:h-30 "

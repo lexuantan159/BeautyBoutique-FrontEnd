@@ -1,6 +1,10 @@
-import React from "react";
+import React, {useContext} from "react";
+import MethodContext from "../../context/methodProvider";
 
 const OrderItem = ({infoOrderItem}) => {
+    const {formatNumber} = useContext(MethodContext)
+
+
 
     return (
         <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle w-[80%] mx-auto">
@@ -32,11 +36,10 @@ const OrderItem = ({infoOrderItem}) => {
                                     <div className="w-full flex justify-between items-center">
                                         <p className="block ">{item?.product?.productName}</p>
                                         <div className="flex flex-col">
-                                            <p className="block"><span className="font-medium">{item?.product?.actualPrice}</span> $(trị
-                                                giá {item?.product?.salePrice} $)</p>
+                                            <p className="block"><span className="font-medium">{formatNumber(item?.product?.actualPrice)}</span> $(trị
+                                                giá {formatNumber(item?.product?.salePrice)} $)</p>
                                             <p className="block">Qty: {item?.product?.quantity}</p>
                                         </div>
-
                                     </div>
                                 </div>
                             )
@@ -49,7 +52,7 @@ const OrderItem = ({infoOrderItem}) => {
                         <h2 className="font-medium text-[16px]">Payment: {infoOrderItem?.payment?.paymentName}</h2>
                         <h2 className="font-medium text-[16px]">Delivery: {infoOrderItem?.delivery?.deliveryMethod}</h2>
                     </div>
-                    <h2 className="block font-medium text-[16px] text-left text-red-400">Total price: {infoOrderItem?.totalPrice}$</h2>
+                    <h2 className="block font-medium text-[16px] text-left text-red-400">Total price: {formatNumber(infoOrderItem?.totalPrice)}$</h2>
                 </div>
 
                 <div className="modal-action">

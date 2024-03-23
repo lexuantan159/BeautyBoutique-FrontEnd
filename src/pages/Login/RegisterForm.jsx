@@ -125,7 +125,7 @@ function RegisterForm() {
             type="submit"
             className="bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50 w-full"
           >
-            Login
+            Register
           </button>
         </form>
       </div>

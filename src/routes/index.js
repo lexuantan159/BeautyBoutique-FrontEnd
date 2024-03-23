@@ -6,53 +6,75 @@ import {
   Cart,
   ShipDetail,
   PaymentSuccess,
-  ProductDetail,
   Order,
   ManagementBlog,
+  AddProduct,
+  ProductDetail,
+  Product,
+  EditProfile,
+  OrderHistories,
   OrderDetail,
   ContactUs,
   UserInfo,
-  Product,
   ManageProduct,
   ManageUser,
   ManageCategory,
   ManageBrand,
-  AddProduct,
-  Admin,
   LoginForm,
   RegisterForm,
-} from '../pages/index';
+  AboutUs,
+  ResetPassword,
+} from "../pages/index";
+import { LayoutAdmin, LayoutDefault, LayoutUser } from "../layouts/index";
+import { Admin } from "../pages";
 
-import { LayoutAdmin, LayoutDefault } from '../layouts/index';
+const router = {
+  normal: [
+    // cac route tren nay khong can phai protect
+    { path: "/", component: Home },
+    { path: "/blogpost", component: Blog },
+    { path: "/product", component: Product },
+    { path: "/product/:id", component: ProductDetail },
+    { path: "/home", component: Home },
+    { path: "/contact", component: ContactUs },
+    { path: "/login", layout: LayoutDefault, component: LoginForm },
+    { path: "/forget", layout: LayoutDefault, component: ResetPassword },
+    { path: "/register", layout: LayoutDefault, component: RegisterForm },
+    { path: "/aboutus", layout: LayoutDefault, component: AboutUs },
+  ],
 
-const router = [
-  { path: '/', component: Home },
-  { path: '/home', component: Home },
-  { path: '/blogpost', component: Blog },
-  { path: '/voucher', component: Voucher },
-  { path: '/cart', component: Cart },
-  { path: '/ship-detail', component: ShipDetail },
-  { path: '/payment-success', component: PaymentSuccess },
-  { path: '/admin/voucher', layout: LayoutAdmin, component: ManageVoucher },
-  { path: '/admin/blog', layout: LayoutAdmin, component: ManagementBlog },
-  { path: '/admin/order', layout: LayoutAdmin, component: Order },
-  { path: '/admin', component: LayoutAdmin },
-  { path: '/admin/product', layout: LayoutAdmin, component: ManageProduct },
-  { path: '/admin/brand', layout: LayoutAdmin, component: ManageBrand },
-  { path: '/admin/category', layout: LayoutAdmin, component: ManageCategory },
-  { path: '/admin/user', layout: LayoutAdmin, component: ManageUser },
-
-  { path: '/product', component: Product },
-  { path: '/admin', component: Admin },
-  { path: '/product', component: Product },
-  { path: '/product/:id', component: ProductDetail },
-
-  { path: '/admin/addproduct', component: AddProduct },
-  { path: '/order/:orderId', component: OrderDetail },
-  { path: '/contact', component: ContactUs },
-  { path: '/user', component: UserInfo },
-  { path: '/login', layout: LayoutDefault, component: LoginForm },
-  { path: '/register', layout: LayoutDefault, component: RegisterForm },
-];
+  // cac route duoi day can phai dc protect
+  protect: [
+    { path: "/voucher", component: Voucher },
+    { path: "/cart", component: Cart },
+    { path: "/ship-detail/:cartItemIds", component: ShipDetail },
+    { path: "/payment-success", component: PaymentSuccess },
+    { path: "/admin/voucher", layout: LayoutAdmin, component: ManageVoucher },
+    { path: "/admin/blog", layout: LayoutAdmin, component: ManagementBlog },
+    { path: "/admin", component: Admin },
+    {
+      path: "/payment-success",
+      layout: LayoutDefault,
+      component: PaymentSuccess,
+    },
+    { path: "/admin/order", layout: LayoutAdmin, component: Order },
+    { path: "/admin/addproduct", component: AddProduct },
+    { path: "/profile", layout: LayoutUser, component: EditProfile },
+    {
+      path: "/profile/order-histories",
+      layout: LayoutUser,
+      component: OrderHistories,
+    },
+    { path: "/admin/voucher", layout: LayoutAdmin, component: ManageVoucher },
+    { path: "/admin/blog", layout: LayoutAdmin, component: ManagementBlog },
+    { path: "/admin/product", layout: LayoutAdmin, component: ManageProduct },
+    { path: "/admin/brand", layout: LayoutAdmin, component: ManageBrand },
+    { path: "/admin/category", layout: LayoutAdmin, component: ManageCategory },
+    { path: "/admin/user", layout: LayoutAdmin, component: ManageUser },
+    { path: "/product/:id", component: ProductDetail },
+    { path: "/order/:orderId", component: OrderDetail },
+    { path: "/user", component: UserInfo },
+  ],
+};
 
 export { router };

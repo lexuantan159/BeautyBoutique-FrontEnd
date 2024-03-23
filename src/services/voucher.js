@@ -1,4 +1,3 @@
-
 import * as request from '../utils/request'
 
 const getAllVoucher = async () => {
@@ -111,26 +110,29 @@ const deleteVoucher = async (id) => {
 };
 
 
-export {
-    getAllVoucher,
-    createNewVouccher,
-    updateVouccher,
-    deleteVoucher,
-    saveVoucher
-
-}
-
 const GET_VOUCHER = "voucher/get-voucher"
 
-export const getVoucher = async (param) => {
+const getVoucherByToken = async (accessToken) => {
+    console.log(accessToken)
     try {
         return await request.get(GET_VOUCHER, {
-            params: param,
             headers: {
+                "Authorization": `Bearer ${accessToken}`,
                 "Content-Type": "Application/json",
-            }
+            },
         });
     } catch (error) {
         return error
     }
 };
+
+
+export {
+    getAllVoucher,
+    createNewVouccher,
+    updateVouccher,
+    deleteVoucher,
+    saveVoucher,
+    getVoucherByToken
+}
+

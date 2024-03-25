@@ -72,7 +72,7 @@ const Product = () => {
       <div className="flex items-center justify-center">
         <div className="w-[1200px]">
           <div className="grid grid-cols-4 gap-6">
-            {products.map((item) => {
+            {products?.map((item) => {
               return (
                 <>
                   <Card>

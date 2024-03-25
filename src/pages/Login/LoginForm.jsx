@@ -2,23 +2,25 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as request from "../../services/login.js";
 import bgLogin from "../../public/img/bg_login.jpg";
+
 function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
   async function handleSubmit(e) {
     try {
       e.preventDefault();
       await request.login(username, password);
       alert("Login successful");
       const user = await request.getUser();
-
       if (user.roleName === "ADMIN") navigate("/admin");
       else navigate("/");
     } catch (err) {
       alert(err.message);
     }
   }
+
   return (
     <div className="max-w-screen h-screen ">
       <img
@@ -77,12 +79,6 @@ function LoginForm() {
                 Keep me signed in
               </label>
             </div>
-            <Link
-              to="/forget"
-              className="text-sm text-blue-400 hover:underline"
-            >
-              forget password?
-            </Link>
             <Link to="/" className="text-sm text-blue-400 hover:underline">
               Already a member?
             </Link>

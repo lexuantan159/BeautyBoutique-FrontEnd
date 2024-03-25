@@ -46,14 +46,43 @@ export const createPayment = async (accessToken, paramObject, cartItemsId) => {
 
 
 const ORDER_HISTORY_ENDPOINT = "/order/order-histories"
-export const getOrderHistories = async (accessToken) => {
+export const getOrderHistories = async (accessToken, paramsObject) => {
     try {
         return await request.get(ORDER_HISTORY_ENDPOINT, {
+            params:paramsObject,
             headers: {
                 "Authorization": `Bearer ${accessToken}`,
                 "Content-Type": "application/json"
             },
-            // withCredentials: true
+        });
+    } catch (error) {
+        return error
+    }
+};
+
+const ALL_ORDER_ENDPOINT = "order/get-all-orders"
+export const getAllOrder = async (accessToken, paramsObject) => {
+    try {
+        return await request.get(ALL_ORDER_ENDPOINT, {
+            params:paramsObject,
+            headers: {
+                "Authorization": `Bearer ${accessToken}`,
+                "Content-Type": "application/json"
+            },
+        });
+    } catch (error) {
+        return error
+    }
+};
+
+const SUMMARY_ORDER_ENDPOINT = "order/get-summary-orders"
+export const getSummaryOrder = async (accessToken) => {
+    try {
+        return await request.get(SUMMARY_ORDER_ENDPOINT, {
+            headers: {
+                "Authorization": `Bearer ${accessToken}`,
+                "Content-Type": "application/json"
+            },
         });
     } catch (error) {
         return error

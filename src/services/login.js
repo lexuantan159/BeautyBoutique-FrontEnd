@@ -1,6 +1,7 @@
 import * as request from '../utils/request';
+
 const LOGIN = 'auth/login';
-const GET_USER = '/users/getuser';
+const GET_USER = '/users/getUser';
 const REGISTER = '/auth/register';
 
 export const login = async (username, password) => {
@@ -9,6 +10,7 @@ export const login = async (username, password) => {
     password: password,
   });
   localStorage.setItem('token', response.data.token);
+  console.log(response.data.token);
   return response; // Trả về đối tượng User từ backend
 };
 export const register = async data => {
@@ -22,16 +24,18 @@ export const register = async data => {
   }
 };
 export const getUser = async () => {
-  const accesstoken = localStorage.getItem('token');
+  const accessToken = localStorage.getItem('token');
 
-  if (!accesstoken) {
+  if (!accessToken) {
     localStorage.removeItem('user');
     throw new Error('User not found');
   }
   try {
+    console.log(accessToken);
     const userResponse = await request.get(GET_USER, {
       headers: {
-        Authorization: `Bearer ${accesstoken}`,
+        "Authorization": `Bearer ${accessToken}`,
+        "Content-Type": "Application/json",
       },
     });
     localStorage.setItem('user', JSON.stringify(userResponse.data));

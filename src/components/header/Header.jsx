@@ -7,13 +7,17 @@ import { getUser } from '../../services/login';
 
 function Header() {
   const navigate = useNavigate();
-  const [hasUser, setHasUser] = useState(true);
+  const [hasUser, setHasUser] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
   const [user, setUser] = useState({});
   const [userImage, setUserImage] = useState(null);
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setHasUser(true);
+    }
     const handleScroll = () => {
       const currentScrollPos = window.pageYOffset;
       const isScrolledDown = currentScrollPos > prevScrollPos;
@@ -37,13 +41,11 @@ function Header() {
   };
   return (
     <div
-      className={`sticky max-w-[1200px] top-0 left-0 right-0 w-full z-50  mx-auto transition-transform transform duration-300 ${
-        isVisible ? 'translate-y-0' : '-translate-y-full'
-      }`}
+      className={`sticky max-w-[1200px] top-0 left-0 right-0 w-full z-50  mx-auto transition-transform transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'
+        }`}
       onLoad={async () => {
         try {
           const data = await getUser();
-          // get user from local storage to display
           const localUser = JSON.parse(localStorage.getItem('user'));
           setUser(() => localUser);
         } catch (e) {
@@ -112,21 +114,20 @@ function Header() {
               </Navbar.Brand>
 
               <Navbar.Collapse className="text-black">
-                <div className="text-black hover:text-red-500">
+                <div className="text-black hover:text-red-500 transition-all">
                   <Link to="/">HOME</Link>
                 </div>
 
-                <div className="text-black hover:text-red-500">
+                <div className="text-black hover:text-red-500 transition-all">
                   <Link to="/product">PRODUCT</Link>
                 </div>
-
-                <div className="text-black hover:text-red-500">
+                <div className="text-black hover:text-red-500 transition-all">
                   <Link to="/https://www.siliconii.com/">ABOUT</Link>
                 </div>
-                <div className="text-black hover:text-red-500">
+                <div className="text-black hover:text-red-500 transition-all">
                   <Link to="/contact">CONTACT</Link>
                 </div>
-                <div className="text-black hover:text-red-500">
+                <div className="text-black hover:text-red-500 transition-all">
                   <Link to="/blogpost">BLOG</Link>
                 </div>
               </Navbar.Collapse>
@@ -134,46 +135,49 @@ function Header() {
                 <div className="flex md:order-2 text-black">
                   <div className="flex items-center justify-center">
                     <Link to="/cart">
-                      <div className="w-10 h-10 rounded-full border border-black flex items-center justify-center mr-2 hover:bg-btnprimary hover:text-[#B4E9D6] ">
-                        <icons.BsCart4 />
+                      <div
+                        className="w-10 h-10 rounded-full border border-black group hover:border-red-400 flex items-center justify-center mr-2 hover:text-red-400 transition-all">
+                        <icons.BsCart4 className="group-hover:text-red-400 transition-all" />
                       </div>
                     </Link>
                   </div>
                   <Dropdown
+                    className="px-2 "
                     arrowIcon={true}
                     inline
                     label={
                       <Avatar
                         alt="User settings"
-                        img={`${
-                          userImage
+                        img={`${userImage
                             ? userImage
                             : 'https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png'
-                        }`}
+                          }`}
                         rounded
                       />
                     }
                   >
                     <Dropdown.Header>
-                      <span className="flex items-center justify-center text-xl m-2 ">
+                      <span className="block items-center justify-center text-xl">
                         {user?.username ?? 'Anonymous User'}
                       </span>
-                      <span className="block truncate text-sm font-medium">
-                        {user?.email ?? 'this user not have email yet'}
+                      <span className="block truncate text-sm font-medium text-red-400 mt-2">
+                        {user?.email ?? 'This user not have email yet'}
                       </span>
                     </Dropdown.Header>
                     {user?.roleName === 'ADMIN' && (
-                      <Link to="/dashboard">
-                        <Dropdown.Item>DASHBOARD</Dropdown.Item>
+                      <Link to="/admin/product">
+                        <Dropdown.Item
+                          className="font-medium hover:bg-red-400 hover:text-white transition-all">DASHBOARD</Dropdown.Item>
                       </Link>
                     )}
-
                     <Link to="/profile">
-                      <Dropdown.Item>PROFILE</Dropdown.Item>
+                      <Dropdown.Item
+                        className="font-medium hover:bg-red-400 hover:text-white transition-all">PROFILE</Dropdown.Item>
                     </Link>
                     <Dropdown.Divider />
                     <Link to="/" onClick={handleLogOut}>
-                      <Dropdown.Item>LOGOUT</Dropdown.Item>
+                      <Dropdown.Item
+                        className="font-medium hover:bg-red-400 hover:text-white transition-all">LOGOUT</Dropdown.Item>
                     </Link>
                   </Dropdown>
                 </div>
@@ -182,17 +186,15 @@ function Header() {
                   <div className="flex justify-center items-center">
                     <ul className="flex justify-center items-center ">
                       <li>
-                        <Link to="/login">
-                          <button className="btn btn-outline btn-success">
-                            LOGIN
-                          </button>
+                        <Link to="/login"
+                          className="rounded-lg px-4 py-2 border-[1px] border-red-400 text-black hover:bg-red-400 hover:text-white mr-2 transition-all">
+                          LOGIN
                         </Link>
                       </li>
                       <li>
-                        <Link to="/register">
-                          <button className="btn btn-info ml-4">
-                            REGISTER
-                          </button>
+                        <Link to="/register"
+                          className="rounded-lg px-4 py-2 border-[1px] border-red-400 bg-red-400 text-white hover:bg-white hover:text-black transition-all">
+                          REGISTER
                         </Link>
                       </li>
                     </ul>
@@ -203,7 +205,9 @@ function Header() {
           </div>
         </div>
       </div>
+
     </div>
   );
 }
+
 export default Header;

@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router';
 import { getUser } from '../../services/login.js';
 import { useEffect } from 'react';
+
 function Protect({ children, setAuth }) {
   const navigate = useNavigate();
 
@@ -15,6 +16,7 @@ function Protect({ children, setAuth }) {
         navigate('/login');
       }
     }
+
     checkAuth();
   }, [navigate]);
   return <>{children}</>;

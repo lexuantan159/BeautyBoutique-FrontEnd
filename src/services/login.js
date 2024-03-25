@@ -10,6 +10,16 @@ export const login = async (username, password) => {
     password: password,
   });
   localStorage.setItem("token", response.data.token);
+  return response;
+};
+export const otp = async (param) => {
+  const response = await request.post(`/auth/sendotp?username=${param}`);
+  console.log(response.data);
+  return response; // Trả về đối tượng User từ backend
+};
+export const reset = async (param) => {
+  const response = await request.post(`/auth/resetpass?username=${param}`);
+  console.log(response.data);
   return response; // Trả về đối tượng User từ backend
 };
 export const register = async (data) => {

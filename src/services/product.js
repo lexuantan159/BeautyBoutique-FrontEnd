@@ -1,5 +1,18 @@
 import * as request from '../utils/request';
 
+export const createProduct = async product => {
+  try {
+    const data = await request.post('/product/create-product', product, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return data;
+  } catch (e) {
+    console.log(e);
+    throw new Error(e.message);
+  }
+};
 const addProduct = async (
   productName,
   actualPrice,

@@ -79,8 +79,17 @@ function LoginForm() {
                 Keep me signed in
               </label>
             </div>
-            <Link to="/" className="text-sm text-blue-400 hover:underline">
-              Already a member?
+            <Link
+              to="/forget"
+              className="text-sm text-blue-400 hover:underline"
+            >
+              Forget password?
+            </Link>
+            <Link
+              to="/register"
+              className="text-sm text-blue-400 hover:underline"
+            >
+              Register
             </Link>
           </div>
           <button

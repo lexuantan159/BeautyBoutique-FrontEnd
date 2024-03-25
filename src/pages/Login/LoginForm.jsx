@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import * as request from '../../services/login.js';
-import bgLogin from '../../public/img/bg_login.jpg';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import * as request from "../../services/login.js";
+import bgLogin from "../../public/img/bg_login.jpg";
 
 function LoginForm() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
     try {
       e.preventDefault();
       await request.login(username, password);
-      alert('Login successful');
+      alert("Login successful");
       const user = await request.getUser();
-      if (user.roleName === 'ADMIN') navigate('/admin');
-      else navigate('/');
+      if (user.roleName === "ADMIN") navigate("/admin");
+      else navigate("/");
     } catch (err) {
       alert(err.message);
     }
@@ -45,7 +45,7 @@ function LoginForm() {
               id="username"
               name="username"
               className="rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 w-full dark:bg-white dark:text-slate-600"
-              onChange={e => {
+              onChange={(e) => {
                 setUsername(() => e.target.value);
               }}
             />
@@ -62,7 +62,7 @@ function LoginForm() {
               id="password"
               name="password"
               className="rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 w-full  dark:bg-white dark:text-slate-600"
-              onChange={e => {
+              onChange={(e) => {
                 setPassword(() => e.target.value);
               }}
             />
@@ -79,8 +79,17 @@ function LoginForm() {
                 Keep me signed in
               </label>
             </div>
-            <Link to="/" className="text-sm text-blue-400 hover:underline">
-              Already a member?
+            <Link
+              to="/forget"
+              className="text-sm text-blue-400 hover:underline"
+            >
+              Forget password?
+            </Link>
+            <Link
+              to="/register"
+              className="text-sm text-blue-400 hover:underline"
+            >
+              Register
             </Link>
           </div>
           <button

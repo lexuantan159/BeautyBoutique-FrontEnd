@@ -1,27 +1,28 @@
-import * as request from '../utils/request';
-const LOGIN = 'auth/login';
-const GET_USER = '/users/getUser';
-const REGISTER = '/auth/register';
+import * as request from "../utils/request";
+
+const LOGIN = "auth/login";
+const GET_USER = "/users/getUser";
+const REGISTER = "/auth/register";
 
 export const login = async (username, password) => {
   const response = await request.post(LOGIN, {
     username: username,
     password: password,
   });
-  localStorage.setItem('token', response.data.token);
+  localStorage.setItem("token", response.data.token);
   return response;
 };
-export const otp = async param => {
+export const otp = async (param) => {
   const response = await request.post(`/auth/sendotp?username=${param}`);
   console.log(response.data);
   return response; // Trả về đối tượng User từ backend
 };
-export const reset = async param => {
+export const reset = async (param) => {
   const response = await request.post(`/auth/resetpass?username=${param}`);
   console.log(response.data);
   return response; // Trả về đối tượng User từ backend
 };
-export const register = async data => {
+export const register = async (data) => {
   try {
     // const { username, email, password, retype_password } = data;
     // console.log(data);
@@ -32,19 +33,20 @@ export const register = async data => {
   }
 };
 export const getUser = async () => {
-  const accesstoken = localStorage.getItem('token');
+  const accessToken = localStorage.getItem("token");
 
-  if (!accesstoken) {
-    localStorage.removeItem('user');
-    throw new Error('User not found');
+  if (!accessToken) {
+    localStorage.removeItem("user");
+    throw new Error("User not found");
   }
   try {
     const userResponse = await request.get(GET_USER, {
       headers: {
-        Authorization: `Bearer ${accesstoken}`,
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "Application/json",
       },
     });
-    localStorage.setItem('user', JSON.stringify(userResponse.data));
+    localStorage.setItem("user", JSON.stringify(userResponse.data));
     return userResponse.data; // Trả về đối tượng User từ backend
   } catch (e) {
     throw new Error(e.message);

@@ -10,7 +10,7 @@ import { storage } from "../config/firebase.config";
 import { v4 } from "uuid";
 import { toast } from "react-toastify";
 
-const MethodContext = createContext({});
+const MethodContext = createContext({})
 
 export const MethodProvider = ({ children }) => {
   const formatDateTime = (dateTimeString) => {

@@ -2,15 +2,18 @@ import * as request from '../utils/request'
 
 const GET_CART = "/cart/get-cart"
 
+
 export const getCart = async (accessToken, param) => {
     try {
         return await request.get(GET_CART, {
             params: param,
             headers: {
                 "Authorization": `Bearer ${accessToken}`,
+                "Authorization": `Bearer ${accessToken}`,
                 "Content-Type": "Application/json",
             },
             // withCredentials: true
+
         });
 
     } catch (error) {
@@ -26,6 +29,7 @@ export const updateCartItem = async (accessToken, param) => {
             params: param,
             headers: {
                 "Authorization": `Bearer ${accessToken}`,
+                "Authorization": `Bearer ${accessToken}`,
                 "Content-Type": "Application/json"
             }
         });
@@ -38,8 +42,10 @@ const DELETE_CART = "cart/delete-cart"
 export const deleteCartItem = async (accessToken, param) => {
     try {
         return await request.deleteRe(DELETE_CART, {
+
             params: param,
             headers: {
+                "Authorization": `Bearer ${accessToken}`,
                 "Authorization": `Bearer ${accessToken}`,
                 "Content-Type": "Application/json"
             }
@@ -61,4 +67,6 @@ export const addToCart = async (accessToken, params) => {
     } catch (error) {
         return error
     }
+
+
 }

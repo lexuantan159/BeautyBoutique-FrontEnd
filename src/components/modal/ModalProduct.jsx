@@ -6,9 +6,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { createProduct } from '../../services/product.js';
 import { ManageProductContext } from '../product/ProductComponent.jsx';
-import * as request from '../../services/product.js';
 import Spinner from '../../pages/Dashboard/Product/Spinner.jsx';
 import MethodContext from '../../context/methodProvider.js';
 import * as productApi from '../../services/product.js';
@@ -144,7 +142,7 @@ const ModalProduct = () => {
       const imageIds = data.imageIds[0];
       const imageUrls = data.imageURLs[0];
       console.log({ ...state, imageIds, imageUrls });
-      const product = await createProduct({ ...state, imageIds, imageUrls });
+      const product = await productApi.createProduct({ ...state, imageIds, imageUrls });
       // toast.success('Add product successfully');
       alert('them san pham thanh cong');
     } catch (error) {
@@ -156,7 +154,7 @@ const ModalProduct = () => {
     async function fetchData() {
       setIsLoading(() => true);
       if (!create && current?.id) {
-        const { data } = await request.getProductById(current?.id);
+        const { data } = await productApi.getProductById(current?.id);
         setProduct(() => data);
         dispatch({ type: 'update', name: data });
       } else {

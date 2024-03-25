@@ -3,8 +3,7 @@ import * as voucherApi from '../../../services/voucher';
 import MethodContext from '../../../context/methodProvider';
 
 const CRUVoucher = ({ closeModal, isOpenForm, setChange, change, voucher }) => {
-
-  const { convertDate, notify } = useContext(MethodContext)
+  const { convertDate, notify } = useContext(MethodContext);
   const [id, setId] = useState(null);
   const [title, setTitle] = useState(null);
   const [content, setContent] = useState(null);
@@ -15,9 +14,9 @@ const CRUVoucher = ({ closeModal, isOpenForm, setChange, change, voucher }) => {
   const [minimumOrder, setMinimumOrder] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const Token = localStorage.getItem('token');
-
+  const Token = localStorage.getItem('Token');
   useEffect(() => {
+    console.log('useEffect called with voucher:', voucher);
     if (isOpenForm.isOpen) {
       document.getElementById('my_modal_4').showModal();
     }
@@ -148,7 +147,7 @@ const CRUVoucher = ({ closeModal, isOpenForm, setChange, change, voucher }) => {
                 className="btn btn-outline btn-success m-4"
                 onClick={() => handleSubmid()}
               >
-                {voucher ? "UPDATE" : "CREATE"}
+                {voucher ? 'UPDATE' : 'CREATE'}
               </button>
 
               <button

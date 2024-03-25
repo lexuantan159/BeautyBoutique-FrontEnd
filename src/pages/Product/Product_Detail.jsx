@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import * as productApi from '../../services/product';
 import { FaCheckCircle } from 'react-icons/fa';
 import Comment from '../Blogpost/Comment';
 import { Button } from 'flowbite-react';
 import * as cartApi from '../../services/cart';
-import MethodContext from "../../context/methodProvider";
 const Product_Detail = () => {
   // ScrollToDetail
   const scrollToDetail = () => {
@@ -30,11 +29,8 @@ const Product_Detail = () => {
   };
   //
   const [quantity, setQuantity] = useState(1);
-  const Token = localStorage.getItem('token');
-  const { notify } = useContext(MethodContext)
-  const [product, setProduct] = useState('');
-  const [change, setChange] = useState(true);
-  const { id } = useParams();
+  const [accessToken, setAccessToken] = useState('ngoclamotcobengoc');
+
   const handleIncrease = () => {
     setQuantity(quantity + 1);
   };
@@ -43,7 +39,11 @@ const Product_Detail = () => {
       setQuantity(quantity - 1);
     }
   };
-
+  //
+  const [product, setProduct] = useState('');
+  const [change, setChange] = useState(true);
+  const { id } = useParams();
+  const [productId, setProductId] = useState(id);
   useEffect(() => {
     try {
       console.log(id);
@@ -60,14 +60,8 @@ const Product_Detail = () => {
 
   const handleAddToCart = async () => {
     try {
-      const params = { productId: id, quantity: quantity }
-      const addCart = await cartApi.addToCart(Token, params);
-      if (addCart?.status === 200) {
-        notify(addCart?.data, "success")
-      }
-      else {
-        notify(addCart.error.data)
-      }
+      const addCart = await cartApi.addToCart(accessToken, productId);
+      console.log(addCart);
     } catch (error) {
       console.log(error);
     }
@@ -87,7 +81,7 @@ const Product_Detail = () => {
               width={405}
               height={405}
               style={{ marginLeft: '150px', paddingTop: '32px' }}
-            />
+            />{' '}
           </div>
         ) : (
           <p>Loading...</p>
@@ -103,7 +97,7 @@ const Product_Detail = () => {
             }}
           >
             {' '}
-            {product?.productName}
+            {product.productName}
           </p>
 
           <td className="py-4" colSpan={2}>
@@ -126,12 +120,29 @@ const Product_Detail = () => {
                   <td style={{ width: '70px' }}>PRICE</td>
                   <td>
                     <div style={{ display: 'inline' }}>
-                      <span style={{ color: '#323232', fontSize: '24px', fontWeight: 'bold', }}>
-                        {product?.salePrice} USD
+                      <span
+                        style={{
+                          color: '#323232',
+                          fontSize: '24px',
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        {' '}
+                        {product.salePrice} USD
                       </span>
                       &nbsp;&nbsp;&nbsp;
-                      <span style={{ color: '#ee2f49', fontSize: '24px', fontWeight: 'bold', }} >
-                        {((100 * (product?.actualPrice - product?.salePrice)) / product?.actualPrice).toFixed(0)} %
+                      <span
+                        style={{
+                          color: '#ee2f49',
+                          fontSize: '24px',
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        {(
+                          (100 * (product.actualPrice - product.salePrice)) /
+                          product.actualPrice
+                        ).toFixed(0)}
+                        %
                       </span>
                     </div>
                     <div style={{ clear: 'both' }}></div>
@@ -141,15 +152,19 @@ const Product_Detail = () => {
                   <td style={{ paddingTop: '10px' }}>RETAIL</td>
                   <td style={{ paddingTop: '10px' }}>
                     <span style={{ textDecoration: 'line-through' }}>
-                      {product?.actualPrice} USD
-                    </span>
-                    ( You saved{' '}{(product?.actualPrice - product?.salePrice).toFixed(2)} USD )
+                      {product.actualPrice} USD
+                    </span>{' '}
+                    ( You saved{' '}
+                    {(product.actualPrice - product.salePrice).toFixed(2)} USD )
                   </td>
                 </tr>
                 <td>QTY</td>
                 <td className="pt-[20px] pb-[20px] flex ">
                   <Button.Group>
-                    <Button onClick={handleDecrease} color="gray" className="text-sm"
+                    <Button
+                      onClick={handleDecrease}
+                      color="gray"
+                      className="text-sm"
                     >
                       {' '}
                       -{' '}
@@ -173,13 +188,13 @@ const Product_Detail = () => {
             <p
               style={{ color: '#323232', fontSize: '24px', fontWeight: 'bold' }}
             >
-              &nbsp;&nbsp;&nbsp; {(product?.salePrice * quantity).toFixed(2)} USD
+              &nbsp;&nbsp;&nbsp; {(product.salePrice * quantity).toFixed(2)} USD
               &nbsp;&nbsp;&nbsp;
             </p>
             <p style={{ paddingTop: '8px' }}>
               {' '}
               ( You saved{' '}
-              {((product?.actualPrice - product?.salePrice) * quantity).toFixed(
+              {((product.actualPrice - product.salePrice) * quantity).toFixed(
                 2
               )}{' '}
               USD )
@@ -294,7 +309,7 @@ const Product_Detail = () => {
               }}
             >
               {' '}
-              {product?.description}
+              {product.description}
             </div>
           </div>
         </div>
@@ -417,7 +432,7 @@ const Product_Detail = () => {
                   }}
                 >
                   <Comment
-                    commentId={id}
+                    commentId={productId}
                     index={1}
                     setChange={setChange}
                     change={change}

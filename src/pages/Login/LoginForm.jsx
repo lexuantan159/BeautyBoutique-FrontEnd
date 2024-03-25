@@ -28,8 +28,7 @@ function LoginForm() {
         alt="...."
         className="relative object-cover h-full w-full"
       />
-      <div
-        className="bg-white opacity-90 shadow-md rounded-lg px-8 pb-8 w-full max-w-md absolute top-[20%] right-[8%] ">
+      <div className="bg-white opacity-90 shadow-md rounded-lg px-8 pb-8 w-full max-w-md absolute top-[20%] right-[8%] ">
         <h1 className="text-2xl font-bold text-center py-4 text-gray-500">
           Sign in
         </h1>

@@ -1,5 +1,18 @@
 import * as request from '../utils/request';
 
+export const createProduct = async product => {
+  try {
+    const data = await request.post('/product/create-product', product, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return data;
+  } catch (e) {
+    console.log(e);
+    throw new Error(e.message);
+  }
+};
 const addProduct = async (
   productName,
   actualPrice,
@@ -130,7 +143,8 @@ const getProductById = async id => {
 
 const addFeedback = async (content, rating, productId, accessToken) => {
   try {
-    const feedback = await request.post('/product/feedback/create-feedback',
+    const feedback = await request.post(
+      '/product/feedback/create-feedback',
       {
         content: content,
         rating: rating,
@@ -138,9 +152,9 @@ const addFeedback = async (content, rating, productId, accessToken) => {
       },
       {
         headers: {
-          "Authorization": `Bearer ${accessToken}`,
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
       }
     );
     return {
@@ -159,7 +173,8 @@ const addFeedback = async (content, rating, productId, accessToken) => {
 
 const getFeedback = async id => {
   try {
-    const feedback = await request.get(`/product/feedback/get-feedback-product?productId=${id}`,
+    const feedback = await request.get(
+      `/product/feedback/get-feedback-product?productId=${id}`,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -181,30 +196,32 @@ const getFeedback = async id => {
 };
 const deleteFeedback = async (id, accessToken) => {
   try {
-    const response = await request.deleteRe(`/product/feedback/delete-feedback?id=${id}`,
-      {
-        headers: {
-          "Authorization": `Bearer ${accessToken}`,
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      });
+    const response = await request.deleteRe(
+      `/product/feedback/delete-feedback?id=${id}`, {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    }
+    );
     return response.status;
   } catch (error) {
-    console.error('Error deleting feedback:', error);
+    console.error('Error deleting blog:', error);
   }
 };
 const updateFeedback = async (id, feedback, accessToken) => {
   console.log(feedback);
   try {
-    const response = await request.put(`/product/feedback/update-feedback?id=${id}`,
+    const response = await request.put(
+      `/product/feedback/update-feedback?id=${id}`,
       {
         content: feedback,
       },
       {
         headers: {
-          "Authorization": `Bearer ${accessToken}`,
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
       }
     );
     return response.data;

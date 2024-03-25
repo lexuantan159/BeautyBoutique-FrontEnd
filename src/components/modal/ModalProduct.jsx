@@ -3,18 +3,23 @@ import React, {
   useContext,
   useEffect,
   useReducer,
+  useRef,
   useState,
 } from 'react';
+import { createProduct } from '../../services/product.js';
 import { ManageProductContext } from '../product/ProductComponent.jsx';
 import * as request from '../../services/product.js';
 import Spinner from '../../pages/Dashboard/Product/Spinner.jsx';
+import MethodContext from '../../context/methodProvider.js';
+import * as productApi from '../../services/product.js';
+import { toast } from 'react-toastify';
+const style =
+  'dark:bg-white ring-1 ring-slate-400 rounded-lg py-1 px-2 focus:outline-none';
 
-const LabelInfo = ({ label, info, description = false, field = label }) => {
+const LabelInfo = ({ label, description = false, field = label }) => {
   const { dispatch, state } = useContext(ModalContext);
-  const style =
-    'dark:bg-white ring-1 ring-slate-400 rounded-lg py-1 px-2 focus:outline-none';
   return (
-    <div className="grid grid-cols-2 items-end max-w-lg">
+    <div className="grid grid-cols-2 max-w-lg items-center">
       <label className="font-semibold" htmlFor="product-name">
         {label}
       </label>
@@ -22,16 +27,55 @@ const LabelInfo = ({ label, info, description = false, field = label }) => {
         <input
           className={style}
           type="text"
-          value={state?.[info]}
+          value={state?.[field]}
           onChange={e => dispatch({ type: field, name: e.target.value })}
         />
       ) : (
         <textarea
           className={style}
-          value={info}
+          value={state?.[field]}
           onChange={e => dispatch({ type: field, name: e.target.value })}
         ></textarea>
       )}
+    </div>
+  );
+};
+const LabelCategory = ({ label }) => {
+  const { dispatch, state } = useContext(ModalContext);
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    try {
+      const fetchDataCategory = async () => {
+        const getCategory = await productApi.getCategory();
+        setCategories(getCategory.data);
+      };
+      fetchDataCategory();
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+  // console.log(categories);
+  // console.log(state);
+  return (
+    <div className="grid grid-cols-2 items-center max-w-lg">
+      <label className="font-semibold" htmlFor="product-name">
+        {label}
+      </label>
+      <select
+        value={state?.category?.id}
+        onChange={e => {
+          //chua lamg gi het
+          // console.log(state?.category?.id);
+          dispatch({ type: 'categoryId', name: e.target.value });
+        }}
+        className="bg-gray-50 border border-gray-300 text-slate-500 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-400  dark:bg-white dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      >
+        {categories.map(c => (
+          <option className="font-sans" value={c.id} key={c.id}>
+            {c.categoryName}
+          </option>
+        ))}
+      </select>
     </div>
   );
 };
@@ -41,38 +85,40 @@ export function delay(ms) {
 
 // make useReducer to handler product object that contains many properties
 const initialProduct = {
-  productName: 'test product',
-  actualPrice: 100,
-  salePrice: 100,
-  description: 'sample product need to be delete',
+  productName: undefined,
+  actualPrice: undefined,
+  salePrice: undefined,
+  description: undefined,
   categoryId: 1,
   brandId: 1,
-  quantity: 10,
-  imageIds: 10,
-  imageUrls: 10,
+  quantity: 1,
+  imageIds: undefined,
+  imageUrls: undefined,
 };
 const reducer = (state, action) => {
   switch (action.type) {
     case 'productName':
       return { ...state, productName: action.name };
     case 'actualPrice':
-      return { ...state, actualPrice: action.name };
+      return { ...state, actualPrice: Number(action.name) };
     case 'salePrice':
-      return { ...state, salePrice: action.name };
+      return { ...state, salePrice: +action.name };
     case 'description':
       return { ...state, description: action.name };
     case 'categoryId':
-      return { ...state, categoryId: action.name };
-    case 'brandId':
-      return { ...state, brandId: action.name };
+      return { ...state, categoryId: +action.name };
     case 'quantity':
-      return { ...state, quantity: action.name };
+      return { ...state, quantity: +action.name };
     case 'imageIds':
       return { ...state, imageIds: action.name };
     case 'imageUrls':
       return { ...state, imageUrls: action.name };
-    default:
-      return state;
+    case 'update':
+      return action.name;
+    default: {
+      console.log(`khong thuc hien action ${action.type}`);
+      console.log(action.type === 'imageUrls');
+    }
   }
 };
 const ModalContext = createContext();
@@ -81,28 +127,53 @@ const ModalProduct = () => {
   const [product, setProduct] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [state, dispatch] = useReducer(reducer, initialProduct);
-  const handleSummit = () => {
-    console.log(state);
+  const [image, setImage] = useState(null);
+  const ref = useRef();
+  const { uploadFile } = useContext(MethodContext);
+  const handleUpload = async () => {
+    return await uploadFile([image]);
+  };
+  const handleSummit = async () => {
+    if (!image) {
+      toast.error('Please provide the image of product');
+      return;
+    }
+    try {
+      const data = await handleUpload();
+      console.log(data);
+      const imageIds = data.imageIds[0];
+      const imageUrls = data.imageURLs[0];
+      console.log({ ...state, imageIds, imageUrls });
+      const product = await createProduct({ ...state, imageIds, imageUrls });
+      // toast.success('Add product successfully');
+      alert('them san pham thanh cong');
+    } catch (error) {
+      console.log(error);
+    }
+    // console.log(state);
   };
   useEffect(() => {
     async function fetchData() {
       setIsLoading(() => true);
-      if (!create && current) {
+      if (!create && current?.id) {
         const { data } = await request.getProductById(current?.id);
         setProduct(() => data);
+        dispatch({ type: 'update', name: data });
       } else {
         await delay(10);
-        setProduct(() => {});
+        dispatch({ type: 'update', name: initialProduct });
+        setProduct(() => { });
       }
       setIsLoading(() => false);
     }
     fetchData();
   }, [current, create]);
-  console.log(product, create);
+  // console.log(state);
   return (
     <ModalContext.Provider value={{ dispatch, state }}>
       <dialog
         id="modal_product"
+        ref={ref}
         className="modal modal-bottom sm:modal-middle w-[60%] mx-auto"
         onClose={() => setCreate(() => false)}
       >
@@ -132,42 +203,23 @@ const ModalProduct = () => {
                     Change image
                   </label>
                   <input
+                    className="rounded-md cursor-pointer"
                     type="file"
                     name="product-image"
-                    onChange={e => console.log(e.target?.files?.[0])}
+                    onChange={e => {
+                      setImage(() => e.target?.files?.[0]);
+                    }}
                   />
                 </div>
-                <LabelInfo
-                  label="Product name"
-                  info={product?.productName}
-                  field={'actualPrice'}
-                />
-                <LabelInfo label="Product quantity" info={product?.quantity} />
-                <LabelInfo
-                  label="Actual price"
-                  info={product?.actualPrice}
-                  field={'actualPrice'}
-                />
-                <LabelInfo
-                  label="Sale Price"
-                  info={product?.salePrice}
-                  field={'actualPrice'}
-                />
-                <LabelInfo
-                  label="Brand"
-                  info={product?.brand?.brandName}
-                  field={'actualPrice'}
-                />
-                <LabelInfo
-                  label="Category"
-                  info={product?.category?.categoryName}
-                  field={'actualPrice'}
-                />
+                <LabelInfo label="Product name" field={'productName'} />
+                <LabelInfo label="Product quantity" field={'quantity'} />
+                <LabelInfo label="Actual price" field={'actualPrice'} />
+                <LabelInfo label="Sale Price" field={'salePrice'} />
+                <LabelCategory label="Category" field={'categoryName'} />
                 <LabelInfo
                   description={true}
                   label="Description"
-                  info={product?.description}
-                  field={'actualPrice'}
+                  field={'description'}
                 />
               </div>
             </div>

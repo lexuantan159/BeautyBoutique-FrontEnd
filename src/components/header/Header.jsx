@@ -149,8 +149,8 @@ function Header() {
                       <Avatar
                         alt="User settings"
                         img={`${userImage
-                            ? userImage
-                            : 'https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png'
+                          ? userImage
+                          : 'https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/default-avatar.png'
                           }`}
                         rounded
                       />

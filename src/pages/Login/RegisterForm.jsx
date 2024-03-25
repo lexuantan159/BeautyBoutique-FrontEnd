@@ -1,34 +1,34 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import * as request from '../../services/login.js';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import * as request from "../../services/login.js";
 
 function RegisterForm() {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPasword, setConfirmPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPasword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
   async function handleSubmit(e) {
     try {
       e.preventDefault();
       // check if any fields is omitted
       if (!(username && password && email)) {
-        alert('Please provide enough information');
+        alert("Please provide enough information");
         return;
       }
       // check if the password and confirm password is the samne
       if (password !== confirmPasword) {
-        alert('Your current password did not match confirm password');
-        setPassword(() => '');
-        setConfirmPassword(() => '');
+        alert("Your current password did not match confirm password");
+        setPassword(() => "");
+        setConfirmPassword(() => "");
         return;
       }
       const dataForm = { username, email, password, retype_password: password };
       try {
         const data = await request.register(dataForm);
-        alert('Register Success');
+        alert("Register Success");
         console.log(dataForm);
-        navigate('/login');
+        navigate("/login");
       } catch (e) {
         console.log(e);
       }
@@ -58,7 +58,7 @@ function RegisterForm() {
               id="username"
               name="username"
               className="rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 w-full dark:bg-white dark:text-slate-600"
-              onChange={e => {
+              onChange={(e) => {
                 setUsername(() => e.target.value);
               }}
             />
@@ -75,7 +75,7 @@ function RegisterForm() {
               id="email"
               name="email"
               className="rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 w-full dark:bg-white dark:text-slate-600"
-              onChange={e => {
+              onChange={(e) => {
                 setEmail(() => e.target.value);
               }}
             />
@@ -93,7 +93,7 @@ function RegisterForm() {
               name="password"
               value={password}
               className="rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 w-full  dark:bg-white dark:text-slate-600"
-              onChange={e => {
+              onChange={(e) => {
                 setPassword(() => e.target.value);
               }}
             />
@@ -111,7 +111,7 @@ function RegisterForm() {
               name="confirmPassword"
               value={confirmPasword}
               className="rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 w-full  dark:bg-white dark:text-slate-600"
-              onChange={e => {
+              onChange={(e) => {
                 setConfirmPassword(() => e.target.value);
               }}
             />

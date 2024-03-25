@@ -40,6 +40,7 @@ const Comment = ({ commentId, index, setChange, change }) => {
         return;
       }
       if (index === 1) {
+
         const addFeedback = await productApi.addFeedback(newComment, 5, commentId, Token);
         if (addFeedback.statusCode === 201) {
           notify(addFeedback.data, "success")
@@ -64,7 +65,7 @@ const Comment = ({ commentId, index, setChange, change }) => {
       setLoading(false);
     }
   };
-  const deleteComment = async (cmtid) => {
+  const deleteComment = async cmtid => {
     try {
       if (index === 1) {
         const deleteFeedback = await productApi.deleteFeedback(cmtid, Token)

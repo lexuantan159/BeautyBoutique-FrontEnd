@@ -13,6 +13,23 @@ export const createProduct = async product => {
     throw new Error(e.message);
   }
 };
+export const updateProduct = async product => {
+  try {
+    const data = await request.put(
+      `/product/updateProduct/${product.id}`,
+      product,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    return data;
+  } catch (e) {
+    console.log(e);
+    throw new Error(e.message);
+  }
+};
 const addProduct = async (
   productName,
   actualPrice,

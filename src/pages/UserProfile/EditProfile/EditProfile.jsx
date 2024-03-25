@@ -14,11 +14,11 @@ const EditProfile = () => {
     const [dateOfBirth, setDateOfBirth] = useState("");
     const [address, setAddress] = useState("");
     const [loadingAva, setLoadingAva] = useState(true);
+    const [updated, setUpdated] = useState(false);
     const fileRef = useRef();
     const accessToken = localStorage.getItem("token");
     const { notify } = useContext(MethodContext)
     const navigation = useNavigate();
-
     const handleUpdateAvatar = async () => {
     };
 
@@ -28,6 +28,7 @@ const EditProfile = () => {
         const responseUpdateUser = await userServices.updateUser(accessToken, body);
         if (responseUpdateUser.status === 200) {
             notify("Update user successfully!", "success");
+            setUpdated(!updated)
         } else {
             notify("Update user fail!", "error");
         }
@@ -41,7 +42,7 @@ const EditProfile = () => {
             const userResponse = await userServices.getUser(accessToken);
             if (userResponse.status === 200) {
                 const user = userResponse.data;
-                const cleanedDateOfBirth = user.dateOfBirth.split('T')[0];
+                const cleanedDateOfBirth = user.dateOfBirth === null ? user.dateOfBirth : user.dateOfBirth.split('T')[0];
                 setFullName(user.fullName);
                 setDateOfBirth(cleanedDateOfBirth);
                 setEmail(user.email);
@@ -49,7 +50,7 @@ const EditProfile = () => {
             }
         }
         fetchUser();
-    }, [])
+    }, [updated])
 
     return (
         <div className="rounded-lg border-[1px] border-gray-200 shadow px-4 p-2">

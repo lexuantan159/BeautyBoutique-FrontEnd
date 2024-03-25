@@ -138,21 +138,14 @@ const ModalProduct = () => {
         return await uploadFile([image]);
     };
     const handleSummit = async () => {
-        console.log({
-            ...state,
-            imageIds: [state.images[0].id],
-            imageUrls: [state.images[0].imageUrl],
-            categoryId: state.category.id,
-            brandId: state.brand.id,
-        });
         if (!create) {
             try {
                 await request.updateProduct({
                     ...state,
-                    imageIds: [state.images[0].id],
-                    imageUrls: [state.images[0].imageUrl],
-                    categoryId: state.category.id,
-                    brandId: state.brand.id,
+                    imageIds: [state?.images[0]?.id],
+                    imageUrls: [state?.images[0]?.imageUrl],
+                    categoryId: state?.category?.id,
+                    brandId: state?.brand?.id,
                 });
                 toast.success("Update product successfully");
                 return;

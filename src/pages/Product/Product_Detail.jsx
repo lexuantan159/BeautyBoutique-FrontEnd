@@ -1,35 +1,38 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import * as productApi from "../../services/product";
-import { FaCheckCircle } from "react-icons/fa";
-import Comment from "../Blogpost/Comment";
-import { Button } from "flowbite-react";
-import * as cartApi from "../../services/cart";
+import React, { useContext, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import * as productApi from '../../services/product';
+import { FaCheckCircle } from 'react-icons/fa';
+import Comment from '../Blogpost/Comment';
+import { Button } from 'flowbite-react';
+import * as cartApi from '../../services/cart';
+import MethodContext from '../../context/methodProvider';
+
 const Product_Detail = () => {
+    const { notify } = useContext(MethodContext)
     // ScrollToDetail
     const scrollToDetail = () => {
-        const detailSection = document.getElementById("detailSection");
+        const detailSection = document.getElementById('detailSection');
         if (detailSection) {
-            detailSection.scrollIntoView({ behavior: "smooth" });
+            detailSection.scrollIntoView({ behavior: 'smooth' });
         }
     };
     // ScrollToShipping
     const scrollToShipping = () => {
-        const shippingSection = document.getElementById("shippingSection");
+        const shippingSection = document.getElementById('shippingSection');
         if (shippingSection) {
-            shippingSection.scrollIntoView({ behavior: "smooth" });
+            shippingSection.scrollIntoView({ behavior: 'smooth' });
         }
     };
     // ScrollToreview
     const scrollToReview = () => {
-        const reviewSection = document.getElementById("reviewSection");
+        const reviewSection = document.getElementById('reviewSection');
         if (reviewSection) {
-            reviewSection.scrollIntoView({ behavior: "smooth" });
+            reviewSection.scrollIntoView({ behavior: 'smooth' });
         }
     };
     //
     const [quantity, setQuantity] = useState(1);
-    const [accessToken, setAccessToken] = useState("ngoclamotcobengoc");
+    const accessToken = localStorage.getItem('token');
 
     const handleIncrease = () => {
         setQuantity(quantity + 1);
@@ -40,10 +43,10 @@ const Product_Detail = () => {
         }
     };
     //
-    const [product, setProduct] = useState("");
+    const [product, setProduct] = useState('');
     const [change, setChange] = useState(true);
     const { id } = useParams();
-    const [productId, setProductId] = useState(id);
+    const [productId] = useState(id);
     useEffect(() => {
         try {
             console.log(id);
@@ -58,10 +61,17 @@ const Product_Detail = () => {
         }
     }, [id]);
 
+
     const handleAddToCart = async () => {
         try {
-            const addCart = await cartApi.addToCart(accessToken, productId);
-            console.log(addCart);
+            const params = { productId, quantity }
+            console.log(accessToken);
+            const addCart = await cartApi.addToCart(accessToken, params);
+            if (addCart?.status === 200) {
+                notify(addCart?.data, 'success')
+            } else {
+                notify("Add to cart faid")
+            }
         } catch (error) {
             console.log(error);
         }

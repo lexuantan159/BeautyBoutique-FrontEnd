@@ -4,7 +4,8 @@ import { ManageProductContext } from "../product/ProductComponent.jsx";
 function ModalDelete({ info }) {
     const { current: product } = useContext(ManageProductContext);
     function handleDelete() {
-        console.log(info);
+        if (info === "product") {
+        }
     }
     return (
         <dialog

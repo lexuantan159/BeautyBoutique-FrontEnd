@@ -254,6 +254,7 @@ const updateFeedback = async (id, feedback, accessToken) => {
         };
     }
 };
+const deleteProduct = async (id) => {};
 
 export {
     addProduct,

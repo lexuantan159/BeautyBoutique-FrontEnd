@@ -40,7 +40,7 @@ function ProductInline({ product }) {
                 className="flex justify-center items-center w-full text-slate-400 hover:text-red-500 font-medium text-xl ease-in duration-200 hover:scale-110"
                 onClick={handleDelete}
             >
-                <BsFillTrash3Fill />
+                <BsFillTrash3Fill onClick={() => setCurrent(() => product)} />
             </div>
         </div>
     );
@@ -119,6 +119,9 @@ export function MangageListProduct() {
     const [current, setCurrent] = useState({});
     const [products, setProducts] = useState([]);
     const [create, setCreate] = useState(false);
+    const handleDelete = (e) => {
+        console.log(e);
+    };
     useEffect(() => {
         async function getProducts() {
             const { data } = await request.getProduct();

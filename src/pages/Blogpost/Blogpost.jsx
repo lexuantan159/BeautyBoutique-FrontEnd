@@ -91,7 +91,7 @@ const Blogpost = () => {
   };
 
   return (
-    <div className='w-full min-h-[250px] my-5'>
+    <div className='w-full min-h-[450px] my-5'>
       <div className='pt-4 flex items-center justify-center'>
         <div className='w-[60%] h-20 border border-solid flex items-center justify-center shadow-md rounded-xl bg-white'>
           <div className="avatar online mr-4">

@@ -160,7 +160,7 @@ const getProductById = async (id) => {
     }
 };
 
-const addFeedback = async (content, rating, productId, userId) => {
+const addFeedback = async (content, rating, productId, accessToken) => {
     try {
         const feedback = await request.post(
             "/product/feedback/create-feedback",
@@ -168,10 +168,10 @@ const addFeedback = async (content, rating, productId, userId) => {
                 content: content,
                 rating: rating,
                 productId: productId,
-                userId: userId,
             },
             {
                 headers: {
+                    Authorization: `Bearer ${accessToken}`,
                     "Content-Type": "application/x-www-form-urlencoded",
                 },
             }
@@ -213,26 +213,33 @@ const getFeedback = async (id) => {
         };
     }
 };
-const deleteFeedback = async (id, userId) => {
+const deleteFeedback = async (id, accessToken) => {
     try {
         const response = await request.deleteRe(
-            `/product/feedback/delete-feedback?id=${id}&userId=${userId}`
+            `/product/feedback/delete-feedback?id=${id}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+            }
         );
         return response.status;
     } catch (error) {
         console.error("Error deleting blog:", error);
     }
 };
-const updateFeedback = async (id, feedback, userId) => {
+const updateFeedback = async (id, feedback, accessToken) => {
     console.log(feedback);
     try {
         const response = await request.put(
-            `/product/feedback/update-feedback?id=${id}&userId=${userId}`,
+            `/product/feedback/update-feedback?id=${id}`,
             {
                 content: feedback,
             },
             {
                 headers: {
+                    Authorization: `Bearer ${accessToken}`,
                     "Content-Type": "application/x-www-form-urlencoded",
                 },
             }

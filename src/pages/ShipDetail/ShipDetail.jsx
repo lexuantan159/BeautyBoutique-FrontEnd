@@ -1,10 +1,10 @@
-import React, {useContext, useEffect, useState} from 'react'
-import {MdOutlineAddLocationAlt} from "react-icons/md";
-import {GrAdd} from "react-icons/gr";
+import React, { useContext, useEffect, useState } from 'react'
+import { MdOutlineAddLocationAlt } from "react-icons/md";
+import { GrAdd } from "react-icons/gr";
 import DropList from "../../components/animation/DropList";
 import ShipDetailItem from "../../components/modal/ShipDetailItem";
-import {Link, useNavigate, useParams} from "react-router-dom";
-import {useQuery} from "react-query";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "react-query";
 import * as shipDetailService from "../../services/shipDetail";
 import * as cartService from "../../services/cart";
 import * as orderServices from "../../services/order";
@@ -13,15 +13,15 @@ import MethodContext from "../../context/methodProvider";
 
 const ShipDetail = () => {
     const [action, setAction] = useState(false)
-    const [shipDetail, setShipDetail] = useState({id: 1})
-    const [methodShipping, setMethodShipping] = useState({id: 0})
-    const [methodPayment, setMethodPayment] = useState({id: 0})
+    const [shipDetail, setShipDetail] = useState({ id: 1 })
+    const [methodShipping, setMethodShipping] = useState({ id: 0 })
+    const [methodPayment, setMethodPayment] = useState({ id: 0 })
     const [totalPrice, setTotalPrice] = useState(0)
-    const [voucher, setVoucher] = useState({discount: 0})
+    const [voucher, setVoucher] = useState({ discount: 0 })
     const [isLoadingPayment, setIsLoadingPayment] = useState(false);
     const [paramsOrder, setParamsOrder] = useState({});
     const [paramsPayment, setParamsPayment] = useState({});
-    const {notify, formatNumber, toastLoadingId, toastUpdateLoadingId} = useContext(MethodContext)
+    const { notify, formatNumber, toastLoadingId, toastUpdateLoadingId } = useContext(MethodContext)
     const navigate = useNavigate();
     const accessToken = localStorage.getItem('token');
     const {
@@ -43,7 +43,7 @@ const ShipDetail = () => {
         }
     }, [cartData, voucher]);
 
-    const {cartItemIds} = useParams();
+    const { cartItemIds } = useParams();
     const [cartItem, setCartItem] = useState([])
 
     useEffect(() => {
@@ -169,74 +169,74 @@ const ShipDetail = () => {
     }
 
     return (<>
-            <div className="max-w-[1200px] grid grid-cols-12 gap-5 mt-40 mx-10 lg:px-2 lg:mx-auto">
-                <h1 className="col-span-12 font-semibold text-xl">Ship Detail</h1>
-                <div className="bg-white col-span-12 lg:col-span-8  overflow-y-scroll no-scrollbar">
-                    <div className="p-3 mb-3 rounded-lg border-[0.2px] border-gray-300 shadow-lg">
-                        <p className="flex items-center text-lg font-bold"><MdOutlineAddLocationAlt
-                            className="mr-2"/> Address </p>
-                        <div className="grid grid-cols-2 gap-4 mt-3">
-                            {
-                                isLoading ? <div>LOADING...</div> :
-                                    shipDetails?.status === 200 && shipDetails?.data?.shipDetails.length > 0 ?
-                                        shipDetails?.data?.shipDetails.slice(0, 3).map(item => {
-                                            return (
-                                                <div
-                                                    key={item?.id}
-                                                    onClick={() => setShipDetail(item)}
-                                                    className={`p-3 border-[1px] hover:border-[#FF9FA0] rounded-lg hover:cursor-pointer ${shipDetail?.id === item?.id && "border-[#FF9FA0]"} transition-all`}>
-                                                    <p className="">{item?.fullName}</p>
-                                                    <p className="">{item?.phoneNumber}</p>
-                                                    <p className="truncate">{item?.address}</p>
-                                                </div>)
-                                        }) : <div>Not Address</div>
+        <div className="max-w-[1200px] grid grid-cols-12 gap-5 mt-40 mx-10 lg:px-2 lg:mx-auto">
+            <h1 className="col-span-12 font-semibold text-xl">Ship Detail</h1>
+            <div className="bg-white col-span-12 lg:col-span-8  overflow-y-scroll no-scrollbar">
+                <div className="p-3 mb-3 rounded-lg border-[0.2px] border-gray-300 shadow-lg">
+                    <p className="flex items-center text-lg font-bold"><MdOutlineAddLocationAlt
+                        className="mr-2" /> Address </p>
+                    <div className="grid grid-cols-2 gap-4 mt-3">
+                        {
+                            isLoading ? <div>LOADING...</div> :
+                                shipDetails?.status === 200 && shipDetails?.data?.shipDetails.length > 0 ?
+                                    shipDetails?.data?.shipDetails.slice(0, 3).map(item => {
+                                        return (
+                                            <div
+                                                key={item?.id}
+                                                onClick={() => setShipDetail(item)}
+                                                className={`p-3 border-[1px] hover:border-[#FF9FA0] rounded-lg hover:cursor-pointer ${shipDetail?.id === item?.id && "border-[#FF9FA0]"} transition-all`}>
+                                                <p className="">{item?.fullName}</p>
+                                                <p className="">{item?.phoneNumber}</p>
+                                                <p className="truncate">{item?.address}</p>
+                                            </div>)
+                                    }) : <div>Not Address</div>
 
-                            }
-                            <div
-                                className="p-3 flex flex-col items-center justify-center border-[1px] border-gray-300 hover:border-[#FF9FA0] border-dashed rounded-lg hover:cursor-pointer"
-                                onClick={() => document.getElementById('my_modal_4').showModal()}
-                            >
-                                <GrAdd/>
-                                <p className="text-gray-300 mt-2">Add new address</p>
-                            </div>
+                        }
+                        <div
+                            className="p-3 flex flex-col items-center justify-center border-[1px] border-gray-300 hover:border-[#FF9FA0] border-dashed rounded-lg hover:cursor-pointer"
+                            onClick={() => document.getElementById('my_modal_4').showModal()}
+                        >
+                            <GrAdd />
+                            <p className="text-gray-300 mt-2">Add new address</p>
                         </div>
-                        <ShipDetailItem shipDetails={shipDetails?.data?.shipDetails} itemShip={shipDetail}
-                                        setItemShip={setShipDetail}/>
                     </div>
-                    {/*Method*/}
-                    <DropList title={"method shipping"} listItem={[{id: 2, name: "J&T"}]}
-                              type={"shipping"} setItem={setMethodShipping}></DropList>
-                    <DropList title={"method payment"}
-                              listItem={[{id: 1, name: "Thanh Toan Khi Nhan Hang"}, {id: 2, name: "Zalo Pay"}]}
-                              type={"payment"} setItem={setMethodPayment}></DropList>
-
+                    <ShipDetailItem shipDetails={shipDetails?.data?.shipDetails} itemShip={shipDetail}
+                        setItemShip={setShipDetail} />
                 </div>
-                <div className="bg-white col-span-12 lg:col-span-4 flex-grow">
-                    <div className="w-full flex justify-between gap-2">
-                        <Link to="/cart" relative={"route"} className="w-full">
-                            <button type="button"
-                                    className="w-full text-center bg-white hover:bg-red-500 hover:text-white border-[1px] border-red-400 py-3 px-4 rounded font-bold mr-3 shadow-lg transition-all">
-                                Cart
-                            </button>
-                        </Link>
-                        <button type="button"
-                                onClick={handlePayment}
-                                className="w-full text-center bg-red-500 hover:bg-white hover:border-[1px] hover:border-red-400 hover:text-black text-white font-bold py-3 px-4 rounded shadow-lg transition-all">
-                            {isLoadingPayment ?
-                                <span className="loading loading-spinner loading-xs text-white"></span> : "Payment"}
+                {/*Method*/}
+                <DropList title={"method shipping"} listItem={[{ id: 2, name: "J&T" }]}
+                    type={"shipping"} setItem={setMethodShipping}></DropList>
+                <DropList title={"method payment"}
+                    listItem={[{ id: 1, name: "Thanh Toan Khi Nhan Hang" }, { id: 2, name: "Zalo Pay" }]}
+                    type={"payment"} setItem={setMethodPayment}></DropList>
 
+            </div>
+            <div className="bg-white col-span-12 lg:col-span-4 flex-grow">
+                <div className="w-full flex justify-between gap-2">
+                    <Link to="/cart" relative={"route"} className="w-full">
+                        <button type="button"
+                            className="w-full text-center bg-white hover:bg-red-500 hover:text-white border-[1px] border-red-400 py-3 px-4 rounded font-bold mr-3 shadow-lg transition-all">
+                            Cart
                         </button>
-                    </div>
-                    <div
-                        className="w-full mt-4 bg-white rounded-lg shadow-md p-3 max-h-[260px] overflow-y-scroll no-scrollbar border-[0.2px] border-gray-300">
-                        {isLoading ? <span
-                            className="loading loading-dots loading-lg text-xl "></span> : (cartData.status === 200 && cartData?.data?.carts.length > 0) && cartData?.data?.carts.map((item) => {
+                    </Link>
+                    <button type="button"
+                        onClick={handlePayment}
+                        className="w-full text-center bg-red-500 hover:bg-white hover:border-[1px] hover:border-red-400 hover:text-black text-white font-bold py-3 px-4 rounded shadow-lg transition-all">
+                        {isLoadingPayment ?
+                            <span className="loading loading-spinner loading-xs text-white"></span> : "Payment"}
+
+                    </button>
+                </div>
+                <div
+                    className="w-full mt-4 bg-white rounded-lg shadow-md p-3 max-h-[260px] overflow-y-scroll no-scrollbar border-[0.2px] border-gray-300">
+                    {isLoading ? <span
+                        className="loading loading-dots loading-lg text-xl "></span> : (cartData.status === 200 && cartData?.data?.carts.length > 0) && cartData?.data?.carts.map((item) => {
                             return (<Link to="/">
                                 <div key={item?.product?.id}
-                                     className="flex gap-4 p-2 mb-2 border-[0.2px] border-white hover:border-[#FF9FA0] rounded-lg transition-all">
+                                    className="flex gap-4 p-2 mb-2 border-[0.2px] border-white hover:border-[#FF9FA0] rounded-lg transition-all">
                                     <img
                                         src={item?.product?.images[0]?.imageUrl}
-                                        alt={item?.product?.productName} className="w-[66px] h-[66px] object-cover"/>
+                                        alt={item?.product?.productName} className="w-[66px] h-[66px] object-cover" />
                                     <div className="w-full flex flex-col justify-between">
                                         <p className="block text-sm">{item?.product?.productName}</p>
                                         <p className="block text-sm"><span
@@ -247,30 +247,30 @@ const ShipDetail = () => {
                                 </div>
                             </Link>)
                         })
-                        }
+                    }
 
+                </div>
+
+                {/*Voucher*/}
+                <VoucherCom conditionApply={totalPrice} voucherActive={setVoucher}
+                    voucherDetail={voucher} />
+                <div className="w-full mt-4 bg-white rounded-lg shadow-md px-3 mb-2 border-[0.2px] border-gray-300">
+                    <div className="mx-3 mb-3 flex justify-between items-center border-b-[1px] border-gray-300">
+                        <p className="py-2 ">Price </p>
+                        <p className="py-2 ">{formatNumber(cartData?.data?.totalPrice)}$ </p>
                     </div>
-
-                    {/*Voucher*/}
-                    <VoucherCom conditionApply={totalPrice} voucherActive={setVoucher}
-                                voucherDetail={voucher}/>
-                    <div className="w-full mt-4 bg-white rounded-lg shadow-md px-3 mb-2 border-[0.2px] border-gray-300">
-                        <div className="mx-3 mb-3 flex justify-between items-center border-b-[1px] border-gray-300">
-                            <p className="py-2 ">Price </p>
-                            <p className="py-2 ">{formatNumber(cartData?.data?.totalPrice)}$ </p>
-                        </div>
-                        <div className="mx-3 mb-3 flex justify-between items-center border-b-[1px] border-gray-300">
-                            <p className="py-2 ">Discount </p>
-                            <p className="py-2 ">{voucher?.discount * 100}% </p>
-                        </div>
-                        <div className="mx-3 mb-3 flex justify-between items-center text-red-400">
-                            <p className="py-2 ">Total </p>
-                            <p className="py-2 ">{formatNumber(totalPrice)}$ </p>
-                        </div>
+                    <div className="mx-3 mb-3 flex justify-between items-center border-b-[1px] border-gray-300">
+                        <p className="py-2 ">Discount </p>
+                        <p className="py-2 ">{voucher?.discount * 100}% </p>
+                    </div>
+                    <div className="mx-3 mb-3 flex justify-between items-center text-red-400">
+                        <p className="py-2 ">Total </p>
+                        <p className="py-2 ">{formatNumber(totalPrice)}$ </p>
                     </div>
                 </div>
             </div>
-        </>
+        </div>
+    </>
     )
 }
 

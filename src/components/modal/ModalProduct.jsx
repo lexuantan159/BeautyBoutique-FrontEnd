@@ -6,13 +6,16 @@ import React, {
     useRef,
     useState,
 } from "react";
-import { createProduct } from "../../services/product.js";
 import { ManageProductContext } from "../product/ProductComponent.jsx";
-import * as request from "../../services/product.js";
 import Spinner from "../../pages/Dashboard/Product/Spinner.jsx";
 import MethodContext from "../../context/methodProvider.js";
-import * as productApi from "../../services/product.js";
 import { toast } from "react-toastify";
+import {
+    createProduct,
+    getProductById,
+    updateProduct,
+    getCategory,
+} from "../../services/product.js";
 const style =
     "dark:bg-white ring-1 ring-slate-400 rounded-lg py-1 px-2 focus:outline-none";
 
@@ -50,8 +53,8 @@ const LabelCategory = ({ label }) => {
     useEffect(() => {
         try {
             const fetchDataCategory = async () => {
-                const getCategory = await productApi.getCategory();
-                setCategories(getCategory.data);
+                const getCategories = await getCategory();
+                setCategories(getCategories.data);
             };
             fetchDataCategory();
         } catch (error) {
@@ -89,15 +92,15 @@ export function delay(ms) {
 
 // make useReducer to handler product object that contains many properties
 const initialProduct = {
-    productName: "",
-    actualPrice: 0,
-    salePrice: 0,
-    description: "",
+    productName: undefined,
+    actualPrice: undefined,
+    salePrice: undefined,
+    description: undefined,
     categoryId: 1,
     brandId: 1,
     quantity: 1,
-    imageIds: "",
-    imageUrls: "",
+    imageIds: undefined,
+    imageUrls: undefined,
 };
 const reducer = (state, action) => {
     switch (action.type) {
@@ -133,25 +136,42 @@ const ModalProduct = () => {
     const [state, dispatch] = useReducer(reducer, initialProduct);
     const [image, setImage] = useState(null);
     const ref = useRef();
-    const { uploadFile } = useContext(MethodContext);
+    const { uploadFile, deleteImage } = useContext(MethodContext);
     const handleUpload = async () => {
         return await uploadFile([image]);
     };
     const handleSummit = async () => {
+        // when Admin try to update the current product
         if (!create) {
             try {
-                await request.updateProduct({
-                    ...state,
-                    imageIds: [state?.images[0]?.id],
-                    imageUrls: [state?.images[0]?.imageUrl],
-                    categoryId: state?.category?.id,
-                    brandId: state?.brand?.id,
-                });
-                toast.success("Update product successfully");
-                return;
+                // console.log(state);
+                if (image) {
+                    // delete old image
+                    await deleteImage([state?.images[0]?.id]);
+                    // update new image to database
+                    const data = await handleUpload();
+                    await updateProduct({
+                        ...state,
+                        imageIds: [data.imageIds[0]],
+                        imageUrls: [data.imageURLs[0]],
+                        categoryId: state?.category?.id,
+                        brandId: state?.brand?.id,
+                    });
+                    toast.success("Update product successfully");
+                    return;
+                } else {
+                    await updateProduct({
+                        ...state,
+                        categoryId: state?.category?.id,
+                        brandId: state?.brand?.id,
+                        imageIds: [state.images?.[0].id],
+                        imageUrls: [state.images?.[0].imageUrl],
+                    });
+                    toast.success("Update product successfully");
+                    return;
+                }
             } catch (e) {
-                console.log(e);
-                throw new Error(e.message);
+                toast.error("Something went wrong, please try again later");
             }
         }
         if (!image) {
@@ -177,18 +197,17 @@ const ModalProduct = () => {
                 imageIds: [imageIds],
                 imageUrls: [imageUrls],
             });
-            // toast.success('Add product successfully');
+            toast.success("Add product successfully");
             alert("them san pham thanh cong");
         } catch (error) {
             console.log(error);
         }
-        // console.log(state);
     };
     useEffect(() => {
         async function fetchData() {
             setIsLoading(() => true);
             if (!create && current?.id) {
-                const { data } = await request.getProductById(current?.id);
+                const { data } = await getProductById(current?.id);
                 setProduct(() => data);
                 dispatch({ type: "update", name: data });
             } else {

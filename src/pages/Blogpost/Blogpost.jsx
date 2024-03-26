@@ -8,49 +8,56 @@ import CreateAndUpdateBlog from './CreateAndUpdateBlog';
 import { Modal, Dropdown, Button } from 'flowbite-react';
 
 const Blogpost = () => {
+
   const [openModal, setOpenModal] = useState(false);
-  const { formatDateTime, deleteImage, notify } = useContext(MethodContext);
+  const { formatDateTime, deleteImage, notify } = useContext(MethodContext)
   const [isOpenForm, setIsOpenForm] = useState({ index: null, isOpen: false });
   const [blogposts, setBlogposts] = useState([]);
-  const [change, setChange] = useState(true);
-  const [deleteItem, setDeleteItem] = useState({ isDelete: false });
-  const [blogCommentId, setBlogCommentId] = useState('');
+  const [change, setChange] = useState(true)
+  const [deleteItem, setDeleteItem] = useState({ isDelete: false })
+  const [blogCommentId, setBlogCommentId] = useState('')
   const [editBlogpost, setEditBlogpost] = useState(null);
+  const Token = localStorage.getItem('Token');
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const bloggData = await blogApi.getAllBlogPost();
-        setBlogposts(bloggData?.blogList);
+        const bloggData = await blogApi.getAllBlogPost()
+        setBlogposts(bloggData?.blogList)
       } catch (error) {
         console.error('Error fetching blogposts:', error);
       }
     };
     fetchData();
+    console.log(blogposts);
   }, [change]);
 
-  const deleteBlogPost = async (id, userId) => {
+  const deleteBlogPost = async (id) => {
     try {
-      const deleteBlog = await blogApi.deleteBlog(id, userId);
+      const deleteBlog = await blogApi.deleteBlog(id, Token)
       if (deleteBlog === 200) {
-        notify('Delete blog succesfuly', 'success');
-      } else {
-        notify('Delete failed');
+        notify("Delete blog succesfuly", "success")
       }
-    } catch (error) {}
-  };
+      else {
+        notify("Delete failed");
+      }
+    } catch (error) {
 
-  const handleDelete = async (id, userId, imageIds) => {
-    await deleteImage(imageIds);
-    await deleteBlogPost(id, userId);
-    setChange(!change);
-  };
+    }
+  }
+
+  const handleDelete = async (id, imageIds) => {
+    await deleteImage(imageIds)
+    await deleteBlogPost(id, Token)
+    setChange(!change)
+  }
   useEffect(() => {
     if (deleteItem?.isDelete) {
-      handleDelete(deleteItem?.id, deleteItem?.userId, deleteItem?.imageIds);
-      setDeleteItem({ isDelete: false });
+      handleDelete(deleteItem?.id, deleteItem?.userId, deleteItem?.imageIds)
+      setDeleteItem({ isDelete: false })
     }
-  }, [deleteItem?.isDelete]);
+  }, [deleteItem?.isDelete])
 
   const openDeleteModal = (id, userId, imageIds) => {
     setDeleteItem(preDeleteItem => ({
@@ -84,83 +91,48 @@ const Blogpost = () => {
   };
 
   return (
-    <div className="w-full min-h-[250px] my-5">
-      <div className="pt-4 flex items-center justify-center">
-        <div className="w-[60%] h-20 border border-solid flex items-center justify-center shadow-md rounded-xl bg-white">
+    <div className='w-full min-h-[250px] my-5'>
+      <div className='pt-4 flex items-center justify-center'>
+        <div className='w-[60%] h-20 border border-solid flex items-center justify-center shadow-md rounded-xl bg-white'>
           <div className="avatar online mr-4">
             <div className="w-16 rounded-full">
-              <img
-                src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                alt=""
-              />
+              <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" alt='' />
             </div>
           </div>
           <input
             onClick={() => setIsOpenForm({ index: null, isOpen: true })}
+
             type="text"
             placeholder="What are you thinking ? "
-            className="input input-bordered input-warning w-full max-w-2xl focus:outline-none"
-          />
-          {isOpenForm.index === null && isOpenForm.isOpen && (
-            <CreateAndUpdateBlog
-              closeModal={setIsOpenForm}
-              isOpenForm={isOpenForm}
-              setChange={setChange}
-              change={change}
-              blogpost={null}
-            ></CreateAndUpdateBlog>
-          )}
+            className="input input-bordered input-warning w-full max-w-2xl focus:outline-none" />
+          {
+            isOpenForm.index === null && isOpenForm.isOpen && <CreateAndUpdateBlog closeModal={setIsOpenForm} isOpenForm={isOpenForm} setChange={setChange} change={change} blogpost={null}></CreateAndUpdateBlog>
+          }
+
         </div>
       </div>
-      <div className="flex items-center justify-center">
-        <div className="w-[60%]">
-          {blogposts?.map(blogpost => {
+      <div className='flex items-center justify-center'>
+        <div className='w-[60%]'>
+          {blogposts?.map((blogpost) => {
             return (
-              <div className="m-4" key={blogpost?.id}>
+              <div className='m-4' key={blogpost?.id}>
                 <div class="bg-white rounded shadow-lg max-w-[80%] mx-auto ">
                   <header class="p-4 flex justify-between">
-                    <div className="w-1/2">
-                      <img
-                        src={blogpost?.user?.imageURL}
-                        alt=""
-                        className="float-left rounded-full w-10 h-10 m-1 mr-3"
-                      />
+                    <div className='w-1/2'>
+                      <img src={blogpost?.user?.imageURL} alt='' className="float-left rounded-full w-10 h-10 m-1 mr-3" />
                       <div>
-                        <h3 theme="pastel" class="text-lg font-bold">
-                          {blogpost?.user?.userName}
-                        </h3>
-                        <p class="text-sm text-gray-600">
-                          {formatDateTime(blogpost?.createDate)}
-                        </p>
+                        <h3 theme='pastel' class="text-lg font-bold">{blogpost?.user?.fullName}</h3>
+                        <p class="text-sm text-gray-600">{formatDateTime(blogpost?.createDate)}</p>
                       </div>
                     </div>
-                    <div className="w-[5%] font-bold text-xl p-2 cursor-pointer">
-                      <Dropdown
-                        label=""
-                        renderTrigger={() => (
-                          <span>
-                            <icons.HiOutlineDotsVertical />
-                          </span>
-                        )}
+                    <div className='w-[5%] font-bold text-xl p-2 cursor-pointer'>
+                      <Dropdown label=""
+                        renderTrigger={() => <span><icons.HiOutlineDotsVertical /></span>}
                         size="sm"
-                        className="bg-blue-100 font-semibold text-base text-black"
-                      >
+                        className='bg-blue-100 font-semibold text-base text-black'>
+                        <Dropdown.Item onClick={() => openDeleteModal(blogpost?.id, blogpost?.user?.id, blogpost?.images)}>Delete Blog</Dropdown.Item>
                         <Dropdown.Item
-                          onClick={() =>
-                            openDeleteModal(
-                              blogpost?.id,
-                              blogpost?.user?.id,
-                              blogpost?.images
-                            )
-                          }
-                        >
-                          Delete Blog
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          onClick={() => {
-                            handleOpenModalEdit(blogpost);
-                          }}
-                        >
+                          onClick={() => { handleOpenModalEdit(blogpost) }}>
                           Edit Blog
                         </Dropdown.Item>
                       </Dropdown>
@@ -178,17 +150,17 @@ const Blogpost = () => {
                       )}
                     </div>
                   </header>
-                  <section>
-                    <div className="flex items-center justify-center">
-                      <span className="text-lg w-[75%] font-semibold text-center max-sm:text-base">
+                  <section >
+                    <div className='flex items-center justify-center'>
+                      <span className='text-lg w-[75%] font-semibold text-center max-sm:text-base'>
                         {blogpost?.title}
                       </span>
                     </div>
-                    <div className="w-full">
+                    <div className='w-full'>
                       <ImageBlog imageUrls={blogpost?.images} />
                     </div>
-                    <div className="flex items-center justify-center">
-                      <div className="w-[90%] shadow-lg rounded-sm flex items-center justify-center">
+                    <div className='flex items-center justify-center'>
+                      <div className='w-[90%] shadow-lg rounded-sm flex items-center justify-center'>
                         <div className="collapse rounded-lg bg-gray-100">
                           <input type="checkbox" />
                           <div className="collapse-title text-base font-medium truncate">

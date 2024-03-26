@@ -1,19 +1,21 @@
-import {useNavigate} from 'react-router';
-import {getUser} from '../../services/login.js';
-import {useEffect} from 'react';
+import { useNavigate } from "react-router";
+import { getUser } from "../../services/login.js";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 
-function Protect({children, setAuth}) {
+function Protect({ children, setAuth }) {
     const navigate = useNavigate();
 
     useEffect(() => {
         async function checkAuth() {
             try {
-                console.log('check thong tin cua user');
                 await getUser();
                 setAuth(() => true);
             } catch (err) {
-                alert('You are not authorized to perform this action. Please login');
-                navigate('/login');
+                toast.error(
+                    "You are not authorized to perform this action. Please login"
+                );
+                navigate("/login");
             }
         }
 

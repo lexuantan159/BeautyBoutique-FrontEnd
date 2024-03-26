@@ -7,6 +7,7 @@ import MethodContext from '../../context/methodProvider';
 
 const CreateBlog = ({ closeModal, isOpenForm, setChange, change, blogpost }) => {
     const { uploadFile, deleteAImage, notify } = useContext(MethodContext)
+    const Token = localStorage.getItem('token');
     const [imageUploads, setImageUpload] = useState(Array(6).fill(null));
     const [imagesDisplay, setImagesDisplay] = useState(Array(6).fill(null));
     const [images, setImages] = useState([])
@@ -32,8 +33,6 @@ const CreateBlog = ({ closeModal, isOpenForm, setChange, change, blogpost }) => 
                 setImagesDisplay(Array(6).fill(null));
             }
         }
-
-
     }, [])
 
     const handleFileChange = (index, e) => {
@@ -41,6 +40,7 @@ const CreateBlog = ({ closeModal, isOpenForm, setChange, change, blogpost }) => 
         const newImages = [];
         const uploadedImages = [...imageUploads];
         const displayedImages = [...imagesDisplay];
+
         for (let i = 0; i < files.length; i++) {
             if (uploadedImages.filter(image => image !== null).length < 6) {
                 const newImage = files[i];
@@ -95,7 +95,7 @@ const CreateBlog = ({ closeModal, isOpenForm, setChange, change, blogpost }) => 
     const handlePost = async () => {
         const img = await updateImageToFirebase();
         if (img.imageIds.length > 0 && img.imageURLs.length > 0) {
-            const createBlog = await blogApi.createNewBlog(title, content, img.imageIds, img.imageURLs, 1);
+            const createBlog = await blogApi.createNewBlog(title, content, img.imageIds, img.imageURLs, Token);
             if (createBlog.statusCode === 201) {
                 setChange(!change)
                 closeModal({ index: null, isOpen: false })
@@ -113,7 +113,7 @@ const CreateBlog = ({ closeModal, isOpenForm, setChange, change, blogpost }) => 
         if (validImages.length > 0) {
             const img = await updateImageToFirebase();
             if (img.imageIds.length > 0 && img.imageURLs.length > 0) {
-                const createBlog = await blogApi.updateBlogPost(id, title, content, img.imageIds, img.imageURLs, 1);
+                const createBlog = await blogApi.updateBlogPost(id, title, content, img.imageIds, img.imageURLs, Token);
                 if (createBlog.statusCode === 201) {
                     setChange(!change)
                     closeModal({ index: null, isOpen: false })
@@ -127,7 +127,7 @@ const CreateBlog = ({ closeModal, isOpenForm, setChange, change, blogpost }) => 
 
             }
         } else {
-            const updateBlog = await blogApi.updateBlogPost(id, title, content, [], [], 1);
+            const updateBlog = await blogApi.updateBlogPost(id, title, content, [], [], Token);
             if (updateBlog.statusCode === 201) {
                 setChange(!change)
                 closeModal({ index: null, isOpen: false })

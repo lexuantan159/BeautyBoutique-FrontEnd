@@ -6,7 +6,7 @@ import { Button, Modal, Table } from 'flowbite-react';
 import { icons } from '../../../utils/icons';
 
 const ManagementBlog = () => {
-
+    const { notify } = useContext(MethodContext)
     const [blogposts, setBlogposts] = useState([]);
     const [change, setChange] = useState()
     const [openModal, setOpenModal] = useState(false);
@@ -14,7 +14,7 @@ const ManagementBlog = () => {
     const [isOpenForm, setIsOpenForm] = useState({ index: null, isOpen: false });
     const [editBlogpost, setEditBlogpost] = useState(null);
     const [deleteItem, setDeleteItem] = useState({ isDelete: false })
-
+    const Token = localStorage.getItem('token');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,36 +29,42 @@ const ManagementBlog = () => {
         fetchData();
     }, [change]);
 
-    const deleteBlogPost = async (id, userId) => {
+    const deleteBlogPost = async (id) => {
         try {
-            const deleteBlog = await blogApi.deleteBlog(id, userId)
+            const deleteBlog = await blogApi.deleteBlog(id, Token)
             if (deleteBlog === 200) {
-                console.log("Delete successfully");
+                notify("Delete blog succesfuly", "success")
             }
             else {
-                console.log("Delete failed");
+                notify("Delete failed");
             }
         } catch (error) {
 
         }
     }
 
-    const handleDelete = async (id, userId, imageIds) => {
+    const handleDelete = async (id, imageIds) => {
         await deleteImage(imageIds)
-        await deleteBlogPost(id, userId)
+        await deleteBlogPost(id, Token)
         setChange(!change)
     }
     useEffect(() => {
-        if (deleteItem.isDelete) {
-            handleDelete(deleteItem.id, deleteItem.userId, deleteItem.imageIds)
+        if (deleteItem?.isDelete) {
+            handleDelete(deleteItem?.id, deleteItem?.imageIds)
             setDeleteItem({ isDelete: false })
         }
-    }, [deleteItem.isDelete])
+    }, [deleteItem?.isDelete])
 
     const openDeleteModal = (id, userId, imageIds) => {
-        setDeleteItem(preDeleteItem => ({ ...preDeleteItem, id: id, userId: userId, imageIds: imageIds }))
-        setOpenModal(true)
-    }
+        setDeleteItem(preDeleteItem => ({
+            ...preDeleteItem,
+            id: id,
+            userId: userId,
+            imageIds: imageIds,
+        }));
+        setOpenModal(true);
+    };
+
     const handleOpenModalEdit = (blogpost) => {
         console.log(blogpost);
         setEditBlogpost(blogpost);
@@ -72,15 +78,6 @@ const ManagementBlog = () => {
                 </span>
             </div>
             <div>
-                <div className=' flex items-center justify-end m-4'>
-                    <div>
-                        <button className="btn btn-outline btn-success"
-                            onClick={() => setIsOpenForm({ index: null, isOpen: true })}>Add new BLog</button>
-                    </div>
-                    {
-                        isOpenForm.index === null && isOpenForm.isOpen && <CreateAndUpdateBlog closeModal={setIsOpenForm} isOpenForm={isOpenForm} setChange={setChange} change={change} blogpost={null}></CreateAndUpdateBlog>
-                    }
-                </div>
                 <div className="h-[550px] shadow-lg overflow-y-scroll no-scrollbar border">
                     <Table hoverable>
                         <Table.Head>
@@ -96,14 +93,14 @@ const ManagementBlog = () => {
                             </Table.HeadCell>
                         </Table.Head>
                         <Table.Body className="divide-y">
-                            {blogposts.map((blogpost) => {
+                            {blogposts?.map((blogpost) => {
                                 return (
                                     <Table.Row className="bg-white ">
                                         <Table.Cell className="font-medium text-gray-900 ">
-                                            {blogpost.title}
+                                            {blogpost?.title}
                                         </Table.Cell>
-                                        <Table.Cell> {blogpost.content}</Table.Cell>
-                                        <Table.Cell> {blogpost.user.userName}</Table.Cell>
+                                        <Table.Cell> {blogpost?.content}</Table.Cell>
+                                        <Table.Cell> {blogpost?.user?.fullName}</Table.Cell>
                                         <Table.Cell> {formatDateTime(blogpost.createDate)}</Table.Cell>
                                         <Table.Cell>
                                             <button className="btn btn-outline btn-warning"

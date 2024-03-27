@@ -45,6 +45,7 @@ const Voucher = () => {
   }, [currentPage, filterOption]);
 
   const handleSaveVoucherForUser = async (voucherId) => {
+    console.log(Token);
     const saveVou = await voucherApi.saveVoucher(Token, voucherId);
     if (saveVou.statusCode === 201) {
       notify(saveVou.message, 'success');
@@ -161,7 +162,7 @@ const Voucher = () => {
                               <button
                                 className="btn btn-accent mb-6"
                                 onClick={() =>
-                                  handleSaveVoucherForUser(1, voucher.id)
+                                  handleSaveVoucherForUser(voucher.id)
                                 }
                               >
                                 Save Voucher

@@ -25,6 +25,7 @@ const ManageVoucher = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setIsOpenForm({ index: null, isOpen: false })
         const vouchersData = await voucherApi.getAllVoucher();
         const totalVoucher = vouchersData.quantity;
         setTotal(totalVoucher)
@@ -46,7 +47,7 @@ const ManageVoucher = () => {
       }
     };
     fetchData();
-  }, [currentPage, filterOption]);
+  }, [currentPage, filterOption, change]);
 
   const deleteVoucher = async (id) => {
     try {

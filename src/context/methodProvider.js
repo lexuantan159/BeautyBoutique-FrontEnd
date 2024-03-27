@@ -57,7 +57,7 @@ export const MethodProvider = ({ children }) => {
             const imageURLs = [];
             for (const imageUpload of imageUploads) {
                 const imageId = v4();
-                const imageRef = ref(storage, `/Blog-post/${imageId}`);
+                const imageRef = ref(storage, `/Blog2/${imageId}`);
                 const snapshot = await uploadBytes(imageRef, imageUpload);
                 const url = await getDownloadURL(snapshot.ref);
                 imageIds.push(imageId);
@@ -72,7 +72,7 @@ export const MethodProvider = ({ children }) => {
     const deleteImage = async (imageIds) => {
         try {
             const deletePromises = imageIds.map(async (imageId) => {
-                const imageRef = ref(storage, `/Blog-post/${imageId.id}`);
+                const imageRef = ref(storage, `/Blog2/${imageId.id}`);
                 await deleteObject(imageRef);
                 // console.log(`Image ${imageId.id} deleted successfully.`);
                 return imageId.id;
@@ -89,7 +89,7 @@ export const MethodProvider = ({ children }) => {
     };
     const deleteAImage = async (imageId) => {
         try {
-            const imageRef = ref(storage, `/Blog-post/${imageId}`);
+            const imageRef = ref(storage, `/Blog2/${imageId}`);
             await deleteObject(imageRef);
             console.log(`Image ${imageId} deleted successfully.`);
             return 200;

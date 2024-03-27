@@ -71,44 +71,50 @@ const CRUVoucher = ({ closeModal, isOpenForm, setChange, change, voucher }) => {
   const handleSubmid = async () => {
     if (!title.trim()) {
       notify("You have not entered a 'TITLE' field")
+      setChange(!change)
       return
     }
     if (!discount || discount <= 0) {
       notify("You have not entered a valid 'DISCOUNT' field")
+      setChange(!change)
       return
     }
     if (!quantity || quantity <= 0) {
       notify("You have not entered a valid 'QUANTITY' field")
+      setChange(!change)
       return
     }
     if (!endDate) {
       notify("You have not entered a 'END DATE' field")
+      setChange(!change)
       return
     }
     if (!startDate) {
       notify("You have not entered a 'START DATE' field")
+      setChange(!change)
       return
     }
     if (!minimumOrder || minimumOrder <= 0) {
       notify("You have not entered a valid 'MINIMUM ORDER' field")
+      setChange(!change)
       return
     }
     if (!maximDiscount || maximDiscount <= 0) {
       notify("You have not entered a valid 'MAXIMUM DISCOUNT' field")
+      setChange(!change)
       return
     }
-
-
-
     if (voucher) {
       await updateVoucher();
     } else {
       if (new Date(startDate) < new Date()) {
         notify("Start date must be greater than or equal to today's date");
+        setChange(!change)
         return;
       }
       if (new Date(endDate) < new Date(startDate)) {
         notify("End date must be greater than start date");
+        setChange(!change)
         return;
       }
       await addNewVoucher();
@@ -196,6 +202,7 @@ const CRUVoucher = ({ closeModal, isOpenForm, setChange, change, voucher }) => {
               >
                 Close
               </button>
+
             </form>
           </div>
         </div>

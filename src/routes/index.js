@@ -55,7 +55,7 @@ const router = {
             component: ManageVoucher,
         },
         { path: "/admin/blog", layout: LayoutAdmin, component: ManagementBlog },
-        { path: "/admin", layout: LayoutAdmin, component: Admin },
+        { path: "/admin", layout: LayoutAdmin, component: ManageProduct },
         {
             path: "/payment-success",
             layout: LayoutDefault,

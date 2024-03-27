@@ -1,8 +1,13 @@
 import { useContext } from "react";
 import { IoWarning } from "react-icons/io5";
 import { ManageProductContext } from "../product/ProductComponent.jsx";
+import { BrandContext } from "../product/BrandComponent.jsx";
+import { CategoryContext } from "../product/CategoryComponent.jsx";
 function ModalDelete({ info }) {
-    const { current: product } = useContext(ManageProductContext);
+    // const { current: product } = useContext(ManageProductContext);
+    // const { current: category } = useContext(CategoryContext);
+    // const { current: brand } = useContext(BrandContext);
+    // console.log(product, brand, category);
     function handleDelete() {
         if (info === "product") {
         }

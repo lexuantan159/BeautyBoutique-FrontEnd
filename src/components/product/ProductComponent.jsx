@@ -3,13 +3,14 @@ import * as request from "../../services/product.js";
 import { BsFillTrash3Fill } from "react-icons/bs";
 import ModalDelete from "../modal/ModalDelete.jsx";
 import ModalProduct from "../modal/ModalProduct.jsx";
-import { Button } from "flowbite-react";
+import { Button, Pagination } from "flowbite-react";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import Spinner from "../../pages/Dashboard/Product/Spinner.jsx";
 
 function ProductInline({ product }) {
     const { setCurrent } = useContext(ManageProductContext);
     const [isLoading, setIsloading] = useState(true);
+
     function handleDelete(e) {
         e.stopPropagation();
         document.getElementById("modal_delete").showModal();
@@ -119,6 +120,12 @@ export function MangageListProduct() {
     const [current, setCurrent] = useState({});
     const [products, setProducts] = useState([]);
     const [create, setCreate] = useState(false);
+    const [isUpdate, setIsUpdate] = useState(false);
+    const [totalPages, setTotalPages] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1);
+    const onPageChange = (page) => {
+        setCurrentPage(page);
+    };
     const handleDelete = (e) => {
         console.log(e);
     };
@@ -130,10 +137,17 @@ export function MangageListProduct() {
             }
         }
         getProducts();
-    }, []);
+    }, [isUpdate]);
     return (
         <ManageProductContext.Provider
-            value={{ current, setCurrent, create, setCreate }}
+            value={{
+                current,
+                setCurrent,
+                create,
+                setCreate,
+                setIsUpdate,
+                isUpdate,
+            }}
         >
             <div className="text-slate-500 bg-white">
                 <HeaderPage
@@ -150,6 +164,14 @@ export function MangageListProduct() {
                 </ListItem>
                 <ModalProduct />
                 <ModalDelete info="product" />
+            </div>
+            <div className="flex overflow-x-auto sm:justify-center">
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={onPageChange}
+                    showIcons
+                />
             </div>
         </ManageProductContext.Provider>
     );

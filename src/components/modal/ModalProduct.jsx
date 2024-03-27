@@ -130,7 +130,8 @@ const reducer = (state, action) => {
 };
 const ModalContext = createContext();
 const ModalProduct = () => {
-    const { current, create, setCreate } = useContext(ManageProductContext);
+    const { current, create, setCreate, setIsUpdate } =
+        useContext(ManageProductContext);
     const [product, setProduct] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [state, dispatch] = useReducer(reducer, initialProduct);
@@ -144,10 +145,10 @@ const ModalProduct = () => {
         // when Admin try to update the current product
         if (!create) {
             try {
-                // console.log(state);
                 if (image) {
                     // delete old image
-                    await deleteImage([state?.images[0]?.id]);
+                    console.log(state);
+                    await deleteImage([state?.images[0]]);
                     // update new image to database
                     const data = await handleUpload();
                     await updateProduct({
@@ -157,6 +158,7 @@ const ModalProduct = () => {
                         categoryId: state?.category?.id,
                         brandId: state?.brand?.id,
                     });
+                    setIsUpdate((va) => !va);
                     toast.success("Update product successfully");
                     return;
                 } else {
@@ -168,37 +170,28 @@ const ModalProduct = () => {
                         imageUrls: [state.images?.[0].imageUrl],
                     });
                     toast.success("Update product successfully");
+                    setIsUpdate((va) => !va);
                     return;
                 }
             } catch (e) {
+                console.log(e);
                 toast.error("Something went wrong, please try again later");
             }
         }
+        // when Admin try to create new product
         if (!image) {
             toast.error("Please provide the image of product");
             return;
         }
         try {
             const data = await handleUpload();
-            console.log(data);
-            if (!create) {
-                try {
-                    // const product = await request.updateProduct(state);
-                } catch (e) {
-                } finally {
-                    return;
-                }
-            }
-            const imageIds = data.imageIds[0];
-            const imageUrls = data.imageURLs[0];
-            console.log({ ...state, imageIds, imageUrls });
-            const product = await createProduct({
+            await createProduct({
                 ...state,
-                imageIds: [imageIds],
-                imageUrls: [imageUrls],
+                imageIds: [data.imageIds[0]],
+                imageUrls: [data.imageURLs[0]],
             });
             toast.success("Add product successfully");
-            alert("them san pham thanh cong");
+            setIsUpdate((va) => !va);
         } catch (error) {
             console.log(error);
         }
@@ -219,7 +212,6 @@ const ModalProduct = () => {
         }
         fetchData();
     }, [current, create]);
-    // console.log(state);
     return (
         <ModalContext.Provider value={{ dispatch, state }}>
             <dialog

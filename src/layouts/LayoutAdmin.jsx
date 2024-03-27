@@ -1,6 +1,6 @@
 import Sidebar, { SidebarItem } from "../components/sidebar/Sidebar";
 import { IoIosHome } from "react-icons/io";
-import { LuLayoutDashboard } from "react-icons/lu";
+import { FaRegUserCircle } from "react-icons/fa";
 import { FaStoreAlt } from "react-icons/fa";
 import { TfiWrite } from "react-icons/tfi";
 import { PiTicket } from "react-icons/pi";
@@ -26,8 +26,8 @@ const LayoutAdmin = ({ children }) => {
             active: false,
         },
         {
-            icon: <LuLayoutDashboard size={20} />,
-            text: "Dashboard",
+            icon: <FaRegUserCircle size={20} />,
+            text: "User",
             active: false,
         },
         { icon: <FaStoreAlt size={20} />, text: "Order", active: false },
@@ -39,7 +39,6 @@ const LayoutAdmin = ({ children }) => {
     useEffect(() => {
         async function fetchUser() {
             const data = await getUser();
-            console.log(data);
             if (data?.role?.roleName === "ADMIN") {
                 setIsAdmin(true);
             } else {

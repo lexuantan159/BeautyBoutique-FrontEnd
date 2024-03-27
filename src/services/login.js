@@ -3,6 +3,7 @@ import * as request from '../utils/request';
 const LOGIN = 'auth/login';
 const GET_USER = '/users/getUser';
 const REGISTER = '/auth/register';
+const CHANGE_PASS = '/auth/change-password';
 
 export const login = async (username, password) => {
     const response = await request.post(LOGIN, {
@@ -40,5 +41,22 @@ export const getUser = async () => {
         return userResponse.data; // Trả về đối tượng User từ backend
     } catch (e) {
         throw new Error(e.message);
+    }
+};
+
+export const changePass = async (accessToken, oldPass, newPass) => {
+
+    try {
+        return await request.post(CHANGE_PASS, {
+            oldPassword: oldPass,
+            newPassword: newPass
+        }, {
+            headers: {
+                "Authorization": `Bearer ${accessToken}`,
+                "Content-Type": "Application/json",
+            },
+        });
+    } catch (e) {
+        return e
     }
 };

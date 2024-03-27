@@ -24,4 +24,5 @@ export { default as ContactUs } from './ContactUs/ContactUs';
 export { default as LoginForm } from './Login/LoginForm';
 export { default as RegisterForm } from './Login/RegisterForm.jsx';
 export { default as AboutUs } from './AboutUs/AboutUs.jsx';
+export { default as ChangePass } from './UserProfile/ChangePass/ChangePass.jsx';
 

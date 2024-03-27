@@ -96,7 +96,7 @@ const ShipDetail = () => {
         // handle validation input
         if (isErrorInput())
             return;
-
+        console.log(methodPayment)
         const id = toastLoadingId("Transaction in progress...")
         setIsLoadingPayment(true);
         // if payment not by zalopay
@@ -104,7 +104,7 @@ const ShipDetail = () => {
             const responseCreateOrder = await orderServices.createOrder(accessToken, paramsOrder, cartItem);
             if (responseCreateOrder.status === 201) {
                 setIsLoadingPayment(false)
-                navigate('/payment-success', {
+                navigate('/profile/order-histories', {
                     state: {
                         id: id,
                         toastMessage: "Order successfully!",
@@ -113,8 +113,12 @@ const ShipDetail = () => {
                 })
             } else {
                 console.log(responseCreateOrder)
+                if (responseCreateOrder?.response?.data?.message === "Not enough quantity in stock!") {
+                    toastUpdateLoadingId("Not enough quantity in stock!", "error", id);
+                } else {
+                    toastUpdateLoadingId("Create order fail!", "error", id);
+                }
                 setIsLoadingPayment(false)
-                toastUpdateLoadingId(responseCreateOrder?.response?.data || "Create order fail!", "error", id);
             }
             return;
         }
@@ -126,10 +130,10 @@ const ShipDetail = () => {
             console.log(responseCreatePayment)
             const paymentUrl = responseCreatePayment?.data?.paymentUrl
             console.log(paymentUrl)
-            const appTransactionId = responseCreatePayment?.data?.zpTransToken
+            const zpTransToken = responseCreatePayment?.data?.zpTransToken
             setParamsOrder(prevState => ({
                 ...prevState,
-                zpTransId: appTransactionId
+                zpTransToken: zpTransToken
             }));
             // link to page payment
             window.open(paymentUrl, '_blank');
@@ -139,7 +143,7 @@ const ShipDetail = () => {
                     // clear interval
                     clearInterval(intervalID);
                     setIsLoadingPayment(false)
-                    navigate('/payment-success', {
+                    navigate('/profile/order-histories', {
                         state: {
                             id: id,
                             toastMessage: "Transaction successfully!",
@@ -162,10 +166,13 @@ const ShipDetail = () => {
                 console.log("Dừng thực hiện sau 15 phút!");
             }, 15 * 60 * 1000); // 15 minutes * 60 second/minute * 1000 ms/second
         } else {
-            setIsLoadingPayment(false);
-            toastUpdateLoadingId("Transaction failed!", "error", id);
+            if (responseCreatePayment?.response?.data?.message === "Not enough quantity in stock!") {
+                toastUpdateLoadingId("Not enough quantity in stock!", "error", id);
+            } else {
+                toastUpdateLoadingId("Transaction failed!", "error", id);
+            }
+            setIsLoadingPayment(false)
         }
-
     }
 
     return (<>
@@ -204,7 +211,7 @@ const ShipDetail = () => {
                                         setItemShip={setShipDetail}/>
                     </div>
                     {/*Method*/}
-                    <DropList title={"method shipping"} listItem={[{id: 2, name: "J&T"}]}
+                    <DropList title={"method shipping"} listItem={[{id: 1, name: "GHTK"}, {id: 2, name: "J&T"}]}
                               type={"shipping"} setItem={setMethodShipping}></DropList>
                     <DropList title={"method payment"}
                               listItem={[{id: 1, name: "Thanh Toan Khi Nhan Hang"}, {id: 2, name: "Zalo Pay"}]}
@@ -240,7 +247,7 @@ const ShipDetail = () => {
                                     <div className="w-full flex flex-col justify-between">
                                         <p className="block text-sm">{item?.product?.productName}</p>
                                         <p className="block text-sm"><span
-                                            className="font-medium">{item?.product?.actualPrice}</span> ₫(trị giá
+                                            className="font-medium">{item?.product?.actualPrice}</span> ₫(total price
                                             {item?.product?.salePrice}
                                             ₫)</p>
                                     </div>

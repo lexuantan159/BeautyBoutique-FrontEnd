@@ -46,7 +46,7 @@ const Cart = () => {
                     className="font-normal">{cart?.data?.quantity <= 1 ? `( ${cart?.data?.quantity === 0 ? 0 : cart?.data?.quantity} product )` : `( ${cart?.data?.quantity} products )`}</span>
                 </h1>
                 <div
-                    className="bg-white col-span-12 lg:col-span-8 rounded-lg shadow-lg max-h-[430px] overflow-y-scroll no-scrollbar border-[0.2px] border-gray-300 pt-3">
+                    className="bg-white col-span-12 lg:col-span-8 rounded-lg shadow-lg max-h-[430px] overflow-y-scroll no-scrollbar border-[0.2px] border-gray-300 pt-3 min-h-[400px] mb-6">
                     {isLoading ? <span
                         className="loading loading-dots loading-lg text-xl "></span> : (cart.status === 200 && cart?.data?.carts.length > 0) ? cart?.data?.carts.map((item, index) => {
                             return (<CartItem key={item?.id} item={item} actionChange={setAction} action={action}

@@ -6,10 +6,20 @@ const ModalVoucher = ({ vouchers = [], conditionApply, voucherActive }) => {
   const { notify } = useContext(MethodContext);
 
   const handleApplyVoucher = item => {
+    const currentDate = new Date().toISOString().slice(0, 10);
+    const startDate = item?.startDate;
+    const endDate = item?.endDate;
+    if (currentDate < startDate || currentDate > endDate) {
+      document.getElementById('my_modal_5').close();
+      notify('Voucher is not available or has expired!', 'error');
+      return;
+    }
+
     if (conditionApply < 0) {
       notify('Cannot apply voucher as your cart is empty!', 'error');
       return;
     }
+
     voucherActive(item);
     document.getElementById('my_modal_5').close();
   };
@@ -22,7 +32,7 @@ const ModalVoucher = ({ vouchers = [], conditionApply, voucherActive }) => {
           </h3>
           <h2 className="font-medium text-lg">Voucher hot!</h2>
           <div className="mt-3 w-full max-h-[350px] overflow-y-scroll no-scrollbar">
-            {vouchers?.length > 0 &&
+            {vouchers?.length > 0 ?
               vouchers?.map((item, index) => {
                 return (
                   <div
@@ -58,7 +68,7 @@ const ModalVoucher = ({ vouchers = [], conditionApply, voucherActive }) => {
                     </div>
                   </div>
                 );
-              })}
+              }): <p className="flex items-center justify-center mt-5 text-lg font-semibold" >No Voucher</p>}
           </div>
 
           <div className="modal-action">

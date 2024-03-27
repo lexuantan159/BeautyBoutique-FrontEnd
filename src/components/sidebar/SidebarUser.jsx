@@ -69,7 +69,7 @@ export default function SidebarUser() {
                                     Profile
                                 </ListItem>
                             </Link>
-                            <Link to="/changepassword">
+                            <Link to="/profile/change-password">
                                 <ListItem className="hover:bg-red-300 hover:text-white font-medium transition-all">
                                     <ListItemPrefix>
                                         <FaLock strokeWidth={3} className="h-3 w-5"/>

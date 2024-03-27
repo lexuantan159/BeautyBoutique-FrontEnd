@@ -6,10 +6,11 @@ import {LiaFileInvoiceDollarSolid} from "react-icons/lia";
 import {useMutation, useQuery, useQueryClient} from "react-query";
 import * as orderService from "../../services/order";
 import MethodContext from "../../context/methodProvider";
+import {TbFilter} from "react-icons/tb";
 
 const Order = () => {
 
-    const {notify, formatNumber} = useContext(MethodContext)
+    const {notify, formatNumber, formatDateTime} = useContext(MethodContext)
     const [paramObject, setParamObject] = useState({pageSize: 6, pageNo: 1})
     const [orderItem, setOrderItem] = useState({})
     const [status, setStatus] = useState(null)
@@ -25,7 +26,7 @@ const Order = () => {
 
     const {
         data: summaryOrders
-    } = useQuery(["summary-orders", paramObject], () => orderService.getSummaryOrder(accessToken));
+    } = useQuery(["summary-orders"], () => orderService.getSummaryOrder(accessToken));
 
     const handleApprove = async ({orderId, isAccept}) => {
         return await orderService.approveOrder(accessToken, {orderId, isAccept})
@@ -116,13 +117,41 @@ const Order = () => {
                 <table className="w-full shadow-lg rounded-lg bg-white">
                     <thead className="">
                     <tr className="w-full grid grid-cols-12 py-1 bg-gray-300 rounded-t-lg pb-2">
-                        <td className="px-2 text-center uppercase font-medium text-sm col-span-2  md:col-span-1">Id</td>
-                        <td className="px-2 text-center uppercase font-medium text-sm hidden md:block md:col-span-2">Delivery</td>
-                        <td className="px-2 text-center uppercase font-medium text-sm col-span-3  md:col-span-3">Total
-                            Price
+                        <td className="px-2 text-center uppercase font-medium text-sm col-span-2 md:col-span-1 flex items-center gap-4 justify-center hover:cursor-pointer"
+                            onClick={() => {
+                                setParamObject(prevState => ({
+                                    ...prevState,
+                                    sortBy: "id",
+                                    sortDir: paramObject?.sortDir === "ASC" ? "DESC" : "ASC"
+                                }))
+                            }}
+                        >Id
+                            <TbFilter/>
                         </td>
-                        <td className="px-2 text-center uppercase font-medium text-sm col-span-3 md:col-span-3">Ship
-                            Detail
+                        <td className="px-2 text-center uppercase font-medium text-sm hidden md:col-span-2 md:flex items-center gap-4 justify-center hover:cursor-pointer"
+                            onClick={() => {
+                                setParamObject(prevState => ({
+                                    ...prevState,
+                                    sortBy: "id",
+                                    sortDir: paramObject?.sortDir === "ASC" ? "DESC" : "ASC"
+                                }))
+                            }}>Created At
+                            <TbFilter/>
+                        </td>
+                        <td className="px-2 text-center uppercase font-medium text-sm col-span-3  md:col-span-3 flex items-center gap-4 justify-center hover:cursor-pointer"
+                            onClick={() => {
+                                setParamObject(prevState => ({
+                                    ...prevState,
+                                    sortBy: "totalPrice",
+                                    sortDir: paramObject?.sortDir === "ASC" ? "DESC" : "ASC"
+                                }))
+                            }}
+                        >Total
+                            Price
+                            <TbFilter/>
+                        </td>
+                        <td className="px-2 text-center uppercase font-medium text-sm col-span-3 md:col-span-3">Order
+                            Status
                         </td>
                         <td className="px-2 text-center uppercase font-medium text-sm col-span-4 md:col-span-3">Action</td>
                     </tr>
@@ -138,7 +167,7 @@ const Order = () => {
                                         document.getElementById('my_modal_5').showModal()
                                     }}>
                                     <td className="truncate px-2 text-center font-medium text-sm col-span-2  md:col-span-1">#{order?.id}</td>
-                                    <td className="truncate px-2 text-center font-medium text-sm hidden md:block md:col-span-2">{order?.delivery?.deliveryMethod}</td>
+                                    <td className="truncate px-2 text-center font-medium text-sm hidden md:block md:col-span-2">{formatDateTime(order?.createdAt)}</td>
                                     <td className="truncate px-2 text-center font-medium text-sm col-span-3  md:col-span-3">{formatNumber(order?.totalPrice)}$
                                     </td>
                                     <td className="truncate px-2 text-center font-medium text-sm col-span-3 md:col-span-3"

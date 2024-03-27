@@ -38,7 +38,7 @@ function RegisterForm() {
             toast.success("Register Success");
             setTimeout(() => {
                 navigate("/login");
-            }, 300);
+            }, 600);
         } catch (e) {
             toast.error("Register failed");
             console.log(e);

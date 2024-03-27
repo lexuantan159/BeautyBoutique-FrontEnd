@@ -13,7 +13,11 @@ export const login = async (username, password) => {
     return response;
 };
 export const otp = async (param) => {
-    const response = await request.post(`/auth/sendotp?username=${param}`);
+    const response = await request.post("/auth/sendotp", null, {
+        params: {
+            username: param,
+        },
+    });
     console.log(response.data);
     return response; // Trả về đối tượng User từ backend
 };

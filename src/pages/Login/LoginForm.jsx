@@ -17,10 +17,10 @@ function LoginForm() {
             const user = await request.getUser();
             console.log(user);
             if (user?.role?.roleName === "ADMIN") {
-                setTimeout(navigate("/admin"), 300);
+                setTimeout(navigate("/admin"), 600);
                 console.log("user la admin");
             } else {
-                setTimeout(navigate("/"), 300);
+                setTimeout(navigate("/"), 600);
                 console.log("user la user");
             }
         } catch (err) {

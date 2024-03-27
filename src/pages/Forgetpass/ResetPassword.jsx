@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as request from "../../services/login.js";
 import bgLogin from "../../public/img/bg_login.jpg";
 import { toast } from "react-toastify";
+import { set } from "lodash";
 
 function ResetPassword() {
     const [username, setUsername] = useState("");
@@ -26,7 +27,6 @@ function ResetPassword() {
         setShowAdditionalInput(true);
         toast.success(`A mail have sent to ${username}'s email address`);
         setA(response.data); // Cập nhật giá trị của a
-        console.log("gia tri a:", response.data); // Log giá trị phản hồi vào console
     }
 
     async function handleCheckotp(e) {
@@ -39,9 +39,13 @@ function ResetPassword() {
             setTimeout(() => {
                 toast.success("Đã gửi mật khẩu mới đến email của bạn");
                 navigate("/login");
-            }, 300);
+            }, 600);
         } else {
             toast.error("OTP không đúng");
+            setTimeout(() => {
+                setShowAdditionalInput(false);
+                setUsername("");
+            }, 600);
         }
     }
 
@@ -147,13 +151,16 @@ function ResetPassword() {
                                 </svg>
                             </button>
                         ) : (
-                            <button
-                                className="text-white bg-[#f77ebb] px-2 py-2 rounded-lg focus:outline-none hover:translate-x-1 hover:-translate-y-1 duration-300 transition"
-                                type="button"
-                                onClick={handleCheckotp}
-                            >
-                                Xác nhận OTP
-                            </button>
+                            <>
+                                <button
+                                    className="text-white bg-[#f77ebb] px-2 py-2 rounded-lg focus:outline-none hover:translate-x-1 hover:-translate-y-1 duration-300 transition"
+                                    type="button"
+                                    onClick={handleCheckotp}
+                                >
+                                    Xác nhận OTP
+                                </button>
+                                <Timer setA={setA} />
+                            </>
                         )}
                     </div>
                 </form>
@@ -163,3 +170,24 @@ function ResetPassword() {
 }
 
 export default ResetPassword;
+function Timer({ setA }) {
+    const [seconds, setSeconds] = useState(59); // Start from 60 seconds
+
+    useEffect(() => {
+        if (seconds > 0) {
+            // Set up a timer that runs every second
+            const intervalId = setInterval(() => {
+                setSeconds(seconds - 1); // Reduce the seconds by 1
+            }, 1000);
+
+            // Clear the interval on re-render to avoid memory leaks
+            return () => clearInterval(intervalId);
+        } else {
+            setA("0000");
+        }
+    }, [seconds]);
+
+    return (
+        <p className="text-center text-slate-500 text-md">{seconds} Seconds</p>
+    );
+}

@@ -45,7 +45,7 @@ const LayoutAdmin = ({ children }) => {
                 toast.error("You are not authorized to access this page.");
                 setTimeout(() => {
                     navigate("/");
-                }, 300);
+                }, 600);
             }
         }
         fetchUser();

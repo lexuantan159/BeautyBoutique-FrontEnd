@@ -75,20 +75,6 @@ function LoginForm() {
                         />
                     </div>
                     <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                            <input
-                                type="checkbox"
-                                id="remember-me"
-                                name="remember-me"
-                                className="w-4 h-4 accent-blue-400 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-                            />
-                            <label
-                                htmlFor="remember-me"
-                                className="text-sm text-gray-700"
-                            >
-                                Keep me signed in
-                            </label>
-                        </div>
                         <Link
                             to="/forget"
                             className="text-sm text-blue-400 hover:underline"
@@ -104,7 +90,7 @@ function LoginForm() {
                     </div>
                     <button
                         type="submit"
-                        className="bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50 w-full"
+                        className="bg-[#f77ebb] text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50 w-full"
                     >
                         Login
                     </button>

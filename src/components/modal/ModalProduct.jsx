@@ -138,6 +138,7 @@ const ModalProduct = () => {
     const [image, setImage] = useState(null);
     const ref = useRef();
     const { uploadFile, deleteImage } = useContext(MethodContext);
+    console.log(state);
     const handleUpload = async () => {
         return await uploadFile([image]);
     };

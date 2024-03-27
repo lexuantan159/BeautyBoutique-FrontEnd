@@ -8,11 +8,12 @@ import {useLocation, useNavigate} from "react-router-dom";
 
 const OrderHistories = () => {
     const accessToken = localStorage.getItem("token");
-    const {notify, formatNumber, toastUpdateLoadingId,formatDateTime} = useContext(MethodContext)
+    const {notify, formatNumber, toastUpdateLoadingId, formatDateTime} = useContext(MethodContext)
     const queryClient = useQueryClient();
     const [paramObject, setParamObject] = useState({pageSize: 6, pageNo: 1})
     const location = useLocation();
     const navigate = useNavigate();
+
     const {
         data: orders
     } = useQuery(["orders", paramObject], () => orderService.getOrderHistories(accessToken, paramObject));
@@ -21,6 +22,7 @@ const OrderHistories = () => {
     const handleCancel = async ({orderId}) => {
         return await orderService.cancelOrder(accessToken, {orderId})
     }
+
 
     useEffect(() => {
         if (location.state?.toastMessage !== '') {
@@ -137,7 +139,6 @@ const OrderHistories = () => {
                                                             </button>
                                                             : <p className="text-xm text-red-400">Not Action</p>
                                                     }
-
                                                 </td>
                                             </tr>
                                         )

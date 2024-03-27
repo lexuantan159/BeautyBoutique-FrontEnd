@@ -86,3 +86,4 @@ const ModalVoucher = ({ vouchers = [], conditionApply, voucherActive }) => {
 };
 
 export default ModalVoucher;
+

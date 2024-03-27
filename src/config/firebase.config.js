@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getStorage } from "firebase/storage"; // Thêm import cho Firebase Storage
-// import 'dotenv/config';
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBygtOa2QGoAhQYyOLcfHcnaLFi-jKgDFk",

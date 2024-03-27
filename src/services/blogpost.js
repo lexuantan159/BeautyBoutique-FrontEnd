@@ -6,7 +6,6 @@ const getAllBlogPost = async () => {
         const response = await request.get('/blog/get-all-blog', {});
         return {
             blogList: response.data.blogPostList,
-
             message: response.data.message,
         }
     } catch (error) {
@@ -18,12 +17,10 @@ const getAllBlogPost = async () => {
         };
     }
 };
-const createNewBlog = async (title, content, imageIds, imageUrls, userId) => {
-
+const createNewBlog = async (title, content, imageIds, imageUrls, accessToken) => {
     try {
         const creteBlog = await request.post('/blog/create-blog',
             {
-                userId: 1,
                 title: title,
                 content: content,
                 imageIds: imageIds,
@@ -32,6 +29,7 @@ const createNewBlog = async (title, content, imageIds, imageUrls, userId) => {
             },
             {
                 headers: {
+                    'Authorization': `Bearer ${accessToken}`,
                     'Content-Type': 'multipart/form-data'
                 }
             });
@@ -48,9 +46,9 @@ const createNewBlog = async (title, content, imageIds, imageUrls, userId) => {
         };
     }
 }
-const updateBlogPost = async (id, title, content, imageIds, imageUrls, userId) => {
+const updateBlogPost = async (id, title, content, imageIds, imageUrls, accessToken) => {
     try {
-        const creteBlog = await request.put(`/blog/update-blog?id=${id}&userId=${userId}`,
+        const creteBlog = await request.put(`/blog/update-blog?id=${id}`,
             {
                 title: title,
                 content: content,
@@ -59,6 +57,7 @@ const updateBlogPost = async (id, title, content, imageIds, imageUrls, userId) =
             },
             {
                 headers: {
+                    'Authorization': `Bearer ${accessToken}`,
                     'Content-Type': 'multipart/form-data'
                 }
             });
@@ -75,9 +74,13 @@ const updateBlogPost = async (id, title, content, imageIds, imageUrls, userId) =
         };
     }
 }
-const deleteBlog = async (id, userId) => {
+const deleteBlog = async (id, accessToken) => {
     try {
-        const response = await request.deleteRe(`/blog/delete-blog/?id=${id}&userId=${userId}`);
+        const response = await request.deleteRe(`/blog/delete-blog/?id=${id}`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+            }
+        });
         return response.status
     } catch (error) {
         console.error("Error deleting blog:", error);

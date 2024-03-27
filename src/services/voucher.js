@@ -16,9 +16,7 @@ const getAllVoucher = async () => {
         };
     }
 };
-const createNewVouccher = async (title, content, quantity, numUsedVoucher, discount, maximDiscount, minimumOrder, startDate, endDate) => {
-    console.log(startDate);
-    console.log(endDate);
+const createNewVouccher = async (Token, title, content, quantity, numUsedVoucher, discount, maximDiscount, minimumOrder, startDate, endDate) => {
     try {
         return await request.post('/voucher/create-voucher',
             {
@@ -34,6 +32,7 @@ const createNewVouccher = async (title, content, quantity, numUsedVoucher, disco
             },
             {
                 headers: {
+                    "Authorization": `Bearer ${Token}`,
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
@@ -47,16 +46,16 @@ const createNewVouccher = async (title, content, quantity, numUsedVoucher, disco
         };
     }
 }
-const saveVoucher = async (userId, voucherId) => {
+const saveVoucher = async (accessToken, voucherId) => {
     try {
         const saveVouUser = await request.post('/voucher/save-voucher-for-user',
             {},
             {
                 params: {
-                    userId: userId,
                     voucherId: voucherId
                 },
                 headers: {
+                    'Authorization': `Bearer ${accessToken}`,
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
@@ -73,8 +72,9 @@ const saveVoucher = async (userId, voucherId) => {
         };
     }
 }
-const updateVouccher = async (id, title, content, quantity, numUsedVoucher, discount, maximDiscount, minimumOrder, startDate, endDate) => {
+const updateVouccher = async (Token, id, title, content, quantity, numUsedVoucher, discount, maximDiscount, minimumOrder, startDate, endDate) => {
     try {
+        console.log(Token);
         return await request.put(`/voucher/update-voucher?id=${id}`,
             {
                 title: title,
@@ -89,6 +89,7 @@ const updateVouccher = async (id, title, content, quantity, numUsedVoucher, disc
             },
             {
                 headers: {
+                    "Authorization": `Bearer ${Token}`,
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
@@ -100,9 +101,16 @@ const updateVouccher = async (id, title, content, quantity, numUsedVoucher, disc
         };
     }
 }
-const deleteVoucher = async (id) => {
+
+const deleteVoucher = async (id, accessToken) => {
     try {
-        const response = await request.deleteRe(`/voucher/delete-voucher?id=${id}`);
+        console.log(accessToken);
+        const response = await request.deleteRe(`/voucher/delete-voucher?id=${id}`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': "application/json"
+            }
+        });
         return response.status
     } catch (error) {
         console.error("Error deleting voucher:", error);

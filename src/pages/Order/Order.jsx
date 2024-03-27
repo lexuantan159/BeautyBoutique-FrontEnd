@@ -16,8 +16,8 @@ const Order = () => {
     const [status, setStatus] = useState(null)
     const accessToken = localStorage.getItem('token');
     const statusMapping = {
-        "Đang Giao Hàng": 5,
-        "Đã Giao Hàng": 3
+        "Delivered": 5,
+        "Shipping": 3
     };
     const queryClient = useQueryClient();
     const {
@@ -179,7 +179,7 @@ const Order = () => {
                                             onChange={async (e) => {
                                                 const selectedStatus = e.target.value;
                                                 const statusId = statusMapping[selectedStatus];
-                                                await mutateChangeStatus({statusId, orderItemId: order?.id})
+                                                await mutateChangeStatus({ statusId, orderItemId: order?.id })
                                             }}
                                             value={status || order?.orderStatus?.statusName}
                                             className="select select-accent w-full max-w-xs border-none focus:outline-none py-1">
@@ -187,8 +187,8 @@ const Order = () => {
                                                     selected>{status || order?.orderStatus?.statusName}</option>
                                             {
                                                 order?.orderStatus?.id === 2 && <>
-                                                    <option value="Đang Giao Hàng">Đang Giao Hàng</option>
-                                                    <option value="Đã Giao Hàng">Đã Giao Hàng</option>
+                                                    <option value="Đang Giao Hàng">Shipping</option>
+                                                    <option value="Đã Giao Hàng">Delivered</option>
                                                 </>
                                             }
                                         </select>
@@ -212,7 +212,7 @@ const Order = () => {
                                                     className="mt-2 sm:mt-0 ml-2 lg:ml-0 w-20 sm:w-24  py-2 border-none text-red-500 bg-red-200/40 rounded-lg  transition-all">
                                                     Reject
                                                 </button>
-                                            </> : <p className="text-xm text-red-400">Đã Xử Lý</p>
+                                            </> : <p className="text-xm text-red-400">Processed</p>
                                         }
 
                                     </td>

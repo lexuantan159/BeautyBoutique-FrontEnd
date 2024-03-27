@@ -4,7 +4,6 @@ import * as cartService from '../../services/cart';
 import MethodContext from '../../context/methodProvider';
 import {debounce} from 'lodash';
 import {Link} from 'react-router-dom';
-import {useQueryClient} from "react-query";
 
 const CartItem = ({item, actionChange, action, noneBorder = false}) => {
     const type = {
@@ -12,8 +11,6 @@ const CartItem = ({item, actionChange, action, noneBorder = false}) => {
         DECREASE: 'decrease',
         INPUT: 'input',
     };
-
-    const queryClient = useQueryClient();
 
     const {notify} = useContext(MethodContext);
     const [quantity, setQuantity] = useState(item?.quantity || 0);
@@ -31,9 +28,6 @@ const CartItem = ({item, actionChange, action, noneBorder = false}) => {
         responseDeleteItem?.status === 200 && actionChange(!action)
         responseDeleteItem?.status === 200 && notify("Delete cart item successfully!", "success");
     }
-
-    console.log(item)
-    console.log(cartItem?.product?.salePrice)
 
     const handleUpdateItem = async (typeAction, newQuantity) => {
         let params = {userId: 1, cartItemId: item.id,}

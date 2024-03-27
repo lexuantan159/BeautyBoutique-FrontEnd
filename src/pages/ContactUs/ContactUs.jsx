@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {FiPhoneCall} from 'react-icons/fi';
-import {MdOutlineMailOutline} from 'react-icons/md';
-import {FaLocationDot} from 'react-icons/fa6';
+import { FiPhoneCall } from 'react-icons/fi';
+import { MdOutlineMailOutline } from 'react-icons/md';
+import { FaLocationDot } from 'react-icons/fa6';
 
 export default function ContactUs() {
     return (
@@ -16,19 +16,19 @@ export default function ContactUs() {
                     </p>
                     <div className="flex flex-col gap-8 mt-3">
                         <div className="flex items-center justify-center gap-3">
-                            <FiPhoneCall/>
+                            <FiPhoneCall />
                             <p className="col-span-2 mb-1 font-medium text-base text-left">
                                 +84-342-454-133
                             </p>
                         </div>
                         <div className="flex items-center justify-center gap-3">
-                            <MdOutlineMailOutline/>
+                            <MdOutlineMailOutline />
                             <p className="col-span-2 mb-1 font-medium text-base text-left">
                                 BeautyBoutique@gmail.com
                             </p>
                         </div>
                         <div className="flex items-center justify-center gap-3">
-                            <FaLocationDot/>
+                            <FaLocationDot />
                             <p className="col-span-2 mb-1 font-medium text-base text-left">
                                 123 Vo Chi Cong
                             </p>

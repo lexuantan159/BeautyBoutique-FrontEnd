@@ -1,5 +1,35 @@
-import * as request from '../utils/request';
+import * as request from "../utils/request";
 
+export const createProduct = async (product) => {
+  try {
+    const data = await request.post("/product/create-product", product, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return data;
+  } catch (e) {
+    console.log(e);
+    throw new Error(e.message);
+  }
+};
+export const updateProduct = async (product) => {
+  try {
+    const data = await request.put(
+      `/product/updateProduct/${product.id}`,
+      product,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return data;
+  } catch (e) {
+    console.log(e);
+    throw new Error(e.message);
+  }
+};
 const addProduct = async (
   productName,
   actualPrice,
@@ -12,7 +42,7 @@ const addProduct = async (
 ) => {
   try {
     const addProduct = await request.post(
-      '/product/create-product',
+      "/product/create-product",
       {
         productName: productName,
         actualPrice: actualPrice,
@@ -26,7 +56,7 @@ const addProduct = async (
       },
       {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       }
     );
@@ -45,7 +75,9 @@ const addProduct = async (
 };
 const getProduct = async () => {
   try {
-    const getAllProduct = await request.get('/product/get-all');
+    const getAllProduct = await request.get("/product/get-all", {
+      params: { pageSize: 200 },
+    });
     return {
       statusCode: getAllProduct.status,
       data: getAllProduct.data,
@@ -59,7 +91,7 @@ const getProduct = async () => {
     };
   }
 };
-const getProductByCategory = async id => {
+const getProductByCategory = async (id) => {
   try {
     const response = await request.get(`/product/getProductByC/${id}`);
     return {
@@ -77,7 +109,7 @@ const getProductByCategory = async id => {
 };
 const getCategory = async () => {
   try {
-    const quang = await request.get('/category/get-all');
+    const quang = await request.get("/category/get-all");
     return {
       statusCode: quang.status,
       data: quang.data,
@@ -107,11 +139,11 @@ const getCategoryById = async (id = 99) => {
     };
   }
 };
-const getProductById = async id => {
+const getProductById = async (id) => {
   try {
     const product = await request.get(`/product/get/${id}`, {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
     return {
@@ -128,19 +160,19 @@ const getProductById = async id => {
   }
 };
 
-const addFeedback = async (content, rating, productId, userId) => {
+const addFeedback = async (content, rating, productId, accessToken) => {
   try {
     const feedback = await request.post(
-      '/product/feedback/create-feedback',
+      "/product/feedback/create-feedback",
       {
         content: content,
         rating: rating,
         productId: productId,
-        userId: userId,
       },
       {
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/x-www-form-urlencoded",
         },
       }
     );
@@ -158,13 +190,13 @@ const addFeedback = async (content, rating, productId, userId) => {
   }
 };
 
-const getFeedback = async id => {
+const getFeedback = async (id) => {
   try {
     const feedback = await request.get(
       `/product/feedback/get-feedback-product?productId=${id}`,
       {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       }
     );
@@ -181,27 +213,34 @@ const getFeedback = async id => {
     };
   }
 };
-const deleteFeedback = async (id, userId) => {
+const deleteFeedback = async (id, accessToken) => {
   try {
     const response = await request.deleteRe(
-      `/product/feedback/delete-feedback?id=${id}&userId=${userId}`
+      `/product/feedback/delete-feedback?id=${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
     );
     return response.status;
   } catch (error) {
-    console.error('Error deleting blog:', error);
+    console.error("Error deleting blog:", error);
   }
 };
-const updateFeedback = async (id, feedback, userId) => {
+const updateFeedback = async (id, feedback, accessToken) => {
   console.log(feedback);
   try {
     const response = await request.put(
-      `/product/feedback/update-feedback?id=${id}&userId=${userId}`,
+      `/product/feedback/update-feedback?id=${id}`,
       {
         content: feedback,
       },
       {
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/x-www-form-urlencoded",
         },
       }
     );
@@ -215,6 +254,29 @@ const updateFeedback = async (id, feedback, userId) => {
     };
   }
 };
+const isBuy = async (accessToken, productId) => {
+  try {
+    const response = await request.get(`/product/feedback/checkOrderAndDelivery`, {
+      params: {
+        productId: productId
+      },
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+    return response
+  } catch (error) {
+    const statusCode =
+      error.status || (error.response && error.response.status) || 500;
+    return {
+      error,
+      statusCode,
+    };
+  }
+}
+const deleteProduct = async (id) => { };
+
 
 export {
   addProduct,
@@ -227,4 +289,7 @@ export {
   deleteFeedback,
   updateFeedback,
   getCategoryById,
+  isBuy
 };
+
+

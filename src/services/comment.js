@@ -1,16 +1,16 @@
 import * as request from '../utils/request'
 
-const createNewComment = async (content, blogId, userId) => {
+const createNewComment = async (content, blogId, accessToken) => {
 
     try {
         const creteBlog = await request.post('/blog/comment/create-comment',
             {
-                userId: 1,
                 blogId: blogId,
                 content: content,
             },
             {
                 headers: {
+                    'Authorization': `Bearer ${accessToken}`,
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
@@ -48,23 +48,28 @@ const getAllCommentByBlogId = async (blogId) => {
         };
     }
 }
-const deleteComment = async (id, userId) => {
+const deleteComment = async (id, accessToken) => {
     try {
-        const response = await request.deleteRe(`/blog/comment/delete-comment?id=${id}&userId=${userId}`);
+        const response = await request.deleteRe(`/blog/comment/delete-comment?id=${id}`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+            }
+        });
         return response.status
     } catch (error) {
         console.error("Error deleting blog:", error);
     }
 };
-const updateComment = async (id, content, userId) => {
+const updateComment = async (id, content, accessToken) => {
     console.log(content);
     try {
-        return await request.put(`/blog/comment/update-comment?id=${id}&userId=${userId}`,
+        return await request.put(`/blog/comment/update-comment?id=${id}`,
             {
                 content: content,
             },
             {
                 headers: {
+                    'Authorization': `Bearer ${accessToken}`,
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });

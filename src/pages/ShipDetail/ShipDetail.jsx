@@ -207,6 +207,7 @@ const ShipDetail = () => {
                                 <p className="text-gray-300 mt-2">Add new address</p>
                             </div>
                         </div>
+
                         <ShipDetailItem shipDetails={shipDetails?.data?.shipDetails} itemShip={shipDetail}
                                         setItemShip={setShipDetail}/>
                     </div>

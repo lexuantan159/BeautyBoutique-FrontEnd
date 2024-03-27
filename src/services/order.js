@@ -5,10 +5,10 @@ const CREATE_ORDER_ENDPOINT = "/order/create-order"
 export const createOrder = async (accessToken, paramObject, cartItemsId) => {
     try {
         return await request.post(CREATE_ORDER_ENDPOINT,
-            {cartItemsId},
+            { cartItemsId },
             {
                 params:
-                paramObject
+                    paramObject
                 ,
                 headers: {
                     "Authorization": `Bearer ${accessToken}`,
@@ -28,10 +28,10 @@ const CREATE_PAYMENT_ENDPOINT = "/order/create-payment"
 export const createPayment = async (accessToken, paramObject, cartItemsId) => {
     try {
         return await request.post(CREATE_PAYMENT_ENDPOINT,
-            {cartItemsId},
+            { cartItemsId },
             {
                 params:
-                paramObject,
+                    paramObject,
                 headers: {
                     "Authorization": `Bearer ${accessToken}`,
                     'Content-Type': 'multipart/form-data'
@@ -49,7 +49,7 @@ const ORDER_HISTORY_ENDPOINT = "/order/order-histories"
 export const getOrderHistories = async (accessToken, paramsObject) => {
     try {
         return await request.get(ORDER_HISTORY_ENDPOINT, {
-            params:paramsObject,
+            params: paramsObject,
             headers: {
                 "Authorization": `Bearer ${accessToken}`,
                 "Content-Type": "application/json"
@@ -64,7 +64,7 @@ const ALL_ORDER_ENDPOINT = "order/get-all-orders"
 export const getAllOrder = async (accessToken, paramsObject) => {
     try {
         return await request.get(ALL_ORDER_ENDPOINT, {
-            params:paramsObject,
+            params: paramsObject,
             headers: {
                 "Authorization": `Bearer ${accessToken}`,
                 "Content-Type": "application/json"
@@ -97,7 +97,7 @@ export const approveOrder = async (accessToken, paramObject) => {
             {},
             {
                 params:
-                paramObject
+                    paramObject
                 ,
                 headers: {
                     "Authorization": `Bearer ${accessToken}`,
@@ -119,7 +119,7 @@ export const changeStatus = async (accessToken, paramObject) => {
             {},
             {
                 params:
-                paramObject
+                    paramObject
                 ,
                 headers: {
                     "Authorization": `Bearer ${accessToken}`,
@@ -134,11 +134,11 @@ export const changeStatus = async (accessToken, paramObject) => {
 
 const CANCEL_ORDER_ENDPOINT = "order/cancel-order"
 export const cancelOrder = async (accessToken, paramObject) => {
-    console.log({accessToken, paramObject})
+    console.log({ accessToken, paramObject })
     try {
         return await request.deleteRe(CANCEL_ORDER_ENDPOINT,
             {
-                params: paramObject ,
+                params: paramObject,
                 headers: {
                     "Authorization": `Bearer ${accessToken}`,
                     'Content-Type': 'application/json'

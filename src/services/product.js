@@ -234,6 +234,27 @@ const updateFeedback = async (id, feedback, accessToken) => {
     };
   }
 };
+const isBuy = async (accessToken, productId) => {
+  try {
+    const response = await request.get(`/product/feedback/checkOrderAndDelivery`, {
+      params: {
+        productId: productId
+      },
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+    return response
+  } catch (error) {
+    const statusCode =
+      error.status || (error.response && error.response.status) || 500;
+    return {
+      error,
+      statusCode,
+    };
+  }
+}
 
 export {
   addProduct,
@@ -246,4 +267,5 @@ export {
   deleteFeedback,
   updateFeedback,
   getCategoryById,
+  isBuy
 };

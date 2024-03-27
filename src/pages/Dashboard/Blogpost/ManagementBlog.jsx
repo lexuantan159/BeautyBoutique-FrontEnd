@@ -59,8 +59,6 @@ const ManagementBlog = () => {
         setDeleteItem(preDeleteItem => ({ ...preDeleteItem, id: id, userId: userId, imageIds: imageIds }))
         setOpenModal(true)
     }
-
-
     const handleOpenModalEdit = (blogpost) => {
         console.log(blogpost);
         setEditBlogpost(blogpost);

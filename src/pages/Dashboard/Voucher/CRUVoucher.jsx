@@ -5,76 +5,116 @@ import MethodContext from '../../../context/methodProvider';
 const CRUVoucher = ({ closeModal, isOpenForm, setChange, change, voucher }) => {
   const { convertDate, notify } = useContext(MethodContext);
   const [id, setId] = useState(null);
-  const [title, setTitle] = useState(null);
-  const [content, setContent] = useState(null);
-  const [quantity, setQuantity] = useState(null);
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [quantity, setQuantity] = useState(0);
   const [numUsedVoucher, setNumUsedVoucher] = useState(0);
-  const [discount, setDiscount] = useState(null);
-  const [maximDiscount, setMaximDiscount] = useState(null);
-  const [minimumOrder, setMinimumOrder] = useState(null);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const Token = localStorage.getItem('Token');
+  const [discount, setDiscount] = useState(0);
+  const [maximDiscount, setMaximDiscount] = useState(0);
+  const [minimumOrder, setMinimumOrder] = useState(0);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const Token = localStorage.getItem('token');
+
   useEffect(() => {
-    console.log('useEffect called with voucher:', voucher);
     if (isOpenForm.isOpen) {
       document.getElementById('my_modal_4').showModal();
     }
 
     if (voucher) {
       setId(voucher.id || null);
-      setTitle(voucher.title || null);
-      setContent(voucher.content || null);
-      setQuantity(voucher.quantity || null);
+      setTitle(voucher.title || '');
+      setContent(voucher.content || '');
+      setQuantity(voucher.quantity || 0);
       setNumUsedVoucher(voucher.numUsedVoucher || 0);
-      setDiscount(voucher.discount || null);
-      setMaximDiscount(voucher.maximDiscount || null);
-      setMinimumOrder(voucher.minimumOrder || null);
-      setStartDate(voucher.startDate || null);
-      setEndDate(voucher.endDate || null);
+      setDiscount(voucher.discount || 0);
+      setMaximDiscount(voucher.maximDiscount || 0);
+      setMinimumOrder(voucher.minimumOrder || 0);
+      setStartDate(voucher.startDate || '');
+      setEndDate(voucher.endDate || '');
     }
-  }, []);
+  }, [isOpenForm.isOpen, voucher]);
 
   const addNewVoucher = async () => {
     try {
       const newVoucher = await voucherApi.createNewVouccher(Token, title, content, quantity, numUsedVoucher, discount, maximDiscount, minimumOrder, convertDate(startDate), convertDate(endDate))
       if (newVoucher?.status === 201) {
         notify(newVoucher.data, "success")
+        closeModal({ index: null, isOpen: false })
+
       }
       else {
-        console.log(newVoucher.error);
         notify(newVoucher.error.response.data)
+        closeModal({ index: null, isOpen: false })
+
       }
     } catch (error) {
       console.error('Error fetching voucher:', error);
+      closeModal({ index: null, isOpen: false })
+
     }
   }
+
   const updateVoucher = async () => {
     try {
       const updateVoucher = await voucherApi.updateVouccher(Token, id, title, content, quantity, numUsedVoucher, discount, maximDiscount, minimumOrder, convertDate(startDate), convertDate(endDate))
-      if (updateVoucher?.status === 200) notify("Update succesfully", "success");
+      if (updateVoucher?.status === 200) notify("Update succesfully", "success")
       else notify("Update failed");
+      closeModal({ index: null, isOpen: false })
     } catch (error) {
       console.error('Error fetching voucher:', error);
+      closeModal({ index: null, isOpen: false })
+
     }
   }
+
   const handleSubmid = async () => {
-    if (title === null) return
-    if (discount === null) return
-    if (quantity === null) return
-    if (endDate === null) return
-    if (startDate === null) return
-    if (minimumOrder === null) return
-    if (maximDiscount === null) return
+    if (!title.trim()) {
+      notify("You have not entered a 'TITLE' field")
+      return
+    }
+    if (!discount || discount <= 0) {
+      notify("You have not entered a valid 'DISCOUNT' field")
+      return
+    }
+    if (!quantity || quantity <= 0) {
+      notify("You have not entered a valid 'QUANTITY' field")
+      return
+    }
+    if (!endDate) {
+      notify("You have not entered a 'END DATE' field")
+      return
+    }
+    if (!startDate) {
+      notify("You have not entered a 'START DATE' field")
+      return
+    }
+    if (!minimumOrder || minimumOrder <= 0) {
+      notify("You have not entered a valid 'MINIMUM ORDER' field")
+      return
+    }
+    if (!maximDiscount || maximDiscount <= 0) {
+      notify("You have not entered a valid 'MAXIMUM DISCOUNT' field")
+      return
+    }
+
+
 
     if (voucher) {
       await updateVoucher();
-    }
-    else {
+    } else {
+      if (new Date(startDate) < new Date()) {
+        notify("Start date must be greater than or equal to today's date");
+        return;
+      }
+      if (new Date(endDate) < new Date(startDate)) {
+        notify("End date must be greater than start date");
+        return;
+      }
       await addNewVoucher();
     }
     setChange(!change)
-    closeModal({ index: null, isOpen: false })
+    // closeModal({ index: null, isOpen: false })
   }
   return (
     <div>
@@ -88,13 +128,13 @@ const CRUVoucher = ({ closeModal, isOpenForm, setChange, change, voucher }) => {
               <h1 className='text-start mb-2 ml-4 block font-bold'>TITLE</h1>
               <input
                 onChange={(e) => setTitle(e.target.value)}
-                type="text" maxLength="70" placeholder="Input Title" value={title} className="input input-bordered input-primary w-full max-w-xs" />
+                type="text" maxLength="70" placeholder="Input Title" value={title} className="input input-bordered input-primary w-full max-w-xs focus:outline-none" />
             </div>
             <div>
               <h1 className='text-start mb-2 ml-4 block font-bold'>QUANTITY</h1>
               <input
                 onChange={(e) => setQuantity(e.target.value)}
-                type="number" placeholder="Input Quantity" value={quantity} className="input input-bordered input-primary w-full max-w-xs" />
+                type="number" placeholder="Input Quantity" value={quantity} className="input input-bordered input-primary w-full max-w-xs focus:outline-none" />
             </div>
           </div>
           <div className='grid grid-cols-2 m-2'>
@@ -102,13 +142,13 @@ const CRUVoucher = ({ closeModal, isOpenForm, setChange, change, voucher }) => {
               <h1 className='text-start mb-2 ml-4 block font-bold'>MINIMUM ORDER</h1>
               <input
                 onChange={(e) => setMinimumOrder(e.target.value)}
-                type="number" placeholder="Input Minimum Order $" value={minimumOrder} className="input input-bordered input-primary w-full max-w-xs" />
+                type="number" placeholder="Input Minimum Order $" value={minimumOrder} className="input input-bordered input-primary w-full max-w-xs focus:outline-none" />
             </div>
             <div>
               <h1 className='text-start mb-2 ml-4 block font-bold'>MAXIMUM DISCOUNT</h1>
               <input
                 onChange={(e) => setMaximDiscount(e.target.value)}
-                type="number" placeholder="Input maximum discount $" value={maximDiscount} className="input input-bordered input-primary w-full max-w-xs" />
+                type="number" placeholder="Input maximum discount $" value={maximDiscount} className="input input-bordered input-primary w-full max-w-xs focus:outline-none" />
             </div>
 
           </div>
@@ -117,14 +157,14 @@ const CRUVoucher = ({ closeModal, isOpenForm, setChange, change, voucher }) => {
             <div>
               <h1 className='text-start mb-2 ml-4 block font-bold'>START DATE</h1>
               <input
-                onChange={(e) => setStartDate(e.target.value)}
-                type="date" placeholder="Type here" value={startDate} className="input input-bordered input-primary w-full max-w-xs" />
+                onChange={(e) => { setStartDate(e.target.value); }}
+                type="date" placeholder="Type here" value={startDate} className="input input-bordered input-primary w-full max-w-xs focus:outline-none" />
             </div>
             <div>
               <h1 className='text-start mb-2 ml-4 block font-bold'>END DATE</h1>
               <input
-                onChange={(e) => setEndDate(e.target.value)}
-                type="date" placeholder="Type here" value={endDate} className="input input-bordered input-primary w-full max-w-xs" />
+                onChange={(e) => { setEndDate(e.target.value); }}
+                type="date" placeholder="Type here" value={endDate} className="input input-bordered input-primary w-full max-w-xs focus:outline-none" />
             </div>
           </div>
           <div className='grid grid-cols-2 m-2'>
@@ -132,13 +172,13 @@ const CRUVoucher = ({ closeModal, isOpenForm, setChange, change, voucher }) => {
               <h1 className='text-start mb-2 ml-4 block font-bold'>DISCOUNT</h1>
               <input
                 onChange={(e) => setDiscount(e.target.value)}
-                type="number" placeholder="Input Discount " value={discount} className="input input-bordered input-primary w-full max-w-xs" />
+                type="number" placeholder="Input Discount " value={discount} className="input input-bordered input-primary w-full max-w-xs focus:outline-none" />
             </div>
             <div>
               <h1 className='text-start mb-2 ml-4 block font-bold'>CONTENT</h1>
               <textarea
                 onChange={(e) => setContent(e.target.value)}
-                className="textarea textarea-primary w-full max-w-xs" placeholder="content" value={content}></textarea>
+                className="textarea textarea-primary w-full max-w-xs focus:outline-none" placeholder="content" value={content}></textarea>
             </div>
           </div>
           <div className="modal-action">

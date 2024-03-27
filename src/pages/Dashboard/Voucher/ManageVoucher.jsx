@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Table, Button } from 'flowbite-react';
+import { Modal, Table, Button, Pagination } from 'flowbite-react';
 import * as voucherApi from '../../../services/voucher';
 import CRUVoucher from './CRUVoucher';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
@@ -7,6 +7,7 @@ import { RiPassExpiredFill } from "react-icons/ri";
 import { MdOutlineDeliveryDining } from "react-icons/md";
 import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 import { MdAddTask } from "react-icons/md";
+import { CiFilter } from "react-icons/ci";
 
 
 const ManageVoucher = () => {
@@ -14,21 +15,38 @@ const ManageVoucher = () => {
   const [isOpenForm, setIsOpenForm] = useState({ index: null, isOpen: false });
   const [change, setChange] = useState(true)
   const [openModal, setOpenModal] = useState(false);
-  const [voucherExpires, setVoucherExpires] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [total, setTotal] = useState(0)
   const Token = localStorage.getItem('token');
 
 
+  const [filterOption, setFilterOption] = useState('Default');
   useEffect(() => {
     const fetchData = async () => {
       try {
         const vouchersData = await voucherApi.getAllVoucher();
-        setVouchers(vouchersData.voucherList);
+        const totalVoucher = vouchersData.quantity;
+        setTotal(totalVoucher)
+        const itemsPerPage = 5;
+        const pages = Math.ceil(totalVoucher / itemsPerPage);
+        setTotalPages(pages);
+        let sortedVouchers = [...vouchersData.voucherList];
+        if (filterOption === 'Discount DESC') {
+          sortedVouchers = sortedVouchers.sort((a, b) => b.discount - a.discount);
+        } else if (filterOption === 'Discount ASC') {
+          sortedVouchers = sortedVouchers.sort((a, b) => a.discount - b.discount);
+        }
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = Math.min(startIndex + itemsPerPage, totalVoucher);
+        const vouchersForPage = sortedVouchers.slice(startIndex, endIndex);
+        setVouchers(vouchersForPage);
       } catch (error) {
         console.error('Error fetching blogposts:', error);
       }
     };
     fetchData();
-  }, [change]);
+  }, [currentPage, filterOption]);
 
   const deleteVoucher = async (id) => {
     try {
@@ -45,7 +63,12 @@ const ManageVoucher = () => {
     await deleteVoucher(id)
     setChange(!change)
   }
-
+  const onPageChange = (page) => {
+    setCurrentPage(page);
+  };
+  const handleSortChange = (e) => {
+    setFilterOption(e.target.value);
+  };
 
   return (
     <div className='max-h-screen mx-4 fill-availabl'>
@@ -60,7 +83,7 @@ const ManageVoucher = () => {
             className="p-3 border-[0.5px] border-gray-400 rounded-lg text-black bg-white flex items-center mt-5 md:mt-0 ">
             <LiaFileInvoiceDollarSolid className="text-5xl text-red-400 mx-2" />
             <div className="">
-              <p className="text-xl font-bold">{vouchers?.length}</p>
+              <p className="text-xl font-bold">{total}</p>
               <p className="font-medium text-xs text-gray-300">Total voucher</p>
             </div>
           </div>
@@ -69,17 +92,23 @@ const ManageVoucher = () => {
             className="p-3 border-[0.5px] border-gray-400 rounded-lg text-black bg-white flex items-center mt-5 md:mt-0">
             <RiPassExpiredFill className="text-5xl text-red-400 mx-2" />
             <div className="">
-              <p className="text-xl font-bold">122</p>
-              <p className="font-medium text-xs text-gray-300">Total voucher expires</p>
+              <p className="text-xl font-bold">{vouchers?.length}</p>
+              <p className="font-medium text-xs text-gray-300">Total voucher page</p>
             </div>
           </div>
 
           <div
             className="p-3 border-[0.5px] border-gray-400 rounded-lg text-black bg-white flex items-center mt-5 md:mt-0">
-            <MdOutlineDeliveryDining className="text-5xl text-red-400 mx-2" />
+            <CiFilter className="text-5xl text-red-400 mx-2" />
             <div className="">
-              <p className="text-xl font-bold">122</p>
-              <p className="font-medium text-xs text-gray-300">Total Delivery</p>
+              <select className="select border-red-400 select-secondary w-full max-w-xs mb-2 focus:outline-none"
+                onChange={handleSortChange}
+                value={filterOption}
+              >
+                <option value="Default">Default</option>
+                <option value="Discount DESC">Discount DESC</option>
+                <option value="Discount ASC">Discount ASC</option>
+              </select>
             </div>
           </div>
 
@@ -87,7 +116,7 @@ const ManageVoucher = () => {
             className="p-3 border-[0.5px] border-gray-400 rounded-lg text-black bg-white flex items-center mt-5 md:mt-0">
             <MdAddTask className="text-5xl text-red-400 mx-2" />
             <div>
-              <button className="btn btn-outline btn-success" onClick={() => setIsOpenForm({ index: null, isOpen: true })}>Add new vouchers</button>
+              <button className="btn btn-outline border-red-400 btn-success" onClick={() => setIsOpenForm({ index: null, isOpen: true })}>Add new vouchers</button>
             </div>
             {
               isOpenForm.index === null && isOpenForm.isOpen && <CRUVoucher closeModal={setIsOpenForm} isOpenForm={isOpenForm} setChange={setChange} change={change} voucher={null}></CRUVoucher>
@@ -95,7 +124,7 @@ const ManageVoucher = () => {
           </div>
         </div>
 
-        <div className="h-[500px] shadow-lg overflow-y-scroll no-scrollbar border mt-2">
+        <div className="h-[550px] shadow-lg overflow-y-scroll no-scrollbar border mt-2 relative">
           <Table hoverable>
             <Table.Head>
               <Table.HeadCell>Title</Table.HeadCell>
@@ -161,10 +190,11 @@ const ManageVoucher = () => {
                   </Table.Row>
                 )
               })}
+
             </Table.Body>
           </Table>
-          <div>
-
+          <div className="flex overflow-x-auto sm:justify-center absolute bottom-4 left-1/3">
+            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} showIcons />
           </div>
         </div>
       </div>

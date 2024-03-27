@@ -14,6 +14,7 @@ const Comment = ({ commentId, index, setChange, change }) => {
   const { formatDateTime, notify } = useContext(MethodContext);
   const [isEdit, setIsEdit] = useState(false);
   const [idEdit, setIdEdit] = useState(false);
+  const [isBuyProduct, setisBuyProduct] = useState('')
   const Token = localStorage.getItem('token');
 
   useEffect(() => {
@@ -22,6 +23,9 @@ const Comment = ({ commentId, index, setChange, change }) => {
         if (index === 1) {
           const feedback = await productApi.getFeedback(commentId);
           setComments(feedback.data.feedbackList);
+          const isBuy = await productApi.isBuy(Token, commentId)
+          setisBuyProduct(isBuy?.data)
+          console.log(isBuy?.data);
         } else {
           const commentData = await commentApi.getAllCommentByBlogId(commentId);
           setComments(commentData.commentList);
@@ -111,44 +115,50 @@ const Comment = ({ commentId, index, setChange, change }) => {
   return (
     <>
       <div className="w-full h-auto">
-        <div className="flex items-start justify-center m-2">
-          <div className="avatar-group -space-x-6 rtl:space-x-reverse w-[10%]">
-            <div className="avatar">
-              <div className="w-12">
-                <img
-                  src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                  alt="name"
-                />
+        {isBuyProduct ? (
+          <div className="flex items-start justify-center m-2">
+            <div className="avatar-group -space-x-6 rtl:space-x-reverse w-[10%]">
+              <div className="avatar">
+                <div className="w-12">
+                  <img
+                    src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                    alt="name"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="flex py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 w-[80%]">
+              <textarea
+                id="comment"
+                rows="1"
+                onChange={e => setNewComment(e.target.value)}
+                value={newComment}
+                className="textarea textarea-accent w-[90%] focus:fill-none"
+                placeholder="Write Your Comment..."
+                required
+              ></textarea>
+              <div className="flex items-center justify-center ml-4">
+                <Button
+                  gradientMonochrome="lime"
+                  onClick={postComment}
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <div className="flex items-center justify-center">
+                      <Spinner className="h-6 w-6 mr-4" /> <span>Loading...</span>
+                    </div>
+                  ) : (
+                    <FiSend />
+                  )}
+                </Button>
               </div>
             </div>
           </div>
-          <div class="flex py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 w-[80%]">
-            <textarea
-              id="comment"
-              rows="1"
-              onChange={e => setNewComment(e.target.value)}
-              value={newComment}
-              className="textarea textarea-accent w-[90%]"
-              placeholder="Write Your Comment..."
-              required
-            ></textarea>
-            <div className="flex items-center justify-center ml-4">
-              <Button
-                gradientMonochrome="lime"
-                onClick={postComment}
-                disabled={loading}
-              >
-                {loading ? (
-                  <div className="flex items-center justify-center">
-                    <Spinner className="h-6 w-6 mr-4" /> <span>Loading...</span>
-                  </div>
-                ) : (
-                  <FiSend />
-                )}
-              </Button>
-            </div>
+        ) : (
+          <div className='flex items-center justify-center'>
+            <img src="https://th.bing.com/th/id/OIP.Wu_5CJjihyM-HCHKFC3h6QHaGP?rs=1&pid=ImgDetMain" alt="" />
           </div>
-        </div>
+        )}
         {comments && comments.length > 0 ? (
           comments?.map((comment) => (
             <div key={comment?.id} className="flex items-start justify-center">
@@ -157,7 +167,7 @@ const Comment = ({ commentId, index, setChange, change }) => {
                   <div className=" avatar-group">
                     <div className="avatar">
                       <div className="w-10">
-                        <img src={comment?.user?.imageURL} alt="Avatar" />
+                        <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" alt="Avatar" />
                       </div>
                     </div>
                     <div className="ml-2">
@@ -196,13 +206,8 @@ const Comment = ({ commentId, index, setChange, change }) => {
                           Save
                         </button>
 
-                        <button
-                          className="text-xs mx-2 link link-error"
-                          onClick={() => {
-                            setIdEdit(false);
-                            setUpdateNewComment('');
-                          }}
-                        >
+                        <button className="text-xs mx-2 link link-error"
+                          onClick={() => { setIdEdit(false); setUpdateNewComment(''); }} >
                           Cance
                         </button>
                       </>
@@ -236,7 +241,7 @@ const Comment = ({ commentId, index, setChange, change }) => {
             There are no comments for this post yet.
           </div>
         )}
-      </div>
+      </div >
     </>
   );
 };

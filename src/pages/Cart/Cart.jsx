@@ -1,18 +1,18 @@
-import { useQuery } from "react-query";
+import {useQuery} from "react-query";
 import * as cartService from "../../services/cart";
-import React, { useContext, useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import CartItem from "../../components/cart/CartItem";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import MethodContext from "../../context/methodProvider";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const Cart = () => {
     const [action, setAction] = useState(false);
     const navigate = useNavigate();
-    const { notify, formatNumber } = useContext(MethodContext);
+    const {notify, formatNumber} = useContext(MethodContext);
     const [cartItemIds, setCartItemIds] = useState([]);
     const accessToken = localStorage.getItem("token");
-    const { data: cart, isLoading } = useQuery(["cart", action], () =>
+    const {data: cart, isLoading} = useQuery(["cart", action], () =>
         cartService.getCart(accessToken, {})
     );
 
@@ -47,30 +47,20 @@ const Cart = () => {
                     <span className="font-normal">
                         {cart?.data?.quantity <= 1
                             ? `( ${
-                                  cart?.data?.quantity === 0
-                                      ? 0
-                                      : cart?.data?.quantity
-                              } product )`
+                                cart?.data?.quantity === 0
+                                    ? 0
+                                    : cart?.data?.quantity
+                            } product )`
                             : `( ${cart?.data?.quantity} products )`}
                     </span>
                 </h1>
-                <div className="bg-white col-span-12 lg:col-span-8 rounded-lg shadow-lg max-h-[430px] overflow-y-scroll no-scrollbar border-[0.2px] border-gray-300 pt-3">
-                    {isLoading ? (
-                        <span className="loading loading-dots loading-lg text-xl "></span>
-                    ) : cart.status === 200 && cart?.data?.carts.length > 0 ? (
-                        cart?.data?.carts.map((item, index) => {
-                            return (
-                                <CartItem
-                                    key={item?.id}
-                                    item={item}
-                                    actionChange={setAction}
-                                    action={action}
-                                    noneBorder={
-                                        cart?.data?.carts.length - 1 === index
-                                    }
-                                />
-                            );
-                        })
+                <div
+                    className="bg-white col-span-12 lg:col-span-8 rounded-lg shadow-lg max-h-[430px] overflow-y-scroll no-scrollbar border-[0.2px] border-gray-300 pt-3 min-h-[400px] mb-6">
+                    {isLoading ? <span
+                        className="loading loading-dots loading-lg text-xl "></span> : (cart.status === 200 && cart?.data?.carts.length > 0) ? cart?.data?.carts.map((item, index) => {
+                            return (<CartItem key={item?.id} item={item} actionChange={setAction} action={action}
+                                              noneBorder={cart?.data?.carts.length - 1 === index}/>)
+                        }
                     ) : (
                         <div className="h-full flex flex-col justify-center items-center py-10">
                             <img

@@ -14,12 +14,13 @@ const CartItem = ({item, actionChange, action, noneBorder = false}) => {
 
     const {notify} = useContext(MethodContext);
     const [quantity, setQuantity] = useState(item?.quantity || 0);
-    const [cartItem, setCartItem] = useState({
-        price: item?.product?.salePrice,
-        totalPrice: item?.totalPrice,
-    });
+    const [cartItem, setCartItem] = useState({});
     const accessToken = localStorage.getItem('token');
 
+
+    useEffect(() => {
+        setCartItem(item)
+    }, [item])
 
     const handleDeleteItem = async () => {
         let params = {userId: 1, cartItemId: item.id,}
@@ -83,8 +84,8 @@ const CartItem = ({item, actionChange, action, noneBorder = false}) => {
                 </Link>
                 <div className="w-full flex flex-col justify-between">
                     <p className="block ">{item?.product?.productName}</p>
-                    <p className="block"><span className="font-medium">{cartItem?.price}</span> ₫(trị
-                        giá {cartItem?.totalPrice} ₫)</p>
+                    <p className="block"><span className="font-medium">{cartItem?.product?.salePrice}</span>$(total item
+                        price {cartItem?.totalPrice}$)</p>
                     <form className="w-full mx-auto flex justify-between">
                         <div className="flex items-center">
                             <button type="button" id="decrement-button" data-input-counter-decrement="counter-input"

@@ -18,10 +18,12 @@ export { default as NotFound } from "./NotFound/NotFound";
 export { default as AddProduct } from "./Dashboard/Product/AddProduct";
 export { default as EditProfile } from "./UserProfile/EditProfile/EditProfile";
 export { default as OrderHistories } from "./UserProfile/OrderHistories/OrderHistories";
-export { default as OrderDetail } from "./Order/OrderDetail";
-export { default as UserInfo } from "./User/UserInfo";
-export { default as ContactUs } from "./ContactUs/ContactUs";
-export { default as LoginForm } from "./Login/LoginForm";
+export { default as OrderDetail } from './Order/OrderDetail';
+export { default as UserInfo } from './User/UserInfo';
+export { default as ContactUs } from './ContactUs/ContactUs';
+export { default as LoginForm } from './Login/LoginForm';
+export { default as RegisterForm } from './Login/RegisterForm.jsx';
+export { default as AboutUs } from './AboutUs/AboutUs.jsx';
+export { default as ChangePass } from './UserProfile/ChangePass/ChangePass.jsx';
 export { default as ResetPassword } from "./Forgetpass/ResetPassword";
-export { default as RegisterForm } from "./Login/RegisterForm.jsx";
-export { default as AboutUs } from "./AboutUs/AboutUs.jsx";
+

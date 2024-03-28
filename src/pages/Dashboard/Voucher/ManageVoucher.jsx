@@ -125,7 +125,7 @@ const ManageVoucher = () => {
           </div>
         </div>
 
-        <div className="h-[550px] shadow-lg overflow-y-scroll no-scrollbar border mt-2 relative">
+        <div className="h-[520px] shadow-lg overflow-y-scroll no-scrollbar border mt-2 relative">
           <Table hoverable>
             <Table.Head>
               <Table.HeadCell>Title</Table.HeadCell>

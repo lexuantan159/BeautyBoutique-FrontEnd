@@ -215,7 +215,7 @@ const ShipDetail = () => {
                     <DropList title={"method shipping"} listItem={[{id: 1, name: "GHTK"}, {id: 2, name: "J&T"}]}
                               type={"shipping"} setItem={setMethodShipping}></DropList>
                     <DropList title={"method payment"}
-                              listItem={[{id: 1, name: "Thanh Toan Khi Nhan Hang"}, {id: 2, name: "Zalo Pay"}]}
+                              listItem={[{id: 1, name: "Payment on delivery"}, {id: 2, name: "Zalo Pay"}]}
                               type={"payment"} setItem={setMethodPayment}></DropList>
 
                 </div>

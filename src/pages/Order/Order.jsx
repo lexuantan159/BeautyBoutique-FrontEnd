@@ -187,8 +187,8 @@ const Order = () => {
                                                     selected>{status || order?.orderStatus?.statusName}</option>
                                             {
                                                 order?.orderStatus?.id === 2 && <>
-                                                    <option value="Đang Giao Hàng">Shipping</option>
-                                                    <option value="Đã Giao Hàng">Delivered</option>
+                                                    <option value="Shipping">Shipping</option>
+                                                    <option value="Delivered">Delivered</option>
                                                 </>
                                             }
                                         </select>

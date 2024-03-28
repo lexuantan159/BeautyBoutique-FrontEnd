@@ -123,33 +123,33 @@ const EditProfile = () => {
                     </div>
                 </form>
                 <div className="flex flex-col items-center col-span-2 mt-4">
-                    {loadingAva ? (
-                        <img
-                            src="https://img.thuthuattinhoc.vn/uploads/2020/05/30/hhinh-anh-luffy-chibi-thu-the-rat-ngau_055520104.jpg"
-                            alt="loading-avatar"
-                            className="w-40 h-40 object-cover border-2 rounded-full"
-                        />
-                    ) : (
-                        <img
-                            src={
-                                "https://vnn-imgs-a1.vgcloud.vn/image1.ictnews.vn/_Files/2020/03/17/trend-avatar-1.jpg"
-                            }
-                            alt="avatar"
-                            className="w-40 h-40 object-cover border-2 rounded-full"
-                        />
-                    )}
-                    <div className="relative w-full mt-4">
-                        <input
-                            ref={fileRef}
-                            onChange={handleUpdateAvatar}
-                            className="relative block w-full text-sm"
-                            type="file"
-                            id="formFileMultiple"
-                            hidden
-                            accept=".png, .jpg, .jpeg"
-                            multiple
-                        />
-                    </div>
+                    {/*{loadingAva ? (*/}
+                    {/*    <img*/}
+                    {/*        src="https://img.thuthuattinhoc.vn/uploads/2020/05/30/hhinh-anh-luffy-chibi-thu-the-rat-ngau_055520104.jpg"*/}
+                    {/*        alt="loading-avatar"*/}
+                    {/*        className="w-40 h-40 object-cover border-2 rounded-full"*/}
+                    {/*    />*/}
+                    {/*) : (*/}
+                    {/*    <img*/}
+                    {/*        src={*/}
+                    {/*            "https://vnn-imgs-a1.vgcloud.vn/image1.ictnews.vn/_Files/2020/03/17/trend-avatar-1.jpg"*/}
+                    {/*        }*/}
+                    {/*        alt="avatar"*/}
+                    {/*        className="w-40 h-40 object-cover border-2 rounded-full"*/}
+                    {/*    />*/}
+                    {/*)}*/}
+                    {/*<div className="relative w-full mt-4">*/}
+                    {/*    <input*/}
+                    {/*        ref={fileRef}*/}
+                    {/*        onChange={handleUpdateAvatar}*/}
+                    {/*        className="relative block w-full text-sm"*/}
+                    {/*        type="file"*/}
+                    {/*        id="formFileMultiple"*/}
+                    {/*        hidden*/}
+                    {/*        accept=".png, .jpg, .jpeg"*/}
+                    {/*        multiple*/}
+                    {/*    />*/}
+                    {/*</div>*/}
                 </div>
             </div>
         </div>

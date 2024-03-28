@@ -29,6 +29,7 @@ const Blogpost = () => {
       try {
         const bloggData = await blogApi.getAllBlogPost()
         setBlogposts(bloggData?.blogList)
+        console.log(bloggData);
         const getProduct = await productApi.getProduct()
         setProducts(getProduct?.data)
       } catch (error) {

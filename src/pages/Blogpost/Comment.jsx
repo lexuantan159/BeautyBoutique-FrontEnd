@@ -115,7 +115,7 @@ const Comment = ({ commentId, index, setChange, change }) => {
   return (
     <>
       <div className="w-full h-auto">
-        {isBuyProduct ? (
+        {isBuyProduct || index === 2 ? (
           <div className="flex items-start justify-center m-2">
             <div className="avatar-group -space-x-6 rtl:space-x-reverse w-[10%]">
               <div className="avatar">

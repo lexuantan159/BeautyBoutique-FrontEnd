@@ -204,7 +204,7 @@ const Blogpost = () => {
                         <section >
                           <div className='flex items-center justify-center'>
                             <span className='text-lg w-[75%] font-semibold text-center max-sm:text-base'>
-                              {blogpost?.title}
+                              {blogpost?.title > 50 ? `${blogpost?.title.substring(0, 50)}...` : blogpost?.title}
                             </span>
                           </div>
                           <div className='w-full'>

@@ -74,7 +74,7 @@ const CRUVoucher = ({ closeModal, isOpenForm, setChange, change, voucher }) => {
       setChange(!change)
       return
     }
-    if (!discount || discount <= 0) {
+    if (!discount || discount <= 0 || discount > 1) {
       notify("You have not entered a valid 'DISCOUNT' field")
       setChange(!change)
       return

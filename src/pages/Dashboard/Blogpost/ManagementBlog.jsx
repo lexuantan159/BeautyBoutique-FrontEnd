@@ -97,9 +97,9 @@ const ManagementBlog = () => {
                                 return (
                                     <Table.Row className="bg-white ">
                                         <Table.Cell className="font-medium text-gray-900 ">
-                                            {blogpost?.title}
+                                            {blogpost?.title > 50 ? `${blogpost?.title.substring(0, 50)}...` : blogpost?.title}
                                         </Table.Cell>
-                                        <Table.Cell> {blogpost?.content}</Table.Cell>
+                                        <Table.Cell> {blogpost?.content > 255 ? `${blogpost?.content.substring(0, 255)}...` : blogpost?.content}</Table.Cell>
                                         <Table.Cell> {blogpost?.user?.fullName}</Table.Cell>
                                         <Table.Cell> {formatDateTime(blogpost.createDate)}</Table.Cell>
                                         <Table.Cell>

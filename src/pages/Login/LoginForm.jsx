@@ -17,7 +17,7 @@ function LoginForm() {
             const user = await request.getUser();
             console.log(user);
             if (user?.role?.roleName === "ADMIN") {
-                setTimeout(navigate("/admin"), 600);
+                setTimeout(navigate("/admin/product"), 600);
                 console.log("user la admin");
             } else {
                 setTimeout(navigate("/"), 600);

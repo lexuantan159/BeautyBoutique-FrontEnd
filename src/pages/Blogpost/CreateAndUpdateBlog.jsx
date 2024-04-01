@@ -4,9 +4,9 @@ import { useState } from 'react';
 import * as blogApi from '../../services/blogpost'
 import MethodContext from '../../context/methodProvider';
 
-
 const CreateBlog = ({ closeModal, isOpenForm, setChange, change, blogpost }) => {
     const { uploadFile, deleteAImage, notify } = useContext(MethodContext)
+    const Token = localStorage.getItem('token');
     const [imageUploads, setImageUpload] = useState(Array(6).fill(null));
     const [imagesDisplay, setImagesDisplay] = useState(Array(6).fill(null));
     const [images, setImages] = useState([])
@@ -14,7 +14,6 @@ const CreateBlog = ({ closeModal, isOpenForm, setChange, change, blogpost }) => 
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
     const [loading, setLoading] = useState(false)
-
     useEffect(() => {
         if (isOpenForm.isOpen) {
             document.getElementById('my_modal_2').showModal();
@@ -32,8 +31,6 @@ const CreateBlog = ({ closeModal, isOpenForm, setChange, change, blogpost }) => 
                 setImagesDisplay(Array(6).fill(null));
             }
         }
-
-
     }, [])
 
     const handleFileChange = (index, e) => {
@@ -41,6 +38,7 @@ const CreateBlog = ({ closeModal, isOpenForm, setChange, change, blogpost }) => 
         const newImages = [];
         const uploadedImages = [...imageUploads];
         const displayedImages = [...imagesDisplay];
+
         for (let i = 0; i < files.length; i++) {
             if (uploadedImages.filter(image => image !== null).length < 6) {
                 const newImage = files[i];
@@ -73,6 +71,7 @@ const CreateBlog = ({ closeModal, isOpenForm, setChange, change, blogpost }) => 
         const updatedDisplayImages = [...imagesDisplay];
         updatedDisplayImages[index] = null;
         setImagesDisplay(updatedDisplayImages);
+
     };
     const handleDeleteImageUpdate = async (index) => {
         const deleteImage = await blogApi.deleteImageBlog(images[index].id)
@@ -93,9 +92,14 @@ const CreateBlog = ({ closeModal, isOpenForm, setChange, change, blogpost }) => 
     }
 
     const handlePost = async () => {
+        if (title === '' || content === '') {
+            closeModal({ index: null, isOpen: false })
+            notify("You must fill out all fields completely")
+            return
+        }
         const img = await updateImageToFirebase();
         if (img.imageIds.length > 0 && img.imageURLs.length > 0) {
-            const createBlog = await blogApi.createNewBlog(title, content, img.imageIds, img.imageURLs, 1);
+            const createBlog = await blogApi.createNewBlog(title, content, img.imageIds, img.imageURLs, Token);
             if (createBlog.statusCode === 201) {
                 setChange(!change)
                 closeModal({ index: null, isOpen: false })
@@ -110,10 +114,15 @@ const CreateBlog = ({ closeModal, isOpenForm, setChange, change, blogpost }) => 
 
     const handUpdate = async () => {
         const validImages = imageUploads.filter(image => image !== null);
+        if (title === '' || content === '') {
+            closeModal({ index: null, isOpen: false })
+            notify("You must fill out all fields completely")
+            return
+        }
         if (validImages.length > 0) {
             const img = await updateImageToFirebase();
             if (img.imageIds.length > 0 && img.imageURLs.length > 0) {
-                const createBlog = await blogApi.updateBlogPost(id, title, content, img.imageIds, img.imageURLs, 1);
+                const createBlog = await blogApi.updateBlogPost(id, title, content, img.imageIds, img.imageURLs, Token);
                 if (createBlog.statusCode === 201) {
                     setChange(!change)
                     closeModal({ index: null, isOpen: false })
@@ -127,7 +136,8 @@ const CreateBlog = ({ closeModal, isOpenForm, setChange, change, blogpost }) => 
 
             }
         } else {
-            const updateBlog = await blogApi.updateBlogPost(id, title, content, [], [], 1);
+
+            const updateBlog = await blogApi.updateBlogPost(id, title, content, [], [], Token);
             if (updateBlog.statusCode === 201) {
                 setChange(!change)
                 closeModal({ index: null, isOpen: false })

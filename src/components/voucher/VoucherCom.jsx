@@ -65,7 +65,7 @@ const VoucherCom = ({conditionApply, voucherActive, voucherDetail}) => {
                     {voucher?.data?.vouchers?.length > 0 && voucher?.data?.vouchers.map((item) => {
                         return (
                             <p key={item?.id}
-                               className="p-3 bg-gray-200 text-black rounded-lg border-[0.5px] border-gray-300">N
+                               className="p-3 bg-gray-200 text-black rounded-lg border-[0.5px] border-gray-300 truncate">N
                                 {item?.voucher?.content}</p>
                         )
                     })}

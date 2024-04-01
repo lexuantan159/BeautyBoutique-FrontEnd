@@ -2,15 +2,18 @@ import * as request from '../utils/request'
 
 const GET_CART = "/cart/get-cart"
 
+
 export const getCart = async (accessToken, param) => {
     try {
         return await request.get(GET_CART, {
             params: param,
             headers: {
                 "Authorization": `Bearer ${accessToken}`,
+                "Authorization": `Bearer ${accessToken}`,
                 "Content-Type": "Application/json",
             },
             // withCredentials: true
+
         });
 
     } catch (error) {
@@ -20,11 +23,12 @@ export const getCart = async (accessToken, param) => {
 
 const UPDATE_CART = "cart/update-cart"
 
-export const updateCartItem = async (accessToken,param) => {
+export const updateCartItem = async (accessToken, param) => {
     try {
         return await request.put(UPDATE_CART, {}, {
             params: param,
             headers: {
+                "Authorization": `Bearer ${accessToken}`,
                 "Authorization": `Bearer ${accessToken}`,
                 "Content-Type": "Application/json"
             }
@@ -35,11 +39,13 @@ export const updateCartItem = async (accessToken,param) => {
 };
 
 const DELETE_CART = "cart/delete-cart"
-export const deleteCartItem = async (accessToken,param) => {
+export const deleteCartItem = async (accessToken, param) => {
     try {
         return await request.deleteRe(DELETE_CART, {
+
             params: param,
             headers: {
+                "Authorization": `Bearer ${accessToken}`,
                 "Authorization": `Bearer ${accessToken}`,
                 "Content-Type": "Application/json"
             }
@@ -54,10 +60,13 @@ export const addToCart = async (accessToken, params) => {
         return await request.post(`cart/add-to-cart`, {}, {
             params: params,
             headers: {
+                "Authorization": `Bearer ${accessToken}`,
                 "Content-Type": "Application/json"
             }
         })
     } catch (error) {
         return error
     }
+
+
 }

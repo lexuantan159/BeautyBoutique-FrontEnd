@@ -4,7 +4,7 @@ import MethodContext from "../../context/methodProvider";
 const OrderItem = ({infoOrderItem}) => {
     const {formatNumber} = useContext(MethodContext)
 
-
+    console.log(infoOrderItem)
 
     return (
         <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle w-[80%] mx-auto">
@@ -38,7 +38,7 @@ const OrderItem = ({infoOrderItem}) => {
                                         <div className="flex flex-col">
                                             <p className="block"><span className="font-medium">{formatNumber(item?.product?.actualPrice)}</span> $(trị
                                                 giá {formatNumber(item?.product?.salePrice)} $)</p>
-                                            <p className="block">Qty: {item?.product?.quantity}</p>
+                                            <p className="block">Qty: {item?.quantity}</p>
                                         </div>
                                     </div>
                                 </div>

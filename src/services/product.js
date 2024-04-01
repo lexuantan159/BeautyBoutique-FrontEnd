@@ -75,6 +75,27 @@ const getProductByCategory = async id => {
     };
   }
 };
+ // Import thư viện request tương ứng
+// const UPDATE_PRODUCT_ENDPOINT =;
+
+export const updateProduct = async (params, body) => {
+  try {
+    const newBody = {
+      ...body,
+    };
+    console.log(newBody);
+    return await request.put( `/product/updateProduct`, newBody, {
+      params: params,
+      headers: {
+        "Content-Type": "application/json", 
+      },
+    });
+  } catch (error) {
+    return error;
+  }
+};
+
+
 const getCategory = async () => {
   try {
     const quang = await request.get('/category/get-all');

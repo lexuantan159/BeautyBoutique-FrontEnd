@@ -1,6 +1,6 @@
 import * as request from '../utils/request';
 const LOGIN = 'auth/login';
-const GET_USER = '/users/getUser';
+const GET_USER = '/users/get';
 const REGISTER = '/auth/register';
 
 export const login = async (username, password) => {
@@ -35,7 +35,7 @@ export const getUser = async () => {
       },
     });
     localStorage.setItem('user', JSON.stringify(userResponse.data));
-    return userResponse.data; // Trả về đối tượng User từ backend
+    return userResponse.data;
   } catch (e) {
     throw new Error(e.message);
   }
